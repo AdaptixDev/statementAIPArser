@@ -60,7 +60,7 @@ class AssistantClient:
                 f"File size exceeds maximum allowed size of {Config.MAX_FILE_SIZE} bytes"
             )
 
-    
+
 
     def create_thread(self) -> Any:
         """Create a new thread.
@@ -219,7 +219,7 @@ class AssistantClient:
                 logger.info(f"File uploaded successfully with ID: {uploaded_file.id}")
             except Exception as e:
                 raise FileUploadError(f"Failed to upload file: {str(e)}")
-            
+
             # Create thread with message containing image
             logger.debug("Creating thread with image message...")
             thread = self.client.beta.threads.create(
@@ -232,7 +232,10 @@ class AssistantClient:
                         },
                         {
                             "type": "image_file",
-                            "image_file": {"file_id": uploaded_file.id}
+                            "image_file": {
+                                "file_id": uploaded_file.id,
+                                "detail": "high"
+                            }
                         }
                     ]
                 }]
