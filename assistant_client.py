@@ -148,14 +148,6 @@ class AssistantClient:
                             # Handle different content types
                             if message.content:
                                 content_block = message.content[0]
-                                # Debug log
-                                print(
-                                    f"Content block type: {type(content_block)}"
-                                )
-                                print(
-                                    f"Content block attributes: {dir(content_block)}"
-                                )
-
                                 # Try to extract content based on block type
                                 if hasattr(content_block, 'text'):
                                     content = content_block.text.value
