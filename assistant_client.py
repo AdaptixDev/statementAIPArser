@@ -55,28 +55,7 @@ class AssistantClient:
                 f"File size exceeds maximum allowed size of {Config.MAX_FILE_SIZE} bytes"
             )
 
-    def upload_file(self, file_path: str) -> str:
-        """Upload a file to OpenAI.
-
-        Args:
-            file_path: Path to the file to upload
-
-        Returns:
-            str: File ID from OpenAI
-
-        Raises:
-            FileUploadError: If file upload fails
-        """
-        try:
-            with open(file_path, "rb") as file:
-                response = self.client.files.create(
-                    file=file,
-                    purpose="vision"  # Using vision for image files
-                )
-                print(f"File uploaded successfully. File ID: {response.id}")
-                return response.id
-        except Exception as e:
-            raise FileUploadError(f"Failed to upload file: {str(e)}")
+    
 
     def create_thread(self) -> Any:
         """Create a new thread.
@@ -218,11 +197,6 @@ class AssistantClient:
             self.validate_image(image_path)
             logger.info(f"Image validated successfully: {image_path}")
 
-            # Upload file
-            logger.debug("Attempting to upload file...")
-            file_id = self.upload_file(image_path)
-            logger.info(f"File uploaded with ID: {file_id}")
-
             # Create thread with message containing image
             logger.debug("Creating thread with image message...")
             thread = self.client.beta.threads.create(
@@ -234,8 +208,11 @@ class AssistantClient:
                             "text": prompt
                         },
                         {
-                            "type": "image_file",
-                            "image_file": {"file_id": file_id}
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"file://{image_path}",
+                                "detail": "high"
+                            }
                         }
                     ]
                 }]
