@@ -3,6 +3,7 @@
 
 import sys
 import os
+import concurrent.futures
 from config import Config
 from assistant_client import AssistantClient
 from exceptions import (
@@ -14,8 +15,23 @@ from exceptions import (
     ResponseTimeoutError
 )
 
-def process_directory(directory_path: str, client: AssistantClient) -> None:
-    """Process all supported images in a directory."""
+def process_single_image(image_path: str, client: AssistantClient) -> None:
+    """Process a single image file."""
+    try:
+        print(f"\nProcessing image: {os.path.basename(image_path)}")
+        prompt = "Please analyze this image and provide a detailed description."
+        response = client.process_image(image_path, prompt)
+        print(f"Successfully processed {os.path.basename(image_path)}")
+        return response
+    except AssistantError as e:
+        print(f"Error processing {os.path.basename(image_path)}: {str(e)}")
+        return None
+    except Exception as e:
+        print(f"Unexpected error processing {os.path.basename(image_path)}: {str(e)}")
+        return None
+
+def process_directory(directory_path: str, client: AssistantClient, max_workers: int = 3) -> None:
+    """Process all supported images in a directory in parallel."""
     supported_extensions = Config.SUPPORTED_IMAGE_FORMATS
     
     # Get list of image files
@@ -31,20 +47,26 @@ def process_directory(directory_path: str, client: AssistantClient) -> None:
         
     print(f"Found {len(image_files)} images to process")
     
-    # Process each image
-    for image_file in image_files:
-        image_path = os.path.join(directory_path, image_file)
-        print(f"\nProcessing image: {image_file}")
-        try:
-            prompt = "Please analyze this image and provide a detailed description."
-            response = client.process_image(image_path, prompt)
-            print(f"Successfully processed {image_file}")
-        except AssistantError as e:
-            print(f"Error processing {image_file}: {str(e)}")
-            continue
-        except Exception as e:
-            print(f"Unexpected error processing {image_file}: {str(e)}")
-            continue
+    # Create full paths for images
+    image_paths = [os.path.join(directory_path, f) for f in image_files]
+    
+    # Process images in parallel
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # Submit all tasks and map them to their futures
+        future_to_path = {
+            executor.submit(process_single_image, path, client): path 
+            for path in image_paths
+        }
+        
+        # Process completed futures as they finish
+        for future in concurrent.futures.as_completed(future_to_path):
+            path = future_to_path[future]
+            try:
+                result = future.result()
+                if result:
+                    print(f"Completed processing: {os.path.basename(path)}")
+            except Exception as e:
+                print(f"Exception processing {os.path.basename(path)}: {str(e)}")
 
 def main():
     """Main function to run the assistant."""

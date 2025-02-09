@@ -3,6 +3,7 @@
 import os
 import time
 import logging
+import threading
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 
@@ -34,6 +35,7 @@ class AssistantClient:
         """
         self.client = OpenAI(api_key=api_key)
         self.assistant_id = assistant_id
+        self._lock = threading.Lock()
 
     def validate_image(self, image_path: str) -> None:
         """Validate the image file.
