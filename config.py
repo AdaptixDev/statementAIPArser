@@ -15,11 +15,14 @@ class Config:
     if not ASSISTANT_ID:
         raise ValueError("ASSISTANT_ID environment variable is not set")
 
-    # API request timeout in seconds
-    REQUEST_TIMEOUT: Final = 30
+    # API request timeout in seconds (increased for vision processing)
+    REQUEST_TIMEOUT: Final = 120  # Increased timeout for image processing
 
     # Supported image formats
     SUPPORTED_IMAGE_FORMATS: Final = ('.png', '.jpg', '.jpeg', '.gif', '.webp')
 
     # Maximum file size in bytes (100MB)
     MAX_FILE_SIZE: Final = 100 * 1024 * 1024
+
+    # Model to use for vision tasks
+    VISION_MODEL: Final = "gpt-4o"  # Latest model with vision capabilities
