@@ -2,12 +2,20 @@
 
 import os
 import time
+import logging
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 
 from openai import OpenAI
 
 from config import Config
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 
 class AssistantClient:
@@ -187,6 +195,7 @@ class AssistantClient:
 
                 time.sleep(2)  # Increased polling interval to reduce API load
             except Exception as e:
+                logger.error(f"Error while waiting for response: {str(e)}", exc_info=True)
                 raise ResponseTimeoutError(
                     f"Error while waiting for response: {str(e)}")
 
@@ -200,17 +209,22 @@ class AssistantClient:
         Returns:
             Dict containing the assistant's response
         """
-        # Validate image
-        self.validate_image(image_path)
-        print(f"Image validated successfully: {image_path}")
+        logger.info(f"Starting image processing for: {image_path}")
+        try:
+            # Validate image
+            logger.debug("Attempting to validate image...")
+            self.validate_image(image_path)
+            logger.info(f"Image validated successfully: {image_path}")
 
-        # Upload file
-        file_id = self.upload_file(image_path)
-        print(f"File uploaded with ID: {file_id}")
+            # Upload file
+            logger.debug("Attempting to upload file...")
+            file_id = self.upload_file(image_path)
+            logger.info(f"File uploaded with ID: {file_id}")
 
-        # Create thread
-        thread = self.create_thread()
-        print(f"Thread created with ID: {thread.id}")
+            # Create thread
+            logger.debug("Attempting to create thread...")
+            thread = self.create_thread()
+            logger.info(f"Thread created with ID: {thread.id}")
 
         # Send message with image
         self.send_message(thread.id, prompt, file_id)
