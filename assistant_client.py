@@ -162,7 +162,19 @@ class AssistantClient:
                                 else:
                                     content = str(content_block)
 
+                                # Get response content
+                                content = content
+
+                                # Generate unique filename with timestamp
+                                timestamp = time.strftime("%Y%m%d-%H%M%S")
+                                json_filename = f"statement_analysis_{timestamp}.json"
+
+                                # Save JSON response to file
+                                with open(json_filename, "w") as f:
+                                    f.write(content)
+
                                 print(f"Received response: {content}")
+                                print(f"\nResponse saved to: {json_filename}")
                                 return {
                                     "role": message.role,
                                     "content": content
