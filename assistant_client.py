@@ -12,10 +12,15 @@ from config import Config
 
 # Configure logging
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+# Reduce OpenAI package logging
+logging.getLogger("openai").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 
 class AssistantClient:
@@ -193,8 +198,7 @@ class AssistantClient:
         logger.info(f"Starting image processing for: {image_path}")
         try:
             # Validate image
-            logger.debug("Attempting to validate image...")
-            # Check if file exists and is readable
+            # Validate image
             if not os.path.exists(image_path):
                 raise FileUploadError(f"File not found: {image_path}")
             if not os.path.isfile(image_path):
@@ -202,18 +206,12 @@ class AssistantClient:
             if not os.access(image_path, os.R_OK):
                 raise FileUploadError(f"File not readable: {image_path}")
 
-            file_size = os.path.getsize(image_path)
-            logger.debug(f"File size: {file_size} bytes")
-
             self.validate_image(image_path)
-            logger.info(f"Image validated successfully: {image_path}")
+            logger.info(f"Processing image: {image_path}")
 
-            # First upload the file with debug info
-            logger.debug(f"Attempting to upload file: {image_path}")
             try:
                 with open(image_path, "rb") as file:
                     file_bytes = file.read()
-                    logger.debug(f"Read {len(file_bytes)} bytes from file")
                     uploaded_file = self.client.files.create(
                         file=("image.jpg", file_bytes, "image/jpeg"),
                         purpose="vision"
