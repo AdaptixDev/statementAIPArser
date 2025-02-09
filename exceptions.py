@@ -1,3 +1,4 @@
+
 """Custom exceptions for the OpenAI Assistant application."""
 
 class AssistantError(Exception):
