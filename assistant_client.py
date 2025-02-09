@@ -239,7 +239,10 @@ class AssistantClient:
                 }]
             )
             logger.info(f"Thread created with ID: {thread.id}")
-        print("Message sent successfully")
+            print("Message sent successfully")
+        except Exception as e:
+            logger.error(f"Error in process_image: {str(e)}", exc_info=True)
+            raise
 
         # Create run with vision-specific configuration
         run = self.client.beta.threads.runs.create(
