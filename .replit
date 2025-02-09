@@ -1,3 +1,4 @@
+
 modules = ["python-3.11"]
 
 [nix]
@@ -27,7 +28,7 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "python main.py generated-icon.png"
+args = "python main.py Files"
 
 [deployment]
-run = ["sh", "-c", "python main.py generated-icon.png"]
+run = ["sh", "-c", "python main.py Files"]
