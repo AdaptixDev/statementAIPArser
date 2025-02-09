@@ -197,6 +197,15 @@ class AssistantClient:
             self.validate_image(image_path)
             logger.info(f"Image validated successfully: {image_path}")
 
+            # First upload the file
+            logger.debug("Uploading image file...")
+            with open(image_path, "rb") as file:
+                uploaded_file = self.client.files.create(
+                    file=file,
+                    purpose="vision"
+                )
+            logger.info(f"File uploaded successfully with ID: {uploaded_file.id}")
+            
             # Create thread with message containing image
             logger.debug("Creating thread with image message...")
             thread = self.client.beta.threads.create(
@@ -208,11 +217,8 @@ class AssistantClient:
                             "text": prompt
                         },
                         {
-                            "type": "image_url",
-                            "image_url": {
-                                "url": f"file://{image_path}",
-                                "detail": "high"
-                            }
+                            "type": "image_file",
+                            "image_file": {"file_id": uploaded_file.id}
                         }
                     ]
                 }]
