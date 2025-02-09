@@ -221,13 +221,24 @@ class AssistantClient:
             file_id = self.upload_file(image_path)
             logger.info(f"File uploaded with ID: {file_id}")
 
-            # Create thread
-            logger.debug("Attempting to create thread...")
-            thread = self.create_thread()
+            # Create thread with message containing image
+            logger.debug("Creating thread with image message...")
+            thread = self.client.beta.threads.create(
+                messages=[{
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": prompt
+                        },
+                        {
+                            "type": "image_file",
+                            "image_file": {"file_id": file_id}
+                        }
+                    ]
+                }]
+            )
             logger.info(f"Thread created with ID: {thread.id}")
-
-        # Send message with image
-        self.send_message(thread.id, prompt, file_id)
         print("Message sent successfully")
 
         # Create run with vision-specific configuration
