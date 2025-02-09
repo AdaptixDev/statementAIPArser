@@ -43,9 +43,11 @@ class AssistantClient:
         if not path.exists():
             raise ImageValidationError(f"Image file not found: {image_path}")
 
-        if path.suffix.lower() not in Config.SUPPORTED_IMAGE_FORMATS:
+        file_extension = path.suffix.lower()
+        if file_extension not in Config.SUPPORTED_IMAGE_FORMATS:
+            logger.error(f"Invalid file extension: {file_extension} for file: {image_path}")
             raise ImageValidationError(
-                f"Unsupported image format. Supported formats: {Config.SUPPORTED_IMAGE_FORMATS}"
+                f"Unsupported image format '{file_extension}'. Supported formats: {Config.SUPPORTED_IMAGE_FORMATS}"
             )
 
         if path.stat().st_size > Config.MAX_FILE_SIZE:

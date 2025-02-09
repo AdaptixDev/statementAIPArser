@@ -19,7 +19,7 @@ class Config:
     REQUEST_TIMEOUT: Final = 120  # Increased timeout for image processing
 
     # Supported image formats
-    SUPPORTED_IMAGE_FORMATS: Final = ('.png', '.jpg', '.jpeg', '.gif', '.webp')
+    SUPPORTED_IMAGE_FORMATS: Final = ('.png', '.jpg', '.jpeg', '.gif', '.webp', '.JPG', '.JPEG')
 
     # Maximum file size in bytes (100MB)
     MAX_FILE_SIZE: Final = 100 * 1024 * 1024
