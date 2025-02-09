@@ -3,7 +3,7 @@
 import sys
 from config import Config
 from assistant_client import AssistantClient
-from exceptions import AssistantError
+from exceptions import AssistantError, FileUploadError
 
 def main():
     """Main function to run the assistant."""
