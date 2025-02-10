@@ -36,12 +36,25 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
             # Convert PDF to images first
             output_dir = 'converted_images'
             image_paths = PDFConverter.pdf_to_images(file_path, output_dir)
-            responses = []
-            for image_path in image_paths:
+            
+            # Process converted images in parallel
+            with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
                 prompt = "Please analyze this bank statement image and extract all transaction details."
-                response = client.process_image(image_path, prompt)
-                responses.append(response)
-                print(f"Successfully processed PDF page: {os.path.basename(image_path)}")
+                future_to_path = {
+                    executor.submit(client.process_image, path, prompt): path
+                    for path in image_paths
+                }
+                
+                responses = []
+                for future in concurrent.futures.as_completed(future_to_path):
+                    path = future_to_path[future]
+                    try:
+                        response = future.result()
+                        responses.append(response)
+                        print(f"Successfully processed PDF page: {os.path.basename(path)}")
+                    except Exception as e:
+                        print(f"Error processing {os.path.basename(path)}: {str(e)}")
+                
             return responses
         else:
             # Process single image directly
