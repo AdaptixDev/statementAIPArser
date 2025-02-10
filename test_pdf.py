@@ -7,7 +7,7 @@ def test_pdf_conversion():
     output_dir = "converted_images"
     
     # Test PDF file path - you'll need to add a PDF file to test
-    pdf_path = "test.pdf"
+    pdf_path = "Statement_163322_10212003_27_Jun_2024.pdf"
     
     if os.path.exists(pdf_path):
         try:
