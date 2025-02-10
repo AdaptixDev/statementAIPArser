@@ -111,6 +111,8 @@ def process_directory(directory_path: str, client: AssistantClient, max_workers:
 def main():
     """Main function to run the assistant."""
     
+    start_time = time.time()
+    
     # Check for command line arguments
     if len(sys.argv) != 2:
         print("Usage: python main.py <file_or_directory_path>")
@@ -137,6 +139,9 @@ def main():
     except Exception as e:
         print(f"Unexpected error: {str(e)}")
         sys.exit(1)
+    finally:
+        elapsed_time = time.time() - start_time
+        print(f"\nTotal processing time: {elapsed_time:.2f} seconds")
 
 if __name__ == "__main__":
     main()
