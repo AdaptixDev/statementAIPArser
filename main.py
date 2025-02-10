@@ -100,15 +100,10 @@ def main():
     
     # Check for command line arguments
     if len(sys.argv) != 2:
-        print("Usage: python main.py <directory_path>")
+        print("Usage: python main.py <file_or_directory_path>")
         sys.exit(1)
     
-    directory_path = sys.argv[1]
-    
-    # Verify directory exists
-    if not os.path.isdir(directory_path):
-        print(f"Error: {directory_path} is not a valid directory")
-        sys.exit(1)
+    path = sys.argv[1]
     
     try:
         # Initialize the assistant client
@@ -117,8 +112,14 @@ def main():
             assistant_id=Config.ASSISTANT_ID
         )
         
-        # Process all images in directory
-        process_directory(directory_path, client)
+        # Check if path is file or directory
+        if os.path.isfile(path):
+            process_single_file(path, client)
+        elif os.path.isdir(path):
+            process_directory(path, client)
+        else:
+            print(f"Error: {path} is not a valid file or directory")
+            sys.exit(1)
         
     except Exception as e:
         print(f"Unexpected error: {str(e)}")
