@@ -1,7 +1,10 @@
 import os
+import logging
 from typing import List
 from pdf2image import convert_from_path
 from PIL import Image
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class PDFConverter:
     @staticmethod
@@ -17,9 +20,12 @@ class PDFConverter:
         Returns:
             List of paths to the generated images
         """
+        logging.info(f"Starting PDF conversion for: {pdf_path}")
         if not os.path.exists(output_dir):
+            logging.info(f"Creating output directory: {output_dir}")
             os.makedirs(output_dir)
 
+        logging.info("Converting PDF to images...")
         # Convert PDF to images with enhanced quality
         images = convert_from_path(
             pdf_path,
@@ -27,6 +33,7 @@ class PDFConverter:
             thread_count=2,  # Use multiple threads for faster processing
             fmt="jpeg"  # Explicitly set format
         )
+        logging.info(f"Successfully converted PDF to {len(images)} images")
 
         # Save images with maximum quality
         image_paths = []
@@ -35,7 +42,9 @@ class PDFConverter:
                 output_dir, 
                 f"{os.path.splitext(os.path.basename(pdf_path))[0]}_page_{i+1}.jpg"
             )
+            logging.info(f"Saving image {i+1} to: {image_path}")
             image.save(image_path, "JPEG", quality=100, optimize=False)
             image_paths.append(image_path)
 
+        logging.info("PDF conversion completed successfully")
         return image_paths
