@@ -30,7 +30,7 @@ def process_single_image(image_path: str, client: AssistantClient) -> None:
         print(f"Unexpected error processing {os.path.basename(image_path)}: {str(e)}")
         return None
 
-def process_directory(directory_path: str, client: AssistantClient, max_workers: int = 6) -> None:
+def process_directory(directory_path: str, client: AssistantClient, max_workers: int = 10) -> None:
     """Process all supported images in a directory in parallel."""
     supported_extensions = Config.SUPPORTED_IMAGE_FORMATS
     
