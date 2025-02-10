@@ -15,47 +15,74 @@ from exceptions import (
     ResponseTimeoutError
 )
 
-def process_single_image(image_path: str, client: AssistantClient) -> None:
-    """Process a single image file."""
+def get_file_type(file_path: str) -> str:
+    """Determine if file is PDF or image."""
+    extension = os.path.splitext(file_path)[1].lower()
+    if extension == '.pdf':
+        return 'pdf'
+    elif extension in Config.SUPPORTED_IMAGE_FORMATS:
+        return 'image'
+    else:
+        raise ValueError(f"Unsupported file type: {extension}")
+
+def process_single_file(file_path: str, client: AssistantClient) -> None:
+    """Process a single file (PDF or image)."""
     try:
-        print(f"\nProcessing image: {os.path.basename(image_path)}")
-        prompt = "Please analyze this image and provide a detailed description."
-        response = client.process_image(image_path, prompt)
-        print(f"Successfully processed {os.path.basename(image_path)}")
-        return response
+        print(f"\nProcessing file: {os.path.basename(file_path)}")
+        file_type = get_file_type(file_path)
+        
+        if file_type == 'pdf':
+            from pdf_utils import PDFConverter
+            # Convert PDF to images first
+            output_dir = 'converted_images'
+            image_paths = PDFConverter.pdf_to_images(file_path, output_dir)
+            responses = []
+            for image_path in image_paths:
+                prompt = "Please analyze this bank statement image and extract all transaction details."
+                response = client.process_image(image_path, prompt)
+                responses.append(response)
+                print(f"Successfully processed PDF page: {os.path.basename(image_path)}")
+            return responses
+        else:
+            # Process single image directly
+            prompt = "Please analyze this bank statement image and extract all transaction details."
+            response = client.process_image(file_path, prompt)
+            print(f"Successfully processed {os.path.basename(file_path)}")
+            return response
+            
     except AssistantError as e:
-        print(f"Error processing {os.path.basename(image_path)}: {str(e)}")
+        print(f"Error processing {os.path.basename(file_path)}: {str(e)}")
         return None
     except Exception as e:
-        print(f"Unexpected error processing {os.path.basename(image_path)}: {str(e)}")
+        print(f"Unexpected error processing {os.path.basename(file_path)}: {str(e)}")
         return None
 
 def process_directory(directory_path: str, client: AssistantClient, max_workers: int = 10) -> None:
-    """Process all supported images in a directory in parallel."""
-    supported_extensions = Config.SUPPORTED_IMAGE_FORMATS
+    """Process all supported files (PDFs and images) in a directory in parallel."""
+    supported_extensions = list(Config.SUPPORTED_IMAGE_FORMATS) + ['.pdf']
     
-    # Get list of image files
-    image_files = [
+    # Get list of supported files
+    files = [
         f for f in os.listdir(directory_path)
         if os.path.isfile(os.path.join(directory_path, f))
         and os.path.splitext(f)[1].lower() in supported_extensions
     ]
     
-    if not image_files:
-        print(f"No supported image files found in {directory_path}")
+    if not files:
+        print(f"No supported files found in {directory_path}")
         return
         
-    print(f"Found {len(image_files)} images to process")
+    print(f"Found {len(files)} files to process")
     
-    # Create full paths for images
-    image_paths = [os.path.join(directory_path, f) for f in image_files]
+    # Create full paths for files
+    file_paths = [os.path.join(directory_path, f) for f in files]
     
-    # Process images in parallel
+    # Process files in parallel
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         # Submit all tasks and map them to their futures
         future_to_path = {
-            executor.submit(process_single_image, path, client): path 
-            for path in image_paths
+            executor.submit(process_single_file, path, client): path 
+            for path in file_paths
         }
         
         # Process completed futures as they finish
