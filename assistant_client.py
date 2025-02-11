@@ -179,7 +179,6 @@ class AssistantClient:
                                 except Exception as e:
                                     print(f"Error processing response: {str(e)}")
                                     
-                                print(f"Received response: {content}")
                                 print(f"\nResponse saved to: {json_filename}")
                                 return {
                                     "role": message.role,
