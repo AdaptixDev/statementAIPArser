@@ -173,6 +173,10 @@ class AssistantClient:
                                     response_dict = json.loads(content)
                                     if "Transactions" in response_dict and len(response_dict["Transactions"]) == 0:
                                         print(f"ERROR: Empty transactions received for file: {thread_id}")
+                                except json.JSONDecodeError:
+                                    print(f"Warning: Response is not valid JSON for file: {thread_id}")
+                                except Exception as e:
+                                    print(f"Error processing response: {str(e)}")
                                     
                                 print(f"Received response: {content}")
                                 print(f"\nResponse saved to: {json_filename}")
