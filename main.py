@@ -60,6 +60,7 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
                         print(f"Error processing {os.path.basename(path)}: {str(e)}")
                 
             return responses
+
         else:
             # Process single image directly
             prompt = "Please analyze this bank statement image and extract all transaction details."
