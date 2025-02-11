@@ -159,9 +159,10 @@ class AssistantClient:
                                 # Get response content
                                 content = content
 
-                                # Generate unique filename with timestamp
+                                # Extract page number from thread_id if it exists
+                                page_num = thread_id.split('_page_')[-1] if '_page_' in thread_id else ''
                                 timestamp = time.strftime("%Y%m%d-%H%M%S")
-                                json_filename = f"statement_analysis_{timestamp}.json"
+                                json_filename = f"statement_analysis_page{page_num}_{timestamp}.json"
 
                                 # Save JSON response to file
                                 with open(json_filename, "w") as f:
@@ -239,6 +240,12 @@ class AssistantClient:
 
             # Create thread with message containing image
             logger.debug("Creating thread with image message...")
+            # Extract page number from image filename
+            page_num = ""
+            if "_page_" in image_path:
+                page_num = image_path.split("_page_")[1].split(".")[0]
+            
+            # Create thread with page number in metadata
             thread = self.client.beta.threads.create(
                 messages=[{
                     "role": "user",
