@@ -229,6 +229,20 @@ class AssistantClient:
             try:
                 with open(image_path, "rb") as file:
                     file_bytes = file.read()
+                    
+                    if Config.USE_IMAGE_COMPRESSION:
+                        from PIL import Image
+                        import io
+                        
+                        quality = Config.INITIAL_COMPRESSION_QUALITY
+                        img = Image.open(io.BytesIO(file_bytes))
+                        while len(file_bytes) > Config.MAX_IMAGE_SIZE_MB * 1024 * 1024 and quality > Config.MIN_COMPRESSION_QUALITY:
+                            output = io.BytesIO()
+                            img.save(output, format='JPEG', quality=quality)
+                            file_bytes = output.getvalue()
+                            quality -= 5
+                            logger.info(f"Compressed image to quality {quality}")
+                    
                     uploaded_file = self.client.files.create(
                         file=("image.jpg", file_bytes, "image/jpeg"),
                         purpose="vision"

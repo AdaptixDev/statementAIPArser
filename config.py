@@ -28,3 +28,9 @@ class Config:
 
     # Model to use for vision tasks
     VISION_MODEL: Final = "gpt-4o"  # Latest model with vision capabilities
+    
+    # Image compression settings
+    USE_IMAGE_COMPRESSION: Final = False  # Whether to compress images before upload
+    MAX_IMAGE_SIZE_MB: Final = 4  # Maximum image size in MB when compression is enabled
+    MIN_COMPRESSION_QUALITY: Final = 5  # Minimum compression quality (1-100)
+    INITIAL_COMPRESSION_QUALITY: Final = 95  # Initial compression quality (1-100)
