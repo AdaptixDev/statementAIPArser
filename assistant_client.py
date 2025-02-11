@@ -113,7 +113,7 @@ class AssistantClient:
         except Exception as e:
             raise MessageCreationError(f"Failed to create message: {str(e)}")
 
-    def wait_for_response(self, thread_id: str, run_id: str) -> Dict[str, Any]:
+    def wait_for_response(self, thread_id: str, run_id: str, image_path: str) -> Dict[str, Any]:
         """Wait for and return the assistant's response.
 
         Args:
@@ -280,4 +280,4 @@ class AssistantClient:
         print(f"Run created with ID: {run.id}")
 
         # Wait for and return response
-        return self.wait_for_response(thread.id, run.id)
+        return self.wait_for_response(thread.id, run.id, image_path)
