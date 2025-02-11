@@ -38,7 +38,7 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
             output_dir = 'converted_images'
             first_page, image_paths = PDFConverter.pdf_to_images(file_path, output_dir)
             
-            print(f"First page identified at: {first_page}")
+            print(f"\nFirst page filename: {os.path.basename(first_page)}")
             # You can now handle the first page specially here if needed
             
             # Process converted images in parallel
