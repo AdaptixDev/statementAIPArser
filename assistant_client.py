@@ -280,23 +280,8 @@ class AssistantClient:
                 page_num = image_path.split("_page_")[1].split(".")[0]
 
             # Create thread with page number in metadata
-            thread = self.client.beta.threads.create(
-                messages=[{
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": prompt
-                        },
-                        {
-                            "type": "image_file",
-                            "image_file": {
-                                "file_id": uploaded_file.id
-                            }
-                        }
-                    ]
-                }]
-            )
+            thread = self.client.beta.threads.create()
+            self.send_message(thread.id, prompt, uploaded_file.id)
             logger.info(f"Thread created with ID: {thread.id}")
             print("Message sent successfully")
         except Exception as e:
