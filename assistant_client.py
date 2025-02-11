@@ -2,13 +2,26 @@
 
 import os
 import time
+import logging
+import threading
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 
 from openai import OpenAI
 
 from config import Config
-from exceptions import FileUploadError, ImageValidationError, ThreadCreationError, MessageCreationError, ResponseTimeoutError
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+# Reduce OpenAI package logging
+logging.getLogger("openai").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 
 class AssistantClient:
@@ -22,6 +35,7 @@ class AssistantClient:
         """
         self.client = OpenAI(api_key=api_key)
         self.assistant_id = assistant_id
+        self._lock = threading.Lock()
 
     def validate_image(self, image_path: str) -> None:
         """Validate the image file.
@@ -36,9 +50,11 @@ class AssistantClient:
         if not path.exists():
             raise ImageValidationError(f"Image file not found: {image_path}")
 
-        if path.suffix.lower() not in Config.SUPPORTED_IMAGE_FORMATS:
+        file_extension = path.suffix.lower()
+        if file_extension not in Config.SUPPORTED_IMAGE_FORMATS:
+            logger.error(f"Invalid file extension: {file_extension} for file: {image_path}")
             raise ImageValidationError(
-                f"Unsupported image format. Supported formats: {Config.SUPPORTED_IMAGE_FORMATS}"
+                f"Unsupported image format '{file_extension}'. Supported formats: {Config.SUPPORTED_IMAGE_FORMATS}"
             )
 
         if path.stat().st_size > Config.MAX_FILE_SIZE:
@@ -46,28 +62,7 @@ class AssistantClient:
                 f"File size exceeds maximum allowed size of {Config.MAX_FILE_SIZE} bytes"
             )
 
-    def upload_file(self, file_path: str) -> str:
-        """Upload a file to OpenAI.
 
-        Args:
-            file_path: Path to the file to upload
-
-        Returns:
-            str: File ID from OpenAI
-
-        Raises:
-            FileUploadError: If file upload fails
-        """
-        try:
-            with open(file_path, "rb") as file:
-                response = self.client.files.create(
-                    file=file,
-                    purpose="assistants"
-                )
-                print(f"File uploaded successfully. File ID: {response.id}")
-                return response.id
-        except Exception as e:
-            raise FileUploadError(f"Failed to upload file: {str(e)}")
 
     def create_thread(self) -> Any:
         """Create a new thread.
@@ -118,7 +113,7 @@ class AssistantClient:
         except Exception as e:
             raise MessageCreationError(f"Failed to create message: {str(e)}")
 
-    def wait_for_response(self, thread_id: str, run_id: str) -> Dict[str, Any]:
+    def wait_for_response(self, thread_id: str, run_id: str, image_path: str) -> Dict[str, Any]:
         """Wait for and return the assistant's response.
 
         Args:
@@ -153,14 +148,6 @@ class AssistantClient:
                             # Handle different content types
                             if message.content:
                                 content_block = message.content[0]
-                                # Debug log
-                                print(
-                                    f"Content block type: {type(content_block)}"
-                                )
-                                print(
-                                    f"Content block attributes: {dir(content_block)}"
-                                )
-
                                 # Try to extract content based on block type
                                 if hasattr(content_block, 'text'):
                                     content = content_block.text.value
@@ -169,7 +156,30 @@ class AssistantClient:
                                 else:
                                     content = str(content_block)
 
-                                print(f"Received response: {content}")
+                                # Get response content
+                                content = content
+
+                                # Extract page number from thread_id if it exists
+                                page_num = image_path.split('_page_')[1].split('.')[0] if '_page_' in image_path else ''
+                                timestamp = time.strftime("%Y%m%d-%H%M%S")
+                                json_filename = f"statement_analysis_page{page_num}_{timestamp}.json"
+
+                                # Save JSON response to file
+                                with open(json_filename, "w") as f:
+                                    f.write(content)
+
+                                try:
+                                    # Parse content as dict and check for empty transactions
+                                    import json
+                                    response_dict = json.loads(content)
+                                    if "Transactions" in response_dict and len(response_dict["Transactions"]) == 0:
+                                        print(f"ERROR: Empty transactions received for file: {thread_id}")
+                                except json.JSONDecodeError:
+                                    print(f"Warning: Response is not valid JSON for file: {thread_id}")
+                                except Exception as e:
+                                    print(f"Error processing response: {str(e)}")
+
+                                print(f"\nResponse saved to: {json_filename}")
                                 return {
                                     "role": message.role,
                                     "content": content
@@ -188,6 +198,7 @@ class AssistantClient:
 
                 time.sleep(2)  # Increased polling interval to reduce API load
             except Exception as e:
+                logger.error(f"Error while waiting for response: {str(e)}", exc_info=True)
                 raise ResponseTimeoutError(
                     f"Error while waiting for response: {str(e)}")
 
@@ -201,28 +212,94 @@ class AssistantClient:
         Returns:
             Dict containing the assistant's response
         """
-        # Validate image
-        self.validate_image(image_path)
-        print(f"Image validated successfully: {image_path}")
+        logger.info(f"Starting image processing for: {image_path}")
+        try:
+            # Validate image
+            # Validate image
+            if not os.path.exists(image_path):
+                raise FileUploadError(f"File not found: {image_path}")
+            if not os.path.isfile(image_path):
+                raise FileUploadError(f"Not a file: {image_path}")
+            if not os.access(image_path, os.R_OK):
+                raise FileUploadError(f"File not readable: {image_path}")
 
-        # Upload file
-        file_id = self.upload_file(image_path)
-        print(f"File uploaded with ID: {file_id}")
+            self.validate_image(image_path)
+            logger.info(f"Processing image: {image_path}")
 
-        # Create thread
-        thread = self.create_thread()
-        print(f"Thread created with ID: {thread.id}")
+            try:
+                with open(image_path, "rb") as file:
+                    file_bytes = file.read()
+                    
+                    if Config.USE_IMAGE_COMPRESSION:
+                        from PIL import Image
+                        import io
+                        
+                        quality = Config.INITIAL_COMPRESSION_QUALITY
+                        img = Image.open(io.BytesIO(file_bytes))
+                        while len(file_bytes) > Config.MAX_IMAGE_SIZE_MB * 1024 * 1024 and quality > Config.MIN_COMPRESSION_QUALITY:
+                            output = io.BytesIO()
+                            img.save(output, format='JPEG', quality=quality)
+                            file_bytes = output.getvalue()
+                            quality -= 5
+                            logger.info(f"Compressed image to quality {quality}")
+                    
+                    uploaded_file = self.client.files.create(
+                        file=("image.jpg", file_bytes, "image/jpeg"),
+                        purpose="vision"
+                    )
+                logger.info(f"File uploaded successfully with ID: {uploaded_file.id}")
+            except Exception as e:
+                raise FileUploadError(f"Failed to upload file: {str(e)}")
 
-        # Send message with image
-        self.send_message(thread.id, prompt, file_id)
-        print("Message sent successfully")
+            # Create thread with message containing image
+            logger.debug("Creating thread with image message...")
+            # Extract page number from image filename
+            page_num = ""
+            if "_page_" in image_path:
+                page_num = image_path.split("_page_")[1].split(".")[0]
 
-        # Create run using the configured assistant
+            # Create thread with page number in metadata
+            thread = self.client.beta.threads.create(
+                messages=[{
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": prompt
+                        },
+                        {
+                            "type": "image_file",
+                            "image_file": {
+                                "file_id": uploaded_file.id,
+                                "detail": "high"
+                            }
+                        }
+                    ]
+                }]
+            )
+            logger.info(f"Thread created with ID: {thread.id}")
+            print("Message sent successfully")
+        except Exception as e:
+            logger.error(f"Error in process_image: {str(e)}", exc_info=True)
+            raise
+
+        # Create run
         run = self.client.beta.threads.runs.create(
             thread_id=thread.id,
-            assistant_id=self.assistant_id
+            assistant_id=self.assistant_id,
+            instructions=
+            "Please provide a detailed analysis of the provided image. Describe what you see, including colors, objects, composition, and any notable details. If you have any concerns about the image content, please explain them clearly."
         )
         print(f"Run created with ID: {run.id}")
 
         # Wait for and return response
-        return self.wait_for_response(thread.id, run.id)
+        return self.wait_for_response(thread.id, run.id, image_path)
+
+from exceptions import (
+    AssistantError,
+    FileUploadError,
+    ImageValidationError,
+    ThreadCreationError,
+    MessageCreationError,
+    ResponseTimeoutError
+)
