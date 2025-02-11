@@ -60,8 +60,7 @@ class AssistantClient:
         try:
             with open(file_path, "rb") as file:
                 response = self.client.files.create(
-                    file=file,
-                    purpose="vision"  # Using vision for image files
+                    file=file
                 )
                 print(f"File uploaded successfully. File ID: {response.id}")
                 return response.id
