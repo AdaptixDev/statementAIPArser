@@ -178,7 +178,7 @@ class AssistantClient:
                                     print(f"Warning: Response is not valid JSON for file: {thread_id}")
                                 except Exception as e:
                                     print(f"Error processing response: {str(e)}")
-                                    
+
                                 print(f"\nResponse saved to: {json_filename}")
                                 return {
                                     "role": message.role,
@@ -243,7 +243,7 @@ class AssistantClient:
             page_num = ""
             if "_page_" in image_path:
                 page_num = image_path.split("_page_")[1].split(".")[0]
-            
+
             # Create thread with page number in metadata
             thread = self.client.beta.threads.create(
                 messages=[{
@@ -281,3 +281,12 @@ class AssistantClient:
 
         # Wait for and return response
         return self.wait_for_response(thread.id, run.id, image_path)
+
+from exceptions import (
+    AssistantError,
+    FileUploadError,
+    ImageValidationError,
+    ThreadCreationError,
+    MessageCreationError,
+    ResponseTimeoutError
+)
