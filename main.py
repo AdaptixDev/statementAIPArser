@@ -41,13 +41,14 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
             print(f"\nFirst page filename: {os.path.basename(first_page)}")
             # You can now handle the first page specially here if needed
             
-            # Process converted images in parallel
+            # Process converted images in parallel with delay
             with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
                 prompt = "Please analyze this bank statement image and extract all transaction details."
-                future_to_path = {
-                    executor.submit(client.process_image, path, prompt): path
-                    for path in image_paths
-                }
+                future_to_path = {}
+                for path in image_paths:
+                    future = executor.submit(client.process_image, path, prompt)
+                    future_to_path[future] = path
+                    time.sleep(0.5)  # Add 0.5 second delay between submissions
                 
                 responses = []
                 for future in concurrent.futures.as_completed(future_to_path):
