@@ -11,13 +11,27 @@ class TransactionMerger:
         self._lock = threading.Lock()
         
     def parse_date(self, date_str: str) -> datetime:
-        try:
-            return datetime.strptime(date_str, "%d %b %Y")
-        except ValueError:
+        # Handle various date formats
+        formats = [
+            "%d %b %y",
+            "%d %b %Y",
+            "%d-%m-%y",
+            "%d-%m-%Y",
+            "%d %b",  # Current year assumed
+        ]
+        
+        for fmt in formats:
             try:
-                return datetime.strptime(f"{date_str} 2024", "%d %b %Y")
+                if len(date_str.split()) == 2:  # Missing year
+                    date_str += " 24"  # Assume 2024
+                return datetime.strptime(date_str, fmt)
             except ValueError:
-                return datetime.max
+                continue
+        return datetime.max
+    
+    def transaction_key(self, trans: Dict) -> str:
+        """Create unique key for transaction"""
+        return f"{trans.get('Date', '')}-{trans.get('Description', '')}-{trans.get('Amount', '')}-{trans.get('Direction', '')}"
     
     def merge_json_file(self, json_path: str) -> None:
         try:
@@ -28,10 +42,20 @@ class TransactionMerger:
                 return
                 
             with self._lock:
-                self.transactions.extend(data['Transactions'])
-                # Sort after each merge
-                self.transactions.sort(
-                    key=lambda x: self.parse_date(x.get('Date', ''))
+                # Use dictionary to prevent duplicates
+                trans_dict = {
+                    self.transaction_key(t): t 
+                    for t in self.transactions + data['Transactions']
+                }
+                
+                # Convert back to list and sort
+                self.transactions = sorted(
+                    trans_dict.values(),
+                    key=lambda x: (
+                        self.parse_date(x.get('Date', '')),
+                        float(x.get('Balance', 0))
+                    ),
+                    reverse=True  # Most recent first
                 )
                 
             # Write current state to combined file
