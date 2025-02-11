@@ -9,6 +9,9 @@ class TransactionMerger:
     def __init__(self):
         self.transactions = []
         self._lock = threading.Lock()
+        # Clear existing combined statement
+        if os.path.exists('combined_statement.json'):
+            os.remove('combined_statement.json')
         
     def parse_date(self, date_str: str) -> datetime:
         # Handle various date formats
