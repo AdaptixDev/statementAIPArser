@@ -61,7 +61,8 @@ class AssistantClient:
         try:
             with open(file_path, "rb") as file:
                 response = self.client.files.create(
-                    file=file
+                    file=file,
+                    purpose="assistants"
                 )
                 print(f"File uploaded successfully. File ID: {response.id}")
                 return response.id
