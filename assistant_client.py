@@ -283,19 +283,8 @@ class AssistantClient:
             thread = self.client.beta.threads.create(
                 messages=[{
                     "role": "user",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": prompt
-                        },
-                        {
-                            "type": "image_file",
-                            "image_file": {
-                                "file_id": uploaded_file.id,
-                                "detail": "high"
-                            }
-                        }
-                    ]
+                    "content": prompt,
+                    "file_ids": [uploaded_file.id]
                 }]
             )
             logger.info(f"Thread created with ID: {thread.id}")
