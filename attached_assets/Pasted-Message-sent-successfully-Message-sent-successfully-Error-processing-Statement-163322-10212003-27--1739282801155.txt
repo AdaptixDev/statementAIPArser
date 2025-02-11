@@ -1,0 +1,47 @@
+Message sent successfully
+Message sent successfully
+Error processing Statement_163322_10212003_27_Jun_2024_page_6.jpg: type object 'Config' has no attribute 'VISION_MODEL'
+2025-02-11 14:05:50,057 - INFO - HTTP Request: POST https://api.openai.com/v1/threads/thread_X2jix9VoFPTNRv7NjzhiBrdC/messages "HTTP/1.1 200 OK"
+Message sent successfully
+Message sent successfully
+Error processing Statement_163322_10212003_27_Jun_2024_page_2.jpg: type object 'Config' has no attribute 'VISION_MODEL'
+2025-02-11 14:05:50,134 - INFO - HTTP Request: POST https://api.openai.com/v1/threads/thread_TWKxCOSlPDkh5OI9rGz6rQyE/messages "HTTP/1.1 200 OK"
+Message sent successfully
+Message sent successfully
+Error processing Statement_163322_10212003_27_Jun_2024_page_9.jpg: type object 'Config' has no attribute 'VISION_MODEL'
+2025-02-11 14:05:50,171 - INFO - HTTP Request: POST https://api.openai.com/v1/threads/thread_gqEtkM4B7f7O1tBn3pCseIr4/messages "HTTP/1.1 200 OK"
+2025-02-11 14:05:50,173 - INFO - HTTP Request: POST https://api.openai.com/v1/threads "HTTP/1.1 200 OK"
+Thread created successfully. Thread ID: thread_FPmRXYrdbwWEQRYB5ckeCwfl
+Thread created with ID: thread_FPmRXYrdbwWEQRYB5ckeCwfl
+Sending message with content: [{'type': 'text', 'text': 'Please analyze this bank statement image and extract all transaction details.'}, {'type': 'image_file', 'image_file': {'file_id': 'file-3xQq1wgm4D689b37ggvcmQ'}}]
+Message sent successfully
+Message sent successfully
+Error processing Statement_163322_10212003_27_Jun_2024_page_4.jpg: type object 'Config' has no attribute 'VISION_MODEL'
+2025-02-11 14:05:50,191 - INFO - HTTP Request: POST https://api.openai.com/v1/threads/thread_gHfsk7qUFoPBo8SxrGRFeCQN/messages "HTTP/1.1 200 OK"
+Message sent successfully
+Message sent successfully
+Error processing Statement_163322_10212003_27_Jun_2024_page_12.jpg: type object 'Config' has no attribute 'VISION_MODEL'
+2025-02-11 14:05:50,252 - INFO - HTTP Request: POST https://api.openai.com/v1/threads/thread_AoWD3OrnxhkBFFV8hQeBub8a/messages "HTTP/1.1 200 OK"
+Message sent successfully
+Message sent successfully
+Error processing Statement_163322_10212003_27_Jun_2024_page_7.jpg: type object 'Config' has no attribute 'VISION_MODEL'
+2025-02-11 14:05:50,391 - INFO - HTTP Request: POST https://api.openai.com/v1/threads/thread_jAzX1iQ0JNMInAMRuKw0fRLw/messages "HTTP/1.1 200 OK"
+Message sent successfully
+Message sent successfully
+Error processing Statement_163322_10212003_27_Jun_2024_page_3.jpg: type object 'Config' has no attribute 'VISION_MODEL'
+2025-02-11 14:05:50,465 - INFO - HTTP Request: POST https://api.openai.com/v1/threads/thread_FPmRXYrdbwWEQRYB5ckeCwfl/messages "HTTP/1.1 200 OK"
+Message sent successfully
+Message sent successfully
+Error processing Statement_163322_10212003_27_Jun_2024_page_1.jpg: type object 'Config' has no attribute 'VISION_MODEL'
+2025-02-11 14:05:50,658 - INFO - HTTP Request: POST https://api.openai.com/v1/threads "HTTP/1.1 200 OK"
+Thread created successfully. Thread ID: thread_fDQkRFB2T8lburPsCkWPr8FI
+Thread created with ID: thread_fDQkRFB2T8lburPsCkWPr8FI
+Sending message with content: [{'type': 'text', 'text': 'Please analyze this bank statement image and extract all transaction details.'}, {'type': 'image_file', 'image_file': {'file_id': 'file-7ykP3k976KDN7B7FmPwyoi'}}]
+2025-02-11 14:05:50,919 - INFO - HTTP Request: POST https://api.openai.com/v1/threads/thread_fDQkRFB2T8lburPsCkWPr8FI/messages "HTTP/1.1 200 OK"
+Message sent successfully
+Message sent successfully
+Error processing Statement_163322_10212003_27_Jun_2024_page_8.jpg: type object 'Config' has no attribute 'VISION_MODEL'
+
+Total processing time: 16.39 seconds
+ Environment updated. Reloading shell...
+~/workspace$ 
