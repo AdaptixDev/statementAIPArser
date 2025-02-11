@@ -67,20 +67,20 @@ class AssistantClient:
 
 
     def create_thread(self) -> Any:
-        """Create a new thread.
+                """Create a new thread.
 
-        Returns:
-            Thread object from OpenAI
+                Returns:
+                    Thread object from OpenAI
 
-        Raises:
-            ThreadCreationError: If thread creation fails
-        """
-        try:
-            thread = self.client.beta.threads.create()
-            print(f"Thread created successfully. Thread ID: {thread.id}")
-            return thread
-        except Exception as e:
-            raise ThreadCreationError(f"Failed to create thread: {str(e)}")
+                Raises:
+                    ThreadCreationError: If thread creation fails
+                """
+                try:
+                    thread = self.client.beta.threads.create()
+                    print(f"Thread created successfully. Thread ID: {thread.id}")
+                    return thread
+                except Exception as e:
+                    raise ThreadCreationError(f"Failed to create thread: {str(e)}")
 
     def send_message(self,
                      thread_id: str,
