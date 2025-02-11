@@ -4,9 +4,10 @@ import os
 import time
 import logging
 import threading
-import io
 from pathlib import Path
 from typing import Dict, Any, Optional, List
+import io
+from io import BytesIO
 
 from openai import OpenAI
 
@@ -254,8 +255,9 @@ class AssistantClient:
                                 logger.info(f"Compressed image to quality {quality}")
                         
                         # Ensure file is properly closed before upload
+                        file_obj = BytesIO(file_bytes)
                         uploaded_file = self.client.files.create(
-                            file=io.BytesIO(file_bytes),
+                            file=file_obj,
                             purpose="vision"
                         )
                         # Verify file was uploaded by retrieving it
