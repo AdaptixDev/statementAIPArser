@@ -1,0 +1,29 @@
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/assistant_client.py", line 282, in process_image
+    self.send_message(thread.id, prompt, uploaded_file.id)
+  File "/home/runner/workspace/assistant_client.py", line 114, in send_message
+    raise MessageCreationError(f"Failed to create message: {str(e)}")
+exceptions.MessageCreationError: Failed to create message: Error code: 400 - {'error': {'message': "Invalid value: 'file'. Supported values are: 'text', 'image_url', and 'image_file'.", 'type': 'invalid_request_error', 'param': 'content[1].type', 'code': 'invalid_value'}}
+2025-02-11 13:38:31,492 - assistant_client - ERROR - Error in process_image: Failed to create message: Error code: 400 - {'error': {'message': "Invalid value: 'file'. Supported values are: 'text', 'image_url', and 'image_file'.", 'type': 'invalid_request_error', 'param': 'content[1].type', 'code': 'invalid_value'}}
+Traceback (most recent call last):
+  File "/home/runner/workspace/assistant_client.py", line 109, in send_message
+    self.client.beta.threads.messages.create(thread_id=thread_id,
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/openai/resources/beta/threads/messages.py", line 102, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/openai/_base_client.py", line 1283, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/openai/_base_client.py", line 960, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/openai/_base_client.py", line 1064, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "Invalid value: 'file'. Supported values are: 'text', 'image_url', and 'image_file'.", 'type': 'invalid_request_error', 'param': 'content[1].type', 'code': 'invalid_value'}}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/w
