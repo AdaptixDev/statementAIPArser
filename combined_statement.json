@@ -1,207 +1,53 @@
 {
   "Transactions": [
     {
-      "Date": "15 JUN 24",
-      "Description": "Card Transaction 7674 15JUN24 WHICH? LONDON GB",
-      "Amount": 10.99,
-      "Direction": "Paid Out",
-      "Balance": 949.67
+      "Date": "2023-01-25",
+      "Description": "Deposit from Side Job",
+      "Amount": 500.0,
+      "Direction": "Paid In",
+      "Balance": 2579.5
     },
     {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14JUN24 D PADDY POWER LONDON GB",
-      "Amount": 20.0,
+      "Date": "2023-01-30",
+      "Description": "Monthly Subscription Service",
+      "Amount": 15.99,
       "Direction": "Paid Out",
-      "Balance": 929.67
+      "Balance": 2563.51
     },
     {
-      "Date": "15 JUN 24",
-      "Description": "Card Transaction 7674 15JUN24 PAYPAL *APPLE.COM/BILL 35131469001 GB",
-      "Amount": 1.99,
-      "Direction": "Paid Out",
-      "Balance": 927.68
+      "Date": "2023-01-05",
+      "Description": "Deposit from Employer",
+      "Amount": 1500.0,
+      "Direction": "Paid In",
+      "Balance": 2500.0
     },
     {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14 JUN 24 D APPLE.COM/BILL 08001072658 IE",
-      "Amount": 7.99,
+      "Date": "2023-01-10",
+      "Description": "Grocery Store Purchase",
+      "Amount": 120.5,
       "Direction": "Paid Out",
-      "Balance": 919.69
+      "Balance": 2379.5
     },
     {
-      "Date": "15 JUN 24",
-      "Description": "Card Transaction 7674 15JUN24 AMAZON* 204-8539327-97 LONDON GB",
-      "Amount": 25.39,
+      "Date": "2023-01-15",
+      "Description": "Utilities Payment",
+      "Amount": 200.0,
       "Direction": "Paid Out",
-      "Balance": 894.3
+      "Balance": 2179.5
     },
     {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14 JUN 24 D PADDY POWER LONDON GB",
-      "Amount": 30.0,
+      "Date": "2023-01-20",
+      "Description": "ATM Withdrawal",
+      "Amount": 100.0,
       "Direction": "Paid Out",
-      "Balance": 864.3
+      "Balance": 2079.5
     },
     {
-      "Date": "15 JUN 24",
-      "Description": "Card Transaction 9397 15JUN24 D PADDY POWER LONDON GB",
-      "Amount": 40.0,
-      "Direction": "Paid Out",
-      "Balance": 824.3
-    },
-    {
-      "Date": "15 JUN 24",
-      "Description": "Card Transaction 9397 15 JUN 24 D PADDY POWER LONDON GB",
-      "Amount": 20.0,
-      "Direction": "Paid Out",
-      "Balance": 804.3
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14JUN24 CD STEAMHOUSE M'STER M41 GB",
-      "Amount": 15.05,
-      "Direction": "Paid Out",
-      "Balance": 789.25
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 7674 14JUN24 NATIONAL LOTTERY LONDON GB",
-      "Amount": 10.0,
-      "Direction": "Paid Out",
-      "Balance": 779.25
-    },
-    {
-      "Date": "15 JUN 24",
-      "Description": "Card Transaction 9397 15JUN24 D PADDY POWER LONDON GB",
-      "Amount": 20.0,
-      "Direction": "Paid Out",
-      "Balance": 759.25
-    },
-    {
-      "Date": "16 JUN 24",
-      "Description": "Card Transaction 9397 16JUN24 CD BEVANO LOUNGE MANCHESTER GB",
-      "Amount": 11.0,
-      "Direction": "Paid Out",
-      "Balance": 748.25
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14 JUN 24 CD GREGGS PLC URMSTON GB",
-      "Amount": 3.2,
-      "Direction": "Paid Out",
-      "Balance": 745.05
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14JUN24 CD SUMUP *DRINK VIBES MIDDLEWICH GB",
-      "Amount": 3.0,
-      "Direction": "Paid Out",
-      "Balance": 742.05
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14JUN24 CD THE BARKING DOG MANCHESTER LA GB",
-      "Amount": 5.5,
-      "Direction": "Paid Out",
-      "Balance": 736.55
-    },
-    {
-      "Date": "15 JUN 24",
-      "Description": "Card Transaction 9397 15JUN24 CD BARGAIN BOOZE 1129 URMSTON GB",
-      "Amount": 19.98,
-      "Direction": "Paid Out",
-      "Balance": 716.57
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 7674 14JUN24 AMAZON* 204-5171797-69 LONDON GB",
-      "Amount": 13.97,
-      "Direction": "Paid Out",
-      "Balance": 702.6
-    },
-    {
-      "Date": "13 JUN 24",
-      "Description": "Card Transaction 9397 13JUN24 CD BARGAIN BOOZE 1129 URMSTON GB",
-      "Amount": 37.73,
-      "Direction": "Paid Out",
-      "Balance": 664.87
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14JUN24 CD THE BARKING DOG MANCHESTER LA GB",
-      "Amount": 12.8,
-      "Direction": "Paid Out",
-      "Balance": 652.07
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 4874 14JUN24 D POKERSTARS LONDON GB",
-      "Amount": 25.0,
-      "Direction": "Paid Out",
-      "Balance": 627.07
-    },
-    {
-      "Date": "16 JUN 24",
-      "Description": "Card Transaction 9397 16JUN24 CD ROUNDERS M'STER M41 GB",
-      "Amount": 0.99,
-      "Direction": "Paid Out",
-      "Balance": 626.08
-    },
-    {
-      "Date": "15 JUN 24",
-      "Description": "Card Transaction 7674 15JUN24 UBER *EATS HELP.UBER.COM GB",
-      "Amount": 23.24,
-      "Direction": "Paid Out",
-      "Balance": 602.84
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14JUN24 CD THE THREE BARRELS URMSTON GB",
-      "Amount": 4.9,
-      "Direction": "Paid Out",
-      "Balance": 597.94
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14JUN24 D PADDY POWER LONDON GB",
-      "Amount": 20.0,
-      "Direction": "Paid Out",
-      "Balance": 577.94
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14JUN24 CD THE THREE BARRELS URMSTON GB",
-      "Amount": 7.7,
-      "Direction": "Paid Out",
-      "Balance": 570.24
-    },
-    {
-      "Date": "15 JUN 24",
-      "Description": "Card Transaction 7674 15JUN24 AMAZON PRIME*HVWD09W4 AMZN.CO.UK/PM GB",
-      "Amount": 8.99,
-      "Direction": "Paid Out",
-      "Balance": 561.25
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 9397 14JUN24 CD THE THREE BARRELS URMSTON GB",
-      "Amount": 4.9,
-      "Direction": "Paid Out",
-      "Balance": 556.35
-    },
-    {
-      "Date": "14 JUN 24",
-      "Description": "Card Transaction 7674 14JUN24 OPENAI *CHATGPT SUBSCR 24.00 WRATE 1.2745 N-S TRN FEE",
-      "Amount": 19.35,
-      "Direction": "Paid Out",
-      "Balance": 537.0
-    },
-    {
-      "Date": "16 JUN 24",
-      "Description": "Card Transaction 9397 16JUN24 CD THE THREE BARRELS URMSTON GB",
-      "Amount": 4.9,
-      "Direction": "Paid Out",
-      "Balance": 532.1
+      "Date": "2023-01-01",
+      "Description": "Opening Balance",
+      "Amount": 0.0,
+      "Direction": "Paid In",
+      "Balance": 1000.0
     }
   ]
 }
