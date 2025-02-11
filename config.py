@@ -3,6 +3,7 @@
 import os
 from typing import Final
 
+
 # Configuration class to store API settings
 class Config:
     # OpenAI API Key from environment variable
@@ -16,10 +17,11 @@ class Config:
         raise ValueError("ASSISTANT_ID environment variable is not set")
 
     # API request timeout in seconds (increased for vision processing)
-    REQUEST_TIMEOUT: Final = 120  # Increased timeout for image processing
+    REQUEST_TIMEOUT: Final = 360  # Increased timeout for image processing
 
     # Supported image formats
-    SUPPORTED_IMAGE_FORMATS: Final = ('.png', '.jpg', '.jpeg', '.gif', '.webp', '.JPG', '.JPEG')
+    SUPPORTED_IMAGE_FORMATS: Final = ('.png', '.jpg', '.jpeg', '.gif', '.webp',
+                                      '.JPG', '.JPEG')
 
     # Maximum file size in bytes (100MB)
     MAX_FILE_SIZE: Final = 100 * 1024 * 1024
