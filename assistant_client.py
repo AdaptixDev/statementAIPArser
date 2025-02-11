@@ -101,10 +101,8 @@ class AssistantClient:
 
             if file_id:
                 message_content.append({
-                    "type": "image_file",
-                    "image_file": {
-                        "file_id": file_id
-                    }
+                    "type": "text",
+                    "text": f"Analyzing image with file ID: {file_id}"
                 })
 
             print(f"Sending message with content: {message_content}")
