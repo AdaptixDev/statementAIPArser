@@ -8,6 +8,7 @@ from typing import Dict, Any, Optional, List
 from openai import OpenAI
 
 from config import Config
+from exceptions import FileUploadError, ImageValidationError, ThreadCreationError, MessageCreationError, ResponseTimeoutError
 
 
 class AssistantClient:
