@@ -121,22 +121,24 @@ class AssistantClient:
             raise MessageCreationError(f"Failed to create message: {str(e)}")
 
     def wait_for_response(self, thread_id: str, run_id: str,
-                          image_path: str) -> Dict[str, Any]:
+                          image_path: str, retry_count: int = 0) -> Dict[str, Any]:
         """Wait for and return the assistant's response.
 
         Args:
             thread_id: Thread ID
             run_id: Run ID to wait for
             image_path: The original image path (used for naming any output)
+            retry_count: Current retry attempt number
 
         Returns:
             Dict containing the assistant's response
 
         Raises:
-            ResponseTimeoutError: If response times out or fails
+            ResponseTimeoutError: If response times out or fails after all retries
         """
+        MAX_RETRIES = 3
         start_time = time.time()
-        print(f"Waiting for response on thread {thread_id}, run {run_id}")
+        print(f"Waiting for response on thread {thread_id}, run {run_id} (Attempt {retry_count + 1}/{MAX_RETRIES})")
 
         while True:
             if time.time() - start_time > Config.REQUEST_TIMEOUT:
@@ -206,12 +208,26 @@ class AssistantClient:
                     }
 
                 elif run.status in ["failed", "cancelled", "expired"]:
-                    if hasattr(run,
-                               'last_error') and run.last_error is not None:
-                        error_msg = f"Run failed with status: {run.status}, error: {run.last_error}"
+                    if retry_count < MAX_RETRIES - 1:
+                        logger.warning(f"Run failed, retrying... (Attempt {retry_count + 1}/{MAX_RETRIES})")
+                        # Create a new run and try again
+                        new_run = self.client.beta.threads.runs.create(
+                            thread_id=thread_id,
+                            assistant_id=self.assistant_id,
+                            instructions=(
+                                "Please provide a detailed analysis of the provided image. "
+                                "Describe what you see, including colors, objects, composition, and any notable details. "
+                                "If you have any concerns about the image content, please explain them clearly."
+                            )
+                        )
+                        time.sleep(5)  # Wait before retrying
+                        return self.wait_for_response(thread_id, new_run.id, image_path, retry_count + 1)
                     else:
-                        error_msg = f"Run failed with status: {run.status}"
-                    raise ResponseTimeoutError(error_msg)
+                        if hasattr(run, 'last_error') and run.last_error is not None:
+                            error_msg = f"Run failed with status: {run.status}, error: {run.last_error}"
+                        else:
+                            error_msg = f"Run failed with status: {run.status}"
+                        raise ResponseTimeoutError(error_msg)
 
                 time.sleep(2)  # Poll interval
             except Exception as e:
