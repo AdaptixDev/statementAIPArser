@@ -42,7 +42,7 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
             # You can now handle the first page specially here if needed
             
             # Process converted images in parallel
-            with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=12) as executor:
                 prompt = "Please analyze this bank statement image and extract all transaction details."
                 future_to_path = {
                     executor.submit(client.process_image, path, prompt): path
@@ -75,7 +75,7 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
         print(f"Unexpected error processing {os.path.basename(file_path)}: {str(e)}")
         return None
 
-def process_directory(directory_path: str, client: AssistantClient, max_workers: int = 8) -> None:
+def process_directory(directory_path: str, client: AssistantClient, max_workers: int = 12) -> None:
     """Process all supported files (PDFs and images) in a directory in parallel."""
     supported_extensions = list(Config.SUPPORTED_IMAGE_FORMATS) + ['.pdf']
     
