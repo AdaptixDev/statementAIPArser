@@ -160,7 +160,7 @@ class AssistantClient:
                                 content = content
 
                                 # Extract page number from thread_id if it exists
-                                page_num = thread_id.split('_page_')[-1] if '_page_' in thread_id else ''
+                                page_num = image_path.split('_page_')[1].split('.')[0] if '_page_' in image_path else ''
                                 timestamp = time.strftime("%Y%m%d-%H%M%S")
                                 json_filename = f"statement_analysis_page{page_num}_{timestamp}.json"
 
