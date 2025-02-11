@@ -17,7 +17,7 @@ class Config:
         raise ValueError("ASSISTANT_ID environment variable is not set")
 
     # API request timeout in seconds (increased for vision processing)
-    REQUEST_TIMEOUT: Final = 360  # Increased timeout for image processing
+    REQUEST_TIMEOUT: Final = 600  # 10 minutes timeout for image processing
 
     # Supported image formats
     SUPPORTED_IMAGE_FORMATS: Final = ('.png', '.jpg', '.jpeg', '.gif', '.webp',
@@ -27,7 +27,7 @@ class Config:
     MAX_FILE_SIZE: Final = 100 * 1024 * 1024
     
     # Image compression settings
-    USE_IMAGE_COMPRESSION: Final = False  # Whether to compress images before upload
+    USE_IMAGE_COMPRESSION: Final = True  # Whether to compress images before upload
     MAX_IMAGE_SIZE_MB: Final = 4  # Maximum image size in MB when compression is enabled
     MIN_COMPRESSION_QUALITY: Final = 5  # Minimum compression quality (1-100)
     INITIAL_COMPRESSION_QUALITY: Final = 95  # Initial compression quality (1-100)

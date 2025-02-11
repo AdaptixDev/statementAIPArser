@@ -243,10 +243,20 @@ class AssistantClient:
                             quality -= 5
                             logger.info(f"Compressed image to quality {quality}")
                     
-                    uploaded_file = self.client.files.create(
-                        file=("image.jpg", file_bytes, "image/jpeg"),
-                        purpose="vision"
-                    )
+                    max_retries = 3
+                    retry_delay = 5
+                    for attempt in range(max_retries):
+                        try:
+                            uploaded_file = self.client.files.create(
+                                file=("image.jpg", file_bytes, "image/jpeg"),
+                                purpose="vision"
+                            )
+                            break
+                        except Exception as e:
+                            if attempt == max_retries - 1:
+                                raise
+                            logger.warning(f"Upload attempt {attempt + 1} failed, retrying in {retry_delay}s...")
+                            time.sleep(retry_delay)
                 logger.info(f"File uploaded successfully with ID: {uploaded_file.id}")
             except Exception as e:
                 raise FileUploadError(f"Failed to upload file: {str(e)}")
