@@ -25,9 +25,6 @@ class Config:
 
     # Maximum file size in bytes (100MB)
     MAX_FILE_SIZE: Final = 100 * 1024 * 1024
-
-    # Model to use for vision tasks
-    VISION_MODEL: Final = "gpt-4o"  # Latest model with vision capabilities
     
     # Image compression settings
     USE_IMAGE_COMPRESSION: Final = False  # Whether to compress images before upload
