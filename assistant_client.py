@@ -180,6 +180,12 @@ class AssistantClient:
                                     print(f"Error processing response: {str(e)}")
 
                                 print(f"\nResponse saved to: {json_filename}")
+                                
+                                # Merge transactions progressively
+                                from transaction_merger import TransactionMerger
+                                merger = TransactionMerger()
+                                merger.merge_json_file(json_filename)
+                                
                                 return {
                                     "role": message.role,
                                     "content": content
