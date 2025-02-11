@@ -4,6 +4,7 @@ import os
 import time
 import logging
 import threading
+import io
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 
@@ -252,11 +253,16 @@ class AssistantClient:
                                 quality -= 5
                                 logger.info(f"Compressed image to quality {quality}")
                         
+                        # Ensure file is properly closed before upload
                         uploaded_file = self.client.files.create(
-                            file=("image.jpg", file_bytes, "image/jpeg"),
+                            file=io.BytesIO(file_bytes),
                             purpose="vision"
                         )
-                        logger.info(f"File uploaded successfully with ID: {uploaded_file.id}")
+                        # Verify file was uploaded by retrieving it
+                        verify_file = self.client.files.retrieve(uploaded_file.id)
+                        if verify_file.status != "processed":
+                            raise FileUploadError("File upload verification failed")
+                        logger.info(f"File uploaded and verified with ID: {uploaded_file.id}")
                         break
                 except Exception as e:
                     if attempt == max_retries - 1:
