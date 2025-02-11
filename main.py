@@ -119,6 +119,8 @@ def main():
     """Main function to run the assistant."""
     
     start_time = time.time()
+    initial_json_count = len([f for f in os.listdir() if f.startswith("statement_analysis_") and f.endswith(".json")])
+    total_files = 0
     
     # Check for command line arguments
     if len(sys.argv) != 2:
@@ -137,7 +139,11 @@ def main():
         # Check if path is file or directory
         if os.path.isfile(path):
             process_single_file(path, client)
+            total_files = 1
         elif os.path.isdir(path):
+            total_files = len([f for f in os.listdir(path) 
+                             if os.path.isfile(os.path.join(path, f)) 
+                             and os.path.splitext(f)[1].lower() in (list(Config.SUPPORTED_IMAGE_FORMATS) + ['.pdf'])])
             process_directory(path, client)
         else:
             print(f"Error: {path} is not a valid file or directory")
