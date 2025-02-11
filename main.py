@@ -89,8 +89,10 @@ def process_directory(directory_path: str, client: AssistantClient, max_workers:
     if not files:
         print(f"No supported files found in {directory_path}")
         return
-        
-    print(f"Found {len(files)} files to process")
+    
+    initial_json_count = len([f for f in os.listdir() if f.startswith("statement_analysis_") and f.endswith(".json")])
+    total_files = len(files)
+    print(f"Found {total_files} files to process")
     
     # Create full paths for files
     file_paths = [os.path.join(directory_path, f) for f in files]
@@ -146,6 +148,11 @@ def main():
         sys.exit(1)
     finally:
         elapsed_time = time.time() - start_time
+        if os.path.isdir(path):
+            final_json_count = len([f for f in os.listdir() if f.startswith("statement_analysis_") and f.endswith(".json")])
+            json_files_created = final_json_count - initial_json_count
+            if json_files_created != total_files:
+                print(f"ERROR: Mismatch in processed files. Expected {total_files} JSON files, but got {json_files_created}")
         print(f"\nTotal processing time: {elapsed_time:.2f} seconds")
 
 if __name__ == "__main__":
