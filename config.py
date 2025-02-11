@@ -28,6 +28,6 @@ class Config:
     
     # Image compression settings
     USE_IMAGE_COMPRESSION: Final = True  # Whether to compress images before upload
-    MAX_IMAGE_SIZE_MB: Final = 4  # Maximum image size in MB when compression is enabled
-    MIN_COMPRESSION_QUALITY: Final = 5  # Minimum compression quality (1-100)
-    INITIAL_COMPRESSION_QUALITY: Final = 95  # Initial compression quality (1-100)
+    MAX_IMAGE_SIZE_MB: Final = 2  # Maximum image size in MB when compression is enabled
+    MIN_COMPRESSION_QUALITY: Final = 20  # Minimum compression quality (1-100)
+    INITIAL_COMPRESSION_QUALITY: Final = 80  # Initial compression quality (1-100)
