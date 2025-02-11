@@ -1,0 +1,24 @@
+ File "/home/runner/workspace/assistant_client.py", line 111, in send_message
+    self.client.beta.threads.messages.create(thread_id=thread_id,
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/openai/resources/beta/threads/messages.py", line 102, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/openai/_base_client.py", line 1283, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/openai/_base_client.py", line 960, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/openai/_base_client.py", line 1064, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': 'Invalid message content: Expected file type to be a supported format: .jpeg, .jpg, .png, .gif, .webp but got none.', 'type': 'invalid_request_error', 'param': 'content.image_file.file_id', 'code': 'invalid_request_id'}}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/assistant_client.py", line 284, in process_image
+    self.send_message(thread.id, prompt, uploaded_file.id)
+  File "/home/runner/workspace/assistant_client.py", line 116, in send_message
+    raise MessageCreationError(f"Failed to create message: {str(e)}")
+exceptions.MessageCreationError: Failed to create message: Error code: 400 - {'error': {'message': 'Invalid message content: Expected file type to be a supported format: .jpeg, .jpg, .png, .gif, .webp but got none.', 'type': 'invalid_request_error', 'param': 'content.image_file.file_id', 'code': 'invalid_request_id'}}
+Error processing Statement_163322_10212003_27_Jun_2024_page_2.jpg: Failed to create message: Error code: 400 - {'error': {'message': 'Invalid message content: Expected file type to be a supported format: .jpeg, .jpg, .png, .gif, .webp but got none.', 'type': 'invalid_request_error', 'param': 'content.image_file.file_id', 'code': 'invalid_request_id'}}
