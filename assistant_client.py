@@ -227,29 +227,37 @@ class AssistantClient:
             logger.info(f"Processing image: {image_path}")
 
             try:
-                import base64
-                from PIL import Image
-                import io
-                
-                # Open and compress image
-                with Image.open(image_path) as img:
-                    # Convert to RGB if needed
-                    if img.mode != 'RGB':
-                        img = img.convert('RGB')
-                        
-                    # Compress image
-                    output = io.BytesIO()
-                    quality = Config.INITIAL_COMPRESSION_QUALITY
-                    img.save(output, format='JPEG', quality=quality)
-                    while output.tell() > Config.MAX_IMAGE_SIZE_MB * 1024 * 1024 and quality > Config.MIN_COMPRESSION_QUALITY:
-                        output = io.BytesIO()
-                        img.save(output, format='JPEG', quality=quality)
-                        quality -= 5
-                        logger.info(f"Compressed image to quality {quality}")
+                with open(image_path, "rb") as file:
+                    file_bytes = file.read()
                     
-                    # Convert to base64
-                    image_base64 = base64.b64encode(output.getvalue()).decode('utf-8')
-                    logger.info("Image converted to base64")
+                    if Config.USE_IMAGE_COMPRESSION:
+                        from PIL import Image
+                        import io
+                        
+                        quality = Config.INITIAL_COMPRESSION_QUALITY
+                        img = Image.open(io.BytesIO(file_bytes))
+                        while len(file_bytes) > Config.MAX_IMAGE_SIZE_MB * 1024 * 1024 and quality > Config.MIN_COMPRESSION_QUALITY:
+                            output = io.BytesIO()
+                            img.save(output, format='JPEG', quality=quality)
+                            file_bytes = output.getvalue()
+                            quality -= 5
+                            logger.info(f"Compressed image to quality {quality}")
+                    
+                    max_retries = 3
+                    retry_delay = 5
+                    for attempt in range(max_retries):
+                        try:
+                            uploaded_file = self.client.files.create(
+                                file=("image.jpg", file_bytes, "image/jpeg"),
+                                purpose="vision"
+                            )
+                            break
+                        except Exception as e:
+                            if attempt == max_retries - 1:
+                                raise
+                            logger.warning(f"Upload attempt {attempt + 1} failed, retrying in {retry_delay}s...")
+                            time.sleep(retry_delay)
+                logger.info(f"File uploaded successfully with ID: {uploaded_file.id}")
             except Exception as e:
                 raise FileUploadError(f"Failed to upload file: {str(e)}")
 
@@ -260,7 +268,7 @@ class AssistantClient:
             if "_page_" in image_path:
                 page_num = image_path.split("_page_")[1].split(".")[0]
 
-            # Create thread with base64 image
+            # Create thread with page number in metadata
             thread = self.client.beta.threads.create(
                 messages=[{
                     "role": "user",
@@ -270,9 +278,9 @@ class AssistantClient:
                             "text": prompt
                         },
                         {
-                            "type": "image",
-                            "image_url": {
-                                "url": f"data:image/jpeg;base64,{image_base64}",
+                            "type": "image_file",
+                            "image_file": {
+                                "file_id": uploaded_file.id,
                                 "detail": "high"
                             }
                         }
