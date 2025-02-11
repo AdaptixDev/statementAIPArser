@@ -101,10 +101,8 @@ class AssistantClient:
 
             if file_id:
                 message_content.append({
-                    "type": "image_file",
-                    "image_file": {
-                        "file_id": file_id
-                    }
+                    "type": "file",
+                    "file_id": file_id
                 })
 
             print(f"Sending message with content: {message_content}")
@@ -258,7 +256,7 @@ class AssistantClient:
                         file_obj = BytesIO(file_bytes)
                         uploaded_file = self.client.files.create(
                             file=file_obj,
-                            purpose="vision"
+                            purpose="assistants"
                         )
                         # Verify file was uploaded by retrieving it
                         verify_file = self.client.files.retrieve(uploaded_file.id)
