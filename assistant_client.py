@@ -216,11 +216,10 @@ class AssistantClient:
         self.send_message(thread.id, prompt, file_id)
         print("Message sent successfully")
 
-        # Create run with vision-specific configuration
+        # Create run
         run = self.client.beta.threads.runs.create(
             thread_id=thread.id,
             assistant_id=self.assistant_id,
-            model=Config.VISION_MODEL,  # Explicitly set the vision model
             instructions=
             "Please provide a detailed analysis of the provided image. Describe what you see, including colors, objects, composition, and any notable details. If you have any concerns about the image content, please explain them clearly."
         )
