@@ -36,7 +36,10 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
             from pdf_utils import PDFConverter
             # Convert PDF to images first
             output_dir = 'converted_images'
-            image_paths = PDFConverter.pdf_to_images(file_path, output_dir)
+            first_page, image_paths = PDFConverter.pdf_to_images(file_path, output_dir)
+            
+            print(f"First page identified at: {first_page}")
+            # You can now handle the first page specially here if needed
             
             # Process converted images in parallel
             with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:

@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 class PDFConverter:
     @staticmethod
-    def pdf_to_images(pdf_path: str, output_dir: str, dpi: int = 300) -> List[str]:
+    def pdf_to_images(pdf_path: str, output_dir: str, dpi: int = 300) -> tuple[str, List[str]]:
         """
         Convert PDF file to high quality images.
 
@@ -18,7 +18,7 @@ class PDFConverter:
             dpi: Resolution for the output images (default: 300)
 
         Returns:
-            List of paths to the generated images
+            Tuple containing (first_page_path, list_of_all_image_paths)
         """
         logging.info(f"Starting PDF conversion for: {pdf_path}")
         if not os.path.exists(output_dir):
@@ -47,4 +47,4 @@ class PDFConverter:
             image_paths.append(image_path)
 
         logging.info("PDF conversion completed successfully")
-        return image_paths
+        return (image_paths[0], image_paths) if image_paths else (None, [])
