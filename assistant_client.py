@@ -167,6 +167,13 @@ class AssistantClient:
                                 with open(json_filename, "w") as f:
                                     f.write(content)
 
+                                try:
+                                    # Parse content as dict and check for empty transactions
+                                    import json
+                                    response_dict = json.loads(content)
+                                    if "Transactions" in response_dict and len(response_dict["Transactions"]) == 0:
+                                        print(f"ERROR: Empty transactions received for file: {thread_id}")
+                                    
                                 print(f"Received response: {content}")
                                 print(f"\nResponse saved to: {json_filename}")
                                 return {
