@@ -24,31 +24,33 @@ else:
 # Configuration class to store API settings
 class Config:
     # OpenAI API Key from environment variable
-    OPENAI_API_KEY: Final = os.getenv('OPENAI_API_KEY')
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your_api_key")
     if not OPENAI_API_KEY:
         print("Debug: Environment variables loaded:", dict(os.environ))
         raise ValueError("OPENAI_API_KEY environment variable is not set")
 
     # Assistant ID from environment variable
-    ASSISTANT_ID: Final = os.getenv('ASSISTANT_ID')
+    ASSISTANT_ID = os.getenv("ASSISTANT_ID", "your_default_assistant_id")
     if not ASSISTANT_ID:
         raise ValueError("ASSISTANT_ID environment variable is not set")
 
+    # Personal Info Assistant ID from environment variable
+    PERSONAL_INFO_ASSISTANT_ID = os.getenv("PERSONAL_INFO_ASSISTANT_ID", "your_personal_info_assistant_id")
+
     # API request timeout in seconds (increased for vision processing)
-    REQUEST_TIMEOUT: Final = 600  # 10 minutes timeout for image processing
+    REQUEST_TIMEOUT = 60  # Timeout in seconds
 
     # Supported image formats
-    SUPPORTED_IMAGE_FORMATS: Final = ('.png', '.jpg', '.jpeg', '.gif', '.webp',
-                                      '.JPG', '.JPEG')
+    SUPPORTED_IMAGE_FORMATS = [".jpg", ".jpeg", ".png"]
 
     # Maximum file size in bytes (100MB)
-    MAX_FILE_SIZE: Final = 100 * 1024 * 1024
+    MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE", 5242880))  # Default: 5MB
     
     # Image compression settings
-    USE_IMAGE_COMPRESSION: Final = True  # Whether to compress images before upload
-    MAX_IMAGE_SIZE_MB: Final = 2  # Maximum image size in MB when compression is enabled
-    MIN_COMPRESSION_QUALITY: Final = 20  # Minimum compression quality (1-100)
-    INITIAL_COMPRESSION_QUALITY: Final = 80  # Initial compression quality (1-100)
+    USE_IMAGE_COMPRESSION = True  # Whether to compress images before upload
+    MAX_IMAGE_SIZE_MB = 5  # Maximum image size in MB when compression is enabled
+    MIN_COMPRESSION_QUALITY = 20  # Minimum compression quality (1-100)
+    INITIAL_COMPRESSION_QUALITY = 90  # Initial compression quality (1-100)
 
     # Maximum number of concurrent requests
-    MAX_CONCURRENT_REQUESTS: Final = 6
+    MAX_CONCURRENT_REQUESTS = 6

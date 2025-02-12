@@ -1,4 +1,16 @@
 {
+    "Personal Information": {
+        "Full Name": "MR CHRISTOPHER J BYRON",
+        "Address": "89 FLIXTON ROAD, URMSTON, MANCHESTER",
+        "Account Number": "10212003",
+        "Sort Code": "16-33-22",
+        "Statement Starting Balance": "£64.97 OD",
+        "Statement Finishing Balance": "£814.79 OD",
+        "Statement Period Date": "25 MAY 2024 to 27 JUN 2024",
+        "Bank Provider": "Royal Bank of Scotland",
+        "Total Paid In": "£9,418.51",
+        "Total Withdrawn": "£10,168.83"
+    },
     "Transactions": [
         {
             "Date": "25 MAY 2024",

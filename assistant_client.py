@@ -243,12 +243,100 @@ class AssistantClient:
                 raise ResponseTimeoutError(
                     f"Error while waiting for response: {str(e)}")
 
+    def send_file_to_assistant(self,
+                               file_bytes: bytes,
+                               file_name: str,
+                               original_file_path: str,
+                               prompt: str = "",
+                               assistant_id: Optional[str] = None,
+                               mime_type: str = "image/jpeg") -> Dict[str, Any]:
+        """
+        Reusable logic to send a file (or any supported file type) to OpenAI.
+        This method uploads the file, builds a message payload (including a prompt if provided),
+        creates a thread and a run (using the configurable assistant ID), and waits for the response.
+
+        Args:
+            file_bytes: The content of the file in bytes.
+            file_name: Name of the file (e.g. "image.jpg").
+            original_file_path: Path to the original file (used to derive page identifiers).
+            prompt: Text prompt to include (if any). If empty, no text is sent.
+            assistant_id: Optional assistant ID to use; if not provided, defaults to self.assistant_id.
+            mime_type: MIME type of the file (default is "image/jpeg").
+
+        Returns:
+            A dictionary containing the assistant's response.
+        """
+        max_retries = 3
+        retry_delay = 5
+        uploaded_file = None
+
+        for attempt in range(max_retries):
+            try:
+                uploaded_file = self.client.files.create(
+                    file=(file_name, file_bytes, mime_type),
+                    purpose="vision"  # or "fine-tune", etc. (kept unchanged)
+                )
+                break
+            except Exception as e:
+                if attempt == max_retries - 1:
+                    raise FileUploadError(
+                        f"Failed to upload file after {max_retries} attempts: {e}"
+                    )
+                logger.warning(
+                    f"Upload attempt {attempt+1} failed, retrying in {retry_delay}s... - Error: {e}"
+                )
+                time.sleep(retry_delay)
+
+        if not uploaded_file or not hasattr(uploaded_file, "id"):
+            raise FileUploadError("File upload did not return a valid file ID.")
+
+        logger.info(f"File uploaded successfully with ID: {uploaded_file.id}")
+
+        # Build the messages payload.
+        message_payload = {"role": "user", "content": []}
+        if prompt:
+            message_payload["content"].append({
+                "type": "text",
+                "text": prompt
+            })
+        # Always include the file attachment.
+        message_payload["content"].append({
+            "type": "image_file",
+            "image_file": {
+                "file_id": uploaded_file.id,
+                "detail": "high"
+            }
+        })
+
+        # Create a thread with the constructed payload.
+        thread = self.client.beta.threads.create(messages=[message_payload])
+        logger.info(f"Thread created with ID: {thread.id}")
+        print("Message (prompt + file reference) sent successfully.")
+
+        # Use the provided assistant_id if given, otherwise use the default.
+        actual_assistant_id = assistant_id if assistant_id is not None else self.assistant_id
+
+        # Create a run on that thread.
+        run = self.client.beta.threads.runs.create(
+            thread_id=thread.id,
+            assistant_id=actual_assistant_id,
+            instructions=(
+                "Please provide a detailed analysis of the provided image. "
+                "Describe what you see, including colors, objects, composition, and any notable details. "
+                "If you have any concerns about the image content, please explain them clearly."
+            )
+        )
+        print(f"Run created with ID: {run.id}")
+
+        # Wait for and return the assistant's response.
+        return self.wait_for_response(thread.id, run.id, original_file_path)
+
     def process_image(self, image_path: str, prompt: str = "") -> Dict[str, Any]:
         """Process an image by uploading it to OpenAI, creating a thread, and retrieving the result.
 
         Args:
             image_path: Path to the image file
-            prompt: Prompt to send with the image
+            prompt: Prompt to send with the file (if any)
 
         Returns:
             Dict containing the assistant's response
@@ -286,70 +374,8 @@ class AssistantClient:
                     quality -= 5
                     logger.info(f"Compressed image to quality {quality}")
 
-            # 4. Upload the file to obtain file_id
-            max_retries = 3
-            retry_delay = 5
-            uploaded_file = None
-
-            for attempt in range(max_retries):
-                try:
-                    uploaded_file = self.client.files.create(
-                        file=("image.jpg", file_bytes, "image/jpeg"),
-                        purpose=
-                        "vision"  # or "fine-tune" etc., but "vision" is typical
-                    )
-                    break
-                except Exception as e:
-                    if attempt == max_retries - 1:
-                        raise FileUploadError(
-                            f"Failed to upload file after {max_retries} attempts: {e}"
-                        )
-                    logger.warning(
-                        f"Upload attempt {attempt+1} failed, retrying in {retry_delay}s... - Error: {e}"
-                    )
-                    time.sleep(retry_delay)
-
-            if not uploaded_file or not hasattr(uploaded_file, "id"):
-                raise FileUploadError(
-                    "File upload did not return a valid file ID.")
-
-            logger.info(
-                f"File uploaded successfully with ID: {uploaded_file.id}")
-
-            # 5. Build the messages payload for the thread.
-            message_payload = {"role": "user", "content": []}
-            if prompt:
-                message_payload["content"].append({
-                    "type": "text",
-                    "text": prompt
-                })
-            # Always include the image file element.
-            message_payload["content"].append({
-                "type": "image_file",
-                "image_file": {
-                    "file_id": uploaded_file.id,
-                    "detail": "high"
-                }
-            })
-
-            # 6. Create a thread with the constructed message payload
-            thread = self.client.beta.threads.create(messages=[message_payload])
-            logger.info(f"Thread created with ID: {thread.id}")
-            print("Message (prompt + image reference) sent successfully.")
-
-            # 7. Create a run on that thread
-            run = self.client.beta.threads.runs.create(
-                thread_id=thread.id,
-                assistant_id=self.assistant_id,
-                instructions=
-                ("Please provide a detailed analysis of the provided image. "
-                 "Describe what you see, including colors, objects, composition, and any notable details. "
-                 "If you have any concerns about the image content, please explain them clearly."
-                 ))
-            print(f"Run created with ID: {run.id}")
-
-            # 8. Wait for the assistant's response
-            return self.wait_for_response(thread.id, run.id, image_path)
+            # 4. Use the new reusable logic to send the file to OpenAI.
+            return self.send_file_to_assistant(file_bytes, "image.jpg", image_path, prompt)
 
         except Exception as e:
             logger.error(f"Error in process_image: {str(e)}", exc_info=True)

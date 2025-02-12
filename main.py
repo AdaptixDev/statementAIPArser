@@ -6,6 +6,51 @@ import time
 from config import Config
 from assistant_client import AssistantClient
 from exceptions import AssistantError
+from personal_merger import merge_personal_and_transactions
+
+def process_front_page_personal_info(front_image_path: str, client: AssistantClient) -> None:
+    """
+    Process the front page image with the personal information extraction assistant.
+    
+    This function reads the front page (denoted by "front" in its filename),
+    then sends it to the OpenAI assistant specified by PERSONAL_INFO_ASSISTANT_ID,
+    along with a prompt to extract personal information. The response's "content" 
+    (which is expected to be a JSON string) is parsed and saved to a JSON file, 
+    with the filename modified to denote personal data.
+    """
+    personal_info_prompt = (
+        "Please parse the provided front page to extract personal information, "
+        "including name, address, account number, and date of birth."
+    )
+    try:
+        print(f"[INFO] Processing personal information extraction for: {os.path.basename(front_image_path)}")
+        with open(front_image_path, "rb") as f:
+            file_bytes = f.read()
+        # Use the new assistantID defined in config for personal information parsing.
+        response = client.send_file_to_assistant(
+            file_bytes=file_bytes,
+            file_name=os.path.basename(front_image_path),
+            original_file_path=front_image_path,
+            prompt=personal_info_prompt,
+            assistant_id=Config.PERSONAL_INFO_ASSISTANT_ID
+        )
+        print(f"[INFO] Personal information extraction response: {response}")
+        
+        # Extract and parse the content field to display as structured JSON.
+        import json
+        try:
+            personal_data = json.loads(response.get("content", "{}"))
+        except Exception as e:
+            print(f"[ERROR] Failed to parse response content: {e}")
+            personal_data = {"error": f"Failed to parse response content: {str(e)}"}
+            
+        base_name = os.path.splitext(os.path.basename(front_image_path))[0]
+        output_file = f"{base_name}_personal_info.json"
+        with open(output_file, "w", encoding="utf-8") as out:
+            json.dump(personal_data, out, indent=4, ensure_ascii=False)
+        print(f"[INFO] Personal information JSON saved to {output_file}")
+    except Exception as e:
+        print(f"[ERROR] Error extracting personal information from {os.path.basename(front_image_path)}: {str(e)}")
 
 def process_single_file(file_path: str, client: AssistantClient) -> None:
     """
@@ -13,6 +58,7 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
       1. Splitting the PDF into multiple images
       2. Sending each image to OpenAI for processing in parallel batches (with an empty prompt)
       3. Merging the resulting JSON transaction files
+      4. Sending the front page to a separate personal information extraction assistant
     """
     try:
         print(f"\nProcessing file: {os.path.basename(file_path)}")
@@ -62,6 +108,15 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
         print("[INFO] Starting merge process for transaction files...")
         merge_transaction_files()  # Uses default glob pattern and output file in the current directory.
         print("[INFO] Merge process complete.")
+        
+        # Process the front page separately for personal information extraction.
+        if first_page and "front" in os.path.basename(first_page).lower():
+            print("[INFO] Initiating personal information extraction for the front page...")
+            process_front_page_personal_info(first_page, client)
+        
+        print("[INFO] Starting final data merge...")
+        merge_personal_and_transactions()
+        print("[INFO] Final data merge complete.")
         
         return responses
 
