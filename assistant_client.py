@@ -165,17 +165,23 @@ class AssistantClient:
                             else:
                                 content = str(content_block)
 
-                            # Attempt to extract a page number from the filename
+                            # Determine a page identifier from the image filename.
+                            # If the filename contains "_page_" extract the page number,
+                            # if it contains "_front", the identifier is "front".
                             page_num = ""
                             if "_page_" in image_path:
                                 try:
-                                    page_num = image_path.split(
-                                        "_page_")[1].split(".")[0]
+                                    page_num = image_path.split("_page_")[1].split(".")[0]
                                 except IndexError:
                                     page_num = ""
+                            elif "_front" in image_path:
+                                page_num = "front"
 
                             timestamp = time.strftime("%Y%m%d-%H%M%S")
-                            json_filename = f"statement_analysis_page{page_num}_{timestamp}.json"
+                            if page_num == "front":
+                                json_filename = f"statement_analysis_front_{timestamp}.json"
+                            else:
+                                json_filename = f"statement_analysis_page{page_num}_{timestamp}.json"
 
                             # Save the response to disk
                             with open(json_filename, "w") as f:
@@ -196,7 +202,8 @@ class AssistantClient:
                                 )
                             except Exception as e:
                                 logger.error(
-                                    f"Error processing response JSON: {e}")
+                                    f"Error processing response JSON: {e}"
+                                )
 
                             logger.info(f"Response saved to: {json_filename}")
                             return {"role": message.role, "content": content}
@@ -236,7 +243,7 @@ class AssistantClient:
                 raise ResponseTimeoutError(
                     f"Error while waiting for response: {str(e)}")
 
-    def process_image(self, image_path: str, prompt: str) -> Dict[str, Any]:
+    def process_image(self, image_path: str, prompt: str = "") -> Dict[str, Any]:
         """Process an image by uploading it to OpenAI, creating a thread, and retrieving the result.
 
         Args:
@@ -309,25 +316,28 @@ class AssistantClient:
             logger.info(
                 f"File uploaded successfully with ID: {uploaded_file.id}")
 
-            # 5. Create a new thread with user prompt + image_file
-            thread = self.client.beta.threads.create(messages=[{
-                "role":
-                "user",
-                "content": [{
+            # 5. Build the messages payload for the thread.
+            message_payload = {"role": "user", "content": []}
+            if prompt:
+                message_payload["content"].append({
                     "type": "text",
                     "text": prompt
-                }, {
-                    "type": "image_file",
-                    "image_file": {
-                        "file_id": uploaded_file.id,
-                        "detail": "high"
-                    }
-                }]
-            }])
+                })
+            # Always include the image file element.
+            message_payload["content"].append({
+                "type": "image_file",
+                "image_file": {
+                    "file_id": uploaded_file.id,
+                    "detail": "high"
+                }
+            })
+
+            # 6. Create a thread with the constructed message payload
+            thread = self.client.beta.threads.create(messages=[message_payload])
             logger.info(f"Thread created with ID: {thread.id}")
             print("Message (prompt + image reference) sent successfully.")
 
-            # 6. Create a run on that thread
+            # 7. Create a run on that thread
             run = self.client.beta.threads.runs.create(
                 thread_id=thread.id,
                 assistant_id=self.assistant_id,
@@ -338,7 +348,7 @@ class AssistantClient:
                  ))
             print(f"Run created with ID: {run.id}")
 
-            # 7. Wait for the assistant's response
+            # 8. Wait for the assistant's response
             return self.wait_for_response(thread.id, run.id, image_path)
 
         except Exception as e:

@@ -1,74 +1,70 @@
-
-"""Main entry point for the OpenAI Assistant application."""
+"""Main entry point for the OpenAI Assistant application (PDF processing only)."""
 
 import sys
 import os
 import time
-import concurrent.futures
 from config import Config
 from assistant_client import AssistantClient
-from exceptions import (
-    AssistantError,
-    FileUploadError,
-    ImageValidationError,
-    ThreadCreationError,
-    MessageCreationError,
-    ResponseTimeoutError
-)
-
-def get_file_type(file_path: str) -> str:
-    """Determine if file is PDF or image."""
-    extension = os.path.splitext(file_path)[1].lower()
-    if extension == '.pdf':
-        return 'pdf'
-    elif extension in Config.SUPPORTED_IMAGE_FORMATS:
-        return 'image'
-    else:
-        raise ValueError(f"Unsupported file type: {extension}")
+from exceptions import AssistantError
 
 def process_single_file(file_path: str, client: AssistantClient) -> None:
-    """Process a single file (PDF or image)."""
+    """
+    Process a single PDF file by:
+      1. Splitting the PDF into multiple images
+      2. Sending each image to OpenAI for processing in parallel batches (with an empty prompt)
+      3. Merging the resulting JSON transaction files
+    """
     try:
         print(f"\nProcessing file: {os.path.basename(file_path)}")
-        file_type = get_file_type(file_path)
+        _, extension = os.path.splitext(file_path)
+        extension = extension.lower()
         
-        if file_type == 'pdf':
-            from pdf_utils import PDFConverter
-            # Convert PDF to images first
-            output_dir = 'converted_images'
-            first_page, image_paths = PDFConverter.pdf_to_images(file_path, output_dir)
+        # Only process PDF files.
+        if extension != ".pdf":
+            print("[ERROR] The file provided must be a PDF.")
+            return
+        
+        responses = []
+        from pdf_utils import PDFConverter
+        output_dir = "converted_images"
+        first_page, image_paths = PDFConverter.pdf_to_images(file_path, output_dir)
+        print(f"\nPDF converted into {len(image_paths)} images.")
+        
+        # Since the AI assistant is already pre-configured, we pass an empty prompt.
+        prompt = ""
+        
+        # Process images in parallel batches using ThreadPoolExecutor
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        
+        batch_size = Config.MAX_CONCURRENT_REQUESTS  # Number of concurrent requests defined in config
+        total_batches = (len(image_paths) + batch_size - 1) // batch_size
+        for batch_index in range(total_batches):
+            batch_start = batch_index * batch_size
+            batch = image_paths[batch_start:batch_start + batch_size]
+            print(f"[INFO] Processing batch {batch_index + 1}/{total_batches} with {len(batch)} image(s) concurrently.")
             
-            print(f"\nFirst page filename: {os.path.basename(first_page)}")
-            # You can now handle the first page specially here if needed
-            
-            # Process converted images in parallel with delay
-            with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
-                prompt = "Please analyze this bank statement image and extract all transaction details."
-                future_to_path = {}
-                for path in image_paths:
-                    future = executor.submit(client.process_image, path, prompt)
-                    future_to_path[future] = path
-                    time.sleep(0.5)  # Add 0.5 second delay between submissions
-                
-                responses = []
-                for future in concurrent.futures.as_completed(future_to_path):
-                    path = future_to_path[future]
+            with ThreadPoolExecutor(max_workers=batch_size) as executor:
+                future_to_image = {
+                    executor.submit(client.process_image, image, prompt): image
+                    for image in batch
+                }
+                for future in as_completed(future_to_image):
+                    image = future_to_image[future]
                     try:
                         response = future.result()
                         responses.append(response)
-                        print(f"Successfully processed PDF page: {os.path.basename(path)}")
+                        print(f"[INFO] Completed processing for image: {os.path.basename(image)}")
                     except Exception as e:
-                        print(f"Error processing {os.path.basename(path)}: {str(e)}")
-                
-            return responses
+                        print(f"[ERROR] Error processing image {os.path.basename(image)}: {str(e)}")
+        
+        # Once all images have been processed, merge the resulting JSON responses.
+        from json_merger import merge_transaction_files
+        print("[INFO] Starting merge process for transaction files...")
+        merge_transaction_files()  # Uses default glob pattern and output file in the current directory.
+        print("[INFO] Merge process complete.")
+        
+        return responses
 
-        else:
-            # Process single image directly
-            prompt = "Please analyze this bank statement image and extract all transaction details."
-            response = client.process_image(file_path, prompt)
-            print(f"Successfully processed {os.path.basename(file_path)}")
-            return response
-            
     except AssistantError as e:
         print(f"Error processing {os.path.basename(file_path)}: {str(e)}")
         return None
@@ -76,84 +72,38 @@ def process_single_file(file_path: str, client: AssistantClient) -> None:
         print(f"Unexpected error processing {os.path.basename(file_path)}: {str(e)}")
         return None
 
-def process_directory(directory_path: str, client: AssistantClient, max_workers: int = 6) -> None:
-    """Process all supported files (PDFs and images) in a directory in parallel."""
-    supported_extensions = list(Config.SUPPORTED_IMAGE_FORMATS) + ['.pdf']
-    
-    # Get list of supported files
-    files = [
-        f for f in os.listdir(directory_path)
-        if os.path.isfile(os.path.join(directory_path, f))
-        and os.path.splitext(f)[1].lower() in supported_extensions
-    ]
-    
-    if not files:
-        print(f"No supported files found in {directory_path}")
-        return
-    
-    initial_json_count = len([f for f in os.listdir() if f.startswith("statement_analysis_") and f.endswith(".json")])
-    total_files = len(files)
-    print(f"Found {total_files} files to process")
-    
-    # Create full paths for files
-    file_paths = [os.path.join(directory_path, f) for f in files]
-    
-    # Process files in parallel
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        # Submit all tasks and map them to their futures
-        future_to_path = {
-            executor.submit(process_single_file, path, client): path 
-            for path in file_paths
-        }
-        
-        # Process completed futures as they finish
-        for future in concurrent.futures.as_completed(future_to_path):
-            path = future_to_path[future]
-            try:
-                result = future.result()
-                if result:
-                    print(f"Completed processing: {os.path.basename(path)}")
-            except Exception as e:
-                print(f"Exception processing {os.path.basename(path)}: {str(e)}")
-
 def main():
-    """Main function to run the assistant."""
-    
+    """Main function to run the assistant for a single PDF file."""
     start_time = time.time()
-    
-    # Check for command line arguments
+
+    # Expect exactly one command line argument: the file path.
     if len(sys.argv) != 2:
-        print("Usage: python main.py <file_or_directory_path>")
+        print("Usage: python main.py <file_path>")
         sys.exit(1)
-    
+
     path = sys.argv[1]
-    
+
+    # Ensure the provided path is a file.
+    if not os.path.isfile(path):
+        print(f"Error: {path} is not a valid file")
+        sys.exit(1)
+
     try:
-        # Initialize the assistant client
+        # Initialize the assistant client using credentials from Config.
         client = AssistantClient(
             api_key=Config.OPENAI_API_KEY,
             assistant_id=Config.ASSISTANT_ID
         )
-        
-        # Check if path is file or directory
-        if os.path.isfile(path):
-            process_single_file(path, client)
-        elif os.path.isdir(path):
-            process_directory(path, client)
-        else:
-            print(f"Error: {path} is not a valid file or directory")
-            sys.exit(1)
-        
+        process_single_file(path, client)
+
+    except AssistantError as e:
+        print(f"Error processing file: {str(e)}")
+        sys.exit(1)
     except Exception as e:
         print(f"Unexpected error: {str(e)}")
         sys.exit(1)
     finally:
         elapsed_time = time.time() - start_time
-        if os.path.isdir(path):
-            final_json_count = len([f for f in os.listdir() if f.startswith("statement_analysis_") and f.endswith(".json")])
-            json_files_created = final_json_count - initial_json_count
-            if json_files_created != total_files:
-                print(f"ERROR: Mismatch in processed files. Expected {total_files} JSON files, but got {json_files_created}")
         print(f"\nTotal processing time: {elapsed_time:.2f} seconds")
 
 if __name__ == "__main__":
