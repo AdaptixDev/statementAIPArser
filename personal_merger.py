@@ -3,6 +3,8 @@ import glob
 import os
 
 def merge_personal_and_transactions(
+    in_memory_transactions: list = None,
+    in_memory_personal_info: dict = None,
     personal_info_glob="*_personal_info.json",
     transactions_file="merged_statement_analysis.json",
     output_file="final_statement_data.json",
@@ -12,37 +14,30 @@ def merge_personal_and_transactions(
     Merges the personal JSON data with the transactions JSON data
     into one final JSON file.
 
-    The final JSON structure will be:
-    {
-        "Personal Information": { ... },
-        "Transactions": [ ... ]
-    }
-
-    Args:
-        personal_info_glob (str): Glob pattern to locate the personal info JSON file.
-        transactions_file (str): Filename for the merged transactions JSON.
-        output_file (str): Filename for the final merged JSON output.
-        directory (str): Directory where the files are located.
+    If in-memory values are provided, they are used instead of reading from disk.
+    The final merged JSON file is written to disk.
     """
-    # Locate the personal information JSON file.
-    personal_files = glob.glob(os.path.join(directory, personal_info_glob))
-    if not personal_files:
-        print(f"[ERROR] No personal info files found with pattern {personal_info_glob}")
-        return
+    # Get personal info data.
+    if in_memory_personal_info is not None:
+        personal_data = in_memory_personal_info
+    else:
+        personal_files = glob.glob(os.path.join(directory, personal_info_glob))
+        if not personal_files:
+            print(f"[ERROR] No personal info files found with pattern {personal_info_glob}")
+            return
+        with open(personal_files[0], "r", encoding="utf-8") as pf:
+            personal_data = json.load(pf)
 
-    # Load the first matching personal info JSON file.
-    with open(personal_files[0], "r", encoding="utf-8") as pf:
-        personal_data = json.load(pf)
-
-    # Ensure the transactions file exists.
-    transactions_path = os.path.join(directory, transactions_file)
-    if not os.path.exists(transactions_path):
-        print(f"[ERROR] Transactions file not found: {transactions_file}")
-        return
-
-    # Load the merged transactions data.
-    with open(transactions_path, "r", encoding="utf-8") as tf:
-        transactions_data = json.load(tf)
+    # Get transactions data.
+    if in_memory_transactions is not None:
+        transactions_data = {"Transactions": in_memory_transactions}
+    else:
+        transactions_path = os.path.join(directory, transactions_file)
+        if not os.path.exists(transactions_path):
+            print(f"[ERROR] Transactions file not found: {transactions_file}")
+            return
+        with open(transactions_path, "r", encoding="utf-8") as tf:
+            transactions_data = json.load(tf)
 
     # Combine the data into a single structure.
     final_data = {

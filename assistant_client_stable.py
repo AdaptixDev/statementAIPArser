@@ -120,14 +120,26 @@ class AssistantClient:
         except Exception as e:
             raise MessageCreationError(f"Failed to create message: {str(e)}")
 
-    def wait_for_response(self, thread_id: str, run_id: str, image_path: str, retry_count: int = 0) -> dict:
-        """
-        Wait for and return the assistant's response.
+    def wait_for_response(self, thread_id: str, run_id: str,
+                          image_path: str, retry_count: int = 0) -> Dict[str, Any]:
+        """Wait for and return the assistant's response.
+
+        Args:
+            thread_id: Thread ID
+            run_id: Run ID to wait for
+            image_path: The original image path (used for naming any output)
+            retry_count: Current retry attempt number
+
+        Returns:
+            Dict containing the assistant's response
+
+        Raises:
+            ResponseTimeoutError: If response times out or fails after all retries
         """
         MAX_RETRIES = 3
         start_time = time.time()
-        logger.info(f"Waiting for response on thread {thread_id}, run {run_id} (Attempt {retry_count + 1}/{MAX_RETRIES})")
-    
+        print(f"Waiting for response on thread {thread_id}, run {run_id} (Attempt {retry_count + 1}/{MAX_RETRIES})")
+
         while True:
             if time.time() - start_time > Config.REQUEST_TIMEOUT:
                 raise ResponseTimeoutError("Assistant response timed out")
@@ -153,7 +165,9 @@ class AssistantClient:
                             else:
                                 content = str(content_block)
 
-                            # Determine page identifier from the image filename.
+                            # Determine a page identifier from the image filename.
+                            # If the filename contains "_page_" extract the page number,
+                            # if it contains "_front", the identifier is "front".
                             page_num = ""
                             if "_page_" in image_path:
                                 try:
@@ -169,33 +183,41 @@ class AssistantClient:
                             else:
                                 json_filename = f"statement_analysis_page{page_num}_{timestamp}.json"
 
-                            # Save the raw response only if file storage is enabled.
-                            if Config.ENABLE_FILE_STORAGE:
-                                # Write the file into the configured output directory.
-                                output_dir = getattr(Config, "OUTPUT_DIR", ".")
-                                file_path_to_write = os.path.join(output_dir, json_filename)
-                                with open(file_path_to_write, "w", encoding="utf-8") as f:
-                                    f.write(content)
-                                logger.info(f"Response saved to: {file_path_to_write}")
-                            else:
-                                logger.info("File storage disabled, not writing response to disk.")
+                            # Save the response to disk
+                            with open(json_filename, "w") as f:
+                                f.write(content)
 
-                            # Attempt to parse the content as JSON before returning.
+                            # Optionally parse JSON to check contents
                             import json
                             try:
-                                parsed_content = json.loads(content)
+                                response_dict = json.loads(content)
+                                if "Transactions" in response_dict and len(
+                                        response_dict["Transactions"]) == 0:
+                                    logger.warning(
+                                        f"Empty transactions received in run {run_id} for {image_path}"
+                                    )
+                            except json.JSONDecodeError:
+                                logger.warning(
+                                    f"Response is not valid JSON for run {run_id}"
+                                )
                             except Exception as e:
-                                logger.error(f"Failed to parse response JSON: {e}", exc_info=True)
-                                parsed_content = content
+                                logger.error(
+                                    f"Error processing response JSON: {e}"
+                                )
 
-                            return parsed_content
+                            logger.info(f"Response saved to: {json_filename}")
+                            return {"role": message.role, "content": content}
 
                     # If no assistant message or no content
-                    return "No response content"
+                    return {
+                        "role": "assistant",
+                        "content": "No response content"
+                    }
 
                 elif run.status in ["failed", "cancelled", "expired"]:
                     if retry_count < MAX_RETRIES - 1:
                         logger.warning(f"Run failed, retrying... (Attempt {retry_count + 1}/{MAX_RETRIES})")
+                        # Create a new run and try again
                         new_run = self.client.beta.threads.runs.create(
                             thread_id=thread_id,
                             assistant_id=self.assistant_id,
@@ -205,18 +227,21 @@ class AssistantClient:
                                 "If you have any concerns about the image content, please explain them clearly."
                             )
                         )
-                        time.sleep(5)
+                        time.sleep(5)  # Wait before retrying
                         return self.wait_for_response(thread_id, new_run.id, image_path, retry_count + 1)
                     else:
-                        error_msg = (f"Run failed with status: {run.status}, error: {getattr(run, 'last_error', '')}"
-                                     if hasattr(run, 'last_error') and run.last_error is not None
-                                     else f"Run failed with status: {run.status}")
+                        if hasattr(run, 'last_error') and run.last_error is not None:
+                            error_msg = f"Run failed with status: {run.status}, error: {run.last_error}"
+                        else:
+                            error_msg = f"Run failed with status: {run.status}"
                         raise ResponseTimeoutError(error_msg)
 
-                time.sleep(2)
+                time.sleep(2)  # Poll interval
             except Exception as e:
-                logger.error(f"Error while waiting for response: {str(e)}", exc_info=True)
-                raise ResponseTimeoutError(f"Error while waiting for response: {str(e)}")
+                logger.error(f"Error while waiting for response: {str(e)}",
+                             exc_info=True)
+                raise ResponseTimeoutError(
+                    f"Error while waiting for response: {str(e)}")
 
     def send_file_to_assistant(self,
                                file_bytes: bytes,
@@ -355,36 +380,3 @@ class AssistantClient:
         except Exception as e:
             logger.error(f"Error in process_image: {str(e)}", exc_info=True)
             raise
-
-    def process_image_bytes(self, file_name: str, file_bytes: bytes, prompt: str = "") -> Dict[str, Any]:
-        """
-        Process an in-memory image by sending its file bytes to OpenAI without disk I/O.
-        The file_name (which contains our pseudo naming indicator, such as '_front' or '_page_X')
-        is used when building the message payload.
-    
-        Args:
-            file_name: Pseudo filename for the image (e.g. 'statement_front.jpg')
-            file_bytes: The image data in bytes.
-            prompt: Optional prompt to send with the file.
-    
-        Returns:
-            A dictionary containing the assistant's response.
-        """
-        logger.info(f"Processing in-memory image: {file_name}")
-    
-        # Optionally compress the image if enabled.
-        if Config.USE_IMAGE_COMPRESSION:
-            from PIL import Image
-            import io
-            quality = Config.INITIAL_COMPRESSION_QUALITY
-            img = Image.open(io.BytesIO(file_bytes))
-            while len(file_bytes) > Config.MAX_IMAGE_SIZE_MB * 1024 * 1024 and quality > Config.MIN_COMPRESSION_QUALITY:
-                output = io.BytesIO()
-                img.save(output, format='JPEG', quality=quality)
-                file_bytes = output.getvalue()
-                quality -= 5
-                logger.info(f"Compressed in-memory image to quality {quality}")
-    
-        # Note: We pass the pseudo filename for both file_name and original_file_path so that
-        # any naming cues (like '_front' or '_page_X') can be extracted in wait_for_response.
-        return self.send_file_to_assistant(file_bytes, file_name, file_name, prompt)

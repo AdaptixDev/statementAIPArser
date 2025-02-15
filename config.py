@@ -54,3 +54,7 @@ class Config:
 
     # Maximum number of concurrent requests
     MAX_CONCURRENT_REQUESTS = 6
+
+    # Toggle file storage: if True, additional output files (e.g. response JSON, personal info)
+    # will be written to disk for debugging/inspection; if False, these writes are skipped.
+    ENABLE_FILE_STORAGE = os.getenv("ENABLE_FILE_STORAGE", "True").lower() in ["true", "1", "yes"]
