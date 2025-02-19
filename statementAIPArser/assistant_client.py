@@ -127,21 +127,21 @@ class AssistantClient:
         MAX_RETRIES = 3
         start_time = time.time()
         logger.info(f"Waiting for response on thread {thread_id}, run {run_id} (Attempt {retry_count + 1}/{MAX_RETRIES})")
-
+    
         while True:
             if time.time() - start_time > Config.REQUEST_TIMEOUT:
                 raise ResponseTimeoutError("Assistant response timed out")
-
+    
             try:
                 run = self.client.beta.threads.runs.retrieve(
                     thread_id=thread_id, run_id=run_id)
                 logger.debug(f"Run status: {run.status}")
-
+    
                 if run.status == "completed":
                     # Fetch the last message (descending order)
                     messages = self.client.beta.threads.messages.list(
                         thread_id=thread_id, order="desc", limit=1)
-
+    
                     if messages.data:
                         message = messages.data[0]
                         if message.role == "assistant" and message.content:
@@ -152,7 +152,7 @@ class AssistantClient:
                                 content = content_block.value
                             else:
                                 content = str(content_block)
-
+    
                             # Determine page identifier from the image filename.
                             page_num = ""
                             if "_page_" in image_path:
@@ -162,23 +162,32 @@ class AssistantClient:
                                     page_num = ""
                             elif "_front" in image_path:
                                 page_num = "front"
-
+    
                             timestamp = time.strftime("%Y%m%d-%H%M%S")
                             if page_num == "front":
                                 json_filename = f"statement_analysis_front_{timestamp}.json"
                             else:
                                 json_filename = f"statement_analysis_page{page_num}_{timestamp}.json"
-
+    
                             # Only write the file if enabled _and_ if save_response is True.
                             if Config.ENABLE_FILE_STORAGE and save_response:
                                 output_dir = getattr(Config, "OUTPUT_DIR", ".")
                                 file_path_to_write = os.path.join(output_dir, json_filename)
+    
+                                # Attempt to prettify the JSON output.
+                                import json
+                                try:
+                                    parsed_json = json.loads(content)
+                                    formatted_content = json.dumps(parsed_json, indent=4, ensure_ascii=False)
+                                except Exception as e:
+                                    logger.error(f"Failed to format JSON response: {e}", exc_info=True)
+                                    formatted_content = content  # fall back if not valid JSON
+    
                                 with open(file_path_to_write, "w", encoding="utf-8") as f:
-                                    f.write(content)
+                                    f.write(formatted_content)
                                 logger.info(f"Response saved to: {file_path_to_write}")
-
+    
                             # Attempt to parse the content as JSON before returning.
-                            import json
                             try:
                                 parsed_content = json.loads(content)
                                 # Log the number of transactions if available.
@@ -188,12 +197,12 @@ class AssistantClient:
                             except Exception as e:
                                 logger.error(f"Failed to parse response JSON: {e}", exc_info=True)
                                 parsed_content = content
-
+    
                             return parsed_content
-
+    
                     # If no assistant message or no content
                     return "No response content"
-
+    
                 elif run.status in ["failed", "cancelled", "expired"]:
                     if retry_count < MAX_RETRIES - 1:
                         logger.warning(f"Run failed, retrying... (Attempt {retry_count + 1}/{MAX_RETRIES})")
@@ -213,7 +222,7 @@ class AssistantClient:
                                      if hasattr(run, 'last_error') and run.last_error is not None
                                      else f"Run failed with status: {run.status}")
                         raise ResponseTimeoutError(error_msg)
-
+    
                 time.sleep(2)
             except Exception as e:
                 logger.error(f"Error while waiting for response: {str(e)}", exc_info=True)
