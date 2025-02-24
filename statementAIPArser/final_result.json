@@ -1,0 +1,875 @@
+{
+  "AllResponses": [
+    {
+      "error": "Could not parse JSON: Unterminated string starting at: line 628 column 22 (char 18547)",
+      "raw_response": "```json\n{\n  \"Transactions\": [\n    {\n      \"Date\": \"25-05-2024\",\n      \"Description\": \"BROUGHT FORWARD\",\n      \"Amount\": 64.97,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 64.97\n    },\n    {\n      \"Date\": \"28-05-2024\",\n      \"Description\": \"Automated Credit JD WILLIAMS & CO\",\n      \"Amount\": 7519.30,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 7454.33\n    },\n    {\n      \"Date\": \"28-05-2024\",\n      \"Description\": \"Automated Credit JDW & CO EXPENSES\",\n      \"Amount\": 110.55,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 7564.88\n    },\n    {\n      \"Date\": \"28-05-2024\",\n      \"Description\": \"Automated Credit MR I J LAWLER AQUABETS LTD FP 28/05/24 0911 000000000310517930\",\n      \"Amount\": 100.00,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 7664.88\n    },\n    {\n      \"Date\": \"28-05-2024\",\n      \"Description\": \"Automated Credit COLLETTE BARLOW YOUR FAVE SISTER FP 28/05/24 0900 240528090038459732\",\n      \"Amount\": 75.00,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 7739.88\n    },\n    {\n      \"Date\": \"24-05-2024\",\n      \"Description\": \"Cash Withdrawal 7674 24MAY24 ANTALYA TEKIROVA ANTALYA TR\",\n      \"Amount\": 81.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7658.88\n    },\n    {\n      \"Date\": \"25-05-2024\",\n      \"Description\": \"Cash Withdrawal 7674 25MAY24 KEMER ATATURK CADDESI ANTALYA TR\",\n      \"Amount\": 54.38,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7604.50\n    },\n    {\n      \"Date\": \"26-05-2024\",\n      \"Description\": \"Cash Withdrawal 7674 26MAY24 TEKIROVA BELEDIYESI/KE ANTALYA TR\",\n      \"Amount\": 54.19,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7550.31\n    },\n    {\n      \"Date\": \"25-05-2024\",\n      \"Description\": \"OnLine Transaction David Ward Germ Bet VIA MOBILE - PYMT FP 25/05/24 10 54174828465976000R\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7530.31\n    },\n    {\n      \"Date\": \"25-05-2024\",\n      \"Description\": \"Card Transaction 7674 25MAY24 PAYPAL *BETFRED COM 35314369001 GB\",\n      \"Amount\": 5.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7525.31\n    },\n    {\n      \"Date\": \"24-05-2024\",\n      \"Description\": \"Card Transaction 7674 24MAY24 GOHENRY MEMBERSHIP LYMINGTON GB\",\n      \"Amount\": 4.49,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7520.82\n    },\n    {\n      \"Date\": \"27-05-2024\",\n      \"Description\": \"Card Transaction 7674 27MAY24 SPLICE.COM* SPLICE PLA NEW YORK CITY US USD 23.99 VRATE 1.2673 N-S TRN FEE 0.52\",\n      \"Amount\": 19.45,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7501.37\n    },\n    {\n      \"Date\": \"24-05-2024\",\n      \"Description\": \"Card Transaction 9397 24MAY24 CD LIMAN MARKET ANTALYA TR TRY 2110.00 VRATE 40.5925 N-S TRN FEE 1.43\",\n      \"Amount\": 53.41,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7447.96\n    },\n    {\n      \"Date\": \"26-05-2024\",\n      \"Description\": \"Card Transaction 7674 26MAY24 OF LONDON GB USD 6.00 VRATE 1.2684 N-S TRN FEE 0.13\",\n      \"Amount\": 4.86,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7443.10\n    },\n    {\n      \"Date\": \"23-05-2024\",\n      \"Description\": \"Card Transaction 7674 23MAY24 PAYPAL *APPLE.COM/BILL 35314369001 GB\",\n      \"Amount\": 2.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7440.11\n    },\n    {\n      \"Date\": \"25-05-2024\",\n      \"Description\": \"Card Transaction 7674 25MAY24 PAYPAL *APPLE.COM/BILL 35314369001 GB\",\n      \"Amount\": 1.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7438.12\n    },\n    {\n      \"Date\": \"27-05-2024\",\n      \"Description\": \"Card Transaction 9397 27MAY24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 6.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7431.13\n    },\n    {\n      \"Date\": \"23-05-2024\",\n      \"Description\": \"Card Transaction 9397 23MAY24 D BETFAIR TA XBIEX GB\",\n      \"Amount\": 30.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7401.13\n    },\n    {\n      \"Date\": \"24-05-2024\",\n      \"Description\": \"Card Transaction 7674 24MAY24 GOOGLE *YOUTUBEPREMIUM 650-253-0000 GB\",\n      \"Amount\": 12.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7388.14\n    },\n    {\n      \"Date\": \"25-05-2024\",\n      \"Description\": \"Card Transaction 7674 25MAY24 AMAZON.CO.UK*HY56B46H4 353-12477661 GB\",\n      \"Amount\": 5.60,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7382.54\n    },\n        {\n      \"Date\": \"30-05-2024\",\n      \"Description\": \"Card Transaction 9397 23MAY24 D BETFAIR TA XBIEX GB\",\n      \"Amount\": 14.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 7368.54\n    },\n    {\n      \"Date\": \"30-05-2024\",\n      \"Description\": \"OnLine Transaction To A/C 10185383 BYRON C & C Via Mobile Xfer\",\n      \"Amount\": 3300.00,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 4068.54\n    },\n    {\n      \"Date\": \"30-05-2024\",\n      \"Description\": \"OnLine Transaction MONZO MONZO VIA MOBILE - PYMT FP 30/05/24 10 39031323550516000R\",\n      \"Amount\": 800.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3268.54\n    },\n        {\n      \"Date\": \"29-05-2024\",\n      \"Description\": \"Card Transaction 7674 29MAY24 BANDZOOGLE WEBSITE CHICAGO US USD 19.95 VRATE 1.2755 N-S TRN FEE 0.43\",\n      \"Amount\": 16.07,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3252.47\n    },\n    {\n      \"Date\": \"29-05-2024\",\n      \"Description\": \"Card Transaction 6759 29MAY24 D WELLTORY.COM REDWOOD CITY US USD 12.99 VRATE 1.2760 N-S TRN FEE 0.28\",\n      \"Amount\": 10.46,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3242.01\n    },\n    {\n      \"Date\": \"29-05-2024\",\n      \"Description\": \"Card Transaction 7674 29MAY24 ANI FOTOGRAFCILIK ANTALYA TR EUR 120.00 VRATE 1.1737 N-S TRN FEE 2.81\",\n      \"Amount\": 105.05,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3136.96\n    },\n    {\n      \"Date\": \"31-05-2024\",\n      \"Description\": \"Direct Debit BAUER CONSUMER MED\",\n      \"Amount\": 5.20,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3131.76\n    },\n    {\n      \"Date\": \"29-05-2024\",\n      \"Description\": \"Card Transaction 7674 29MAY24 TOMBOLA TOMBOLA UK GI\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3111.76\n    },\n    {\n      \"Date\": \"30-05-2024\",\n      \"Description\": \"Card Transaction 9397 30MAY24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 50.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3061.76\n    },\n    {\n      \"Date\": \"30-05-2024\",\n      \"Description\": \"Card Transaction 7674 30MAY24 TAKEAWAY LONDON GB\",\n      \"Amount\": 38.10,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3023.66\n    },\n    {\n      \"Date\": \"29-05-2024\",\n      \"Description\": \"Card Transaction 9397 29MAY24 D BETFAIR LONDON GB\",\n      \"Amount\": 5.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3018.66\n    },\n    {\n      \"Date\": \"29-05-2024\",\n      \"Description\": \"Card Transaction 9397 29MAY24 D BETFAIR LONDON GB\",\n      \"Amount\": 12.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 3006.66\n    },\n    {\n      \"Date\": \"29-05-2024\",\n      \"Description\": \"Card Transaction 7674 29MAY24 SABIR HEDIYELIK ANTALYA TR EUR 10.00 VRATE 1.1737 N-S TRN FEE 0.23\",\n      \"Amount\": 8.75,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2997.91\n    },\n    {\n      \"Date\": \"29-05-2024\",\n      \"Description\": \"Card Transaction 7674 29MAY24 TOMBOLA TOMBOLA UK GI\",\n      \"Amount\": 25.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2972.91\n    },\n    {\n      \"Date\": \"29-05-2024\",\n      \"Description\": \"Card Transaction 9397 29MAY24 D BETFAIR LONDON GB\",\n      \"Amount\": 30.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2942.91\n    },\n    {\n      \"Date\": \"03-06-2024\",\n      \"Description\": \"OnLine Transaction IG BYRON DAD VIA MOBILE - PYMT\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2922.91\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 CD PLY MANCHESTER GB\",\n      \"Amount\": 13.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2909.91\n    },\n    {\n      \"Date\": \"31-05-2024\",\n      \"Description\": \"Card Transaction 7674 31MAY24 PAYPAL *EVENTIMUKLT 02078849127 GB\",\n      \"Amount\": 26.88,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2883.03\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 7674 01JUN24 UBER *TRIP HELP.UBER.COM GB\",\n      \"Amount\": 14.91,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2868.12\n    },\n    {\n      \"Date\": \"31-05-2024\",\n      \"Description\": \"Card Transaction 939731MAY24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 25.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2843.12\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 CD VIET SHACK M'STER M4 5 GB\",\n      \"Amount\": 29.98,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2813.14\n    },\n    {\n      \"Date\": \"31-05-2024\",\n      \"Description\": \"Card Transaction 9397 31MAY24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 25.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2788.14\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 7674 01JUN24 PATREON* MEMBERSHIPPAT INTERNET GB\",\n      \"Amount\": 5.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2783.14\n    },\n    {\n      \"Date\": \"31-05-2024\",\n      \"Description\": \"Card Transaction 9397 31MAY24 CD SUBWAY 65781 URMSTON URMSTON GB\",\n      \"Amount\": 8.28,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2774.86\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 D JUST EAT LONDON GB\",\n      \"Amount\": 20.39,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2754.47\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 CD SQ *OSCILLATE COFFEE URMSTON GB\",\n      \"Amount\": 5.80,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2748.67\n    },\n    {\n      \"Date\": \"31-05-2024\",\n      \"Description\": \"Card Transaction 9397 31MAY24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 5.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2742.68\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 D QUARTER HOUSE NQ* ME&U RIBCHESTER, P GB\",\n      \"Amount\": 12.91,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2729.77\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 30.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2699.77\n    },\n    {\n      \"Date\": \"02-06-2024\",\n      \"Description\": \"Card Transaction 9397 02JUN24 D DELIVEROO LONDON GB\",\n      \"Amount\": 25.36,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2674.41\n    },\n    {\n      \"Date\": \"31-05-2024\",\n      \"Description\": \"Card Transaction 7674 31MAY24 ASHBOURNE-M EMBERSHIPS SOLIHULL GB\",\n      \"Amount\": 26.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2648.41\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 7674 01JUN24 PAYPAL *APPLE.COM/BILL 35314369001 GB\",\n      \"Amount\": 1.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2646.42\n    },\n     {\n      \"Date\": \"03-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 15.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2631.42\n    },\n    {\n      \"Date\": \"31-05-2024\",\n      \"Description\": \"Card Transaction 9397 31MAY24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 11.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2619.43\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 CD SUMUP **THE CROWN KET MANCHESTER GB\",\n      \"Amount\": 13.50,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2605.93\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 CD FIERCE BEER MANCHESTER MANCHESTER GB\",\n      \"Amount\": 11.90,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2594.03\n    },\n    {\n      \"Date\": \"02-06-2024\",\n      \"Description\": \"Card Transaction 9397 02JUN24 CD BARGAIN BOOZE 1129 URMSTON GB\",\n      \"Amount\": 14.03,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2580.00\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 7674 01JUN24 C ZETTLE_*FLOK MANCHESTER GB\",\n      \"Amount\": 47.10,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2532.90\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 7674 01JUN24 NAKEDWINES.COM NORWICH GB\",\n      \"Amount\": 30.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2502.90\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 CD 7 SINS MANCHESTER GB\",\n      \"Amount\": 8.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2494.90\n    },\n    {\n      \"Date\": \"31-05-2024\",\n      \"Description\": \"Card Transaction 9397 31MAY24 CD BARGAIN BOOZE 1129 URMSTON GB\",\n      \"Amount\": 8.74,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2486.16\n    },\n    {\n      \"Date\": \"01-06-2024\",\n      \"Description\": \"Card Transaction 9397 01JUN24 D JG *BONE CANCER RESEAR LONDON GB\",\n      \"Amount\": 27.50,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2458.66\n    },\n       {\n      \"Date\": \"02-06-2024\",\n      \"Description\": \"Cash Withdrawal BMACH 02JUN\",\n      \"Amount\": 50.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2408.66\n    },\n     {\n      \"Date\": \"02-06-2024\",\n      \"Description\": \"Cash Withdrawal BMACH 02JUN\",\n      \"Amount\": 50.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2358.66\n    },\n {\n      \"Date\": \"03-06-2024\",\n      \"Description\": \"Card Transaction 9397 03JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 10.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2348.66\n    },\n    {\n      \"Date\": \"03-06-2024\",\n      \"Description\": \"Card Transaction 9397 03JUN24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 5.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2342.67\n    },\n        {\n      \"Date\": \"03-06-2024\",\n      \"Description\": \"Card Transaction 9397 03JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 25.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2317.67\n    },\n {\n      \"Date\": \"05-06-2024\",\n      \"Description\": \"OnLine Transaction NICK SWEENEY THAI BRIDE VIA MOBILE - PYMT FP 05/06/24 10 23173242382403000R\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2297.67\n    },\n    {\n      \"Date\": \"04-06-2024\",\n      \"Description\": \"Card Transaction 7674 04JUN24 AM\u0391\u0396\u039f\u039d* 204-9519457-71 LONDON GB\",\n      \"Amount\": 9.97,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2287.70\n    },\n    {\n      \"Date\": \"04-06-2024\",\n      \"Description\": \"Card Transaction 9397 04JUN24 CD BEVANO LOUNGE MANCHESTER GB\",\n      \"Amount\": 38.45,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2249.25\n    },\n     {\n      \"Date\": \"04-06-2024\",\n      \"Description\": \"Card Transaction 7674 04JUN24 AMAZON* 204-3139383-10 LONDON GB\",\n      \"Amount\": 7.98,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2241.27\n    },\n    {\n      \"Date\": \"04-06-2024\",\n      \"Description\": \"Card Transaction 9397 04JUN24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 5.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2235.28\n    },\n  {\n      \"Date\": \"05-06-2024\",\n      \"Description\": \"Card Transaction 9397 05JUN24 CD N BROWN GRIFFIN HOUSE MANCHESTER GB\",\n      \"Amount\": 0.84,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2234.44\n    },\n    {\n      \"Date\": \"05-06-2024\",\n      \"Description\": \"Card Transaction 9397 05JUN24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 7.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2226.45\n    },\n    {\n      \"Date\": \"05-06-2024\",\n      \"Description\": \"Card Transaction 9397 05JUN24 CD N BROWN GRIFFIN HOUSE MANCHESTER GB\",\n      \"Amount\": 1.10,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2225.35\n    },\n     {\n      \"Date\": \"05-06-2024\",\n      \"Description\": \"Card Transaction 9397 05JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 25.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2200.35\n    },\n    {\n      \"Date\": \"05-06-2024\",\n      \"Description\": \"Card Transaction 7674 05JUN24 SIMPLE INTELLIGENT PAR MANCHESTER GB\",\n      \"Amount\": 8.40,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2191.95\n    },\n    {\n      \"Date\": \"05-06-2024\",\n      \"Description\": \"Card Transaction 9397 05JUN24 CD N BROWN GRIFFIN HOUSE MANCHESTER GB\",\n      \"Amount\": 4.05,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2187.90\n    },\n {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 7674 06JUN24 ARCADE ONLINE 0893400120 AU\",\n      \"Amount\": 4.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2182.91\n    },\n    {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 9397 06JUN24 CD SUMUP **THE CROWN KET MANCHESTER GB\",\n      \"Amount\": 15.90,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2167.01\n    },\n    {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 9397 06JUN24 CD SUMUP **THE CROWN KET MANCHESTER GB\",\n      \"Amount\": 16.96,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2150.05\n    },\n     {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 9397 06JUN24 CD SUMUP *ADG LEISURE LT MANCHESTER GB\",\n      \"Amount\": 6.20,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2143.85\n    },\n    {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 7674 06JUN24 PAYPAL *CONNECTEDRE AR 0893400120 AU\",\n      \"Amount\": 8.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2134.86\n    },\n     {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 9397 06JUN24 CD SUMUP *ADG LEISURE LT MANCHESTER GB\",\n      \"Amount\": 5.65,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2129.21\n    },\n    {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 7674 06JUN24 PAYPAL *CONNECTEDRE AR 0893400120 AU\",\n      \"Amount\": 8.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2120.22\n    },\n    {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 7674 06JUN24 UBER *TRIP HELP.UBER.COM GB\",\n      \"Amount\": 17.97,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2102.25\n    },\n     {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 9397 06JUN24 CD SUMUP *ADG LEISURE LT MANCHESTER GB\",\n      \"Amount\": 6.50,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2095.75\n    },\n    {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 7674 06JUN24 UBER *TRIP HELP.UBER.COM GB\",\n      \"Amount\": 6.98,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2088.77\n    },\n    {\n      \"Date\": \"06-06-2024\",\n      \"Description\": \"Card Transaction 7674 06JUN24 UBER *TRIP HELP.UBER.COM GB\",\n      \"Amount\": 14.96,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 2073.81\n    },\n     {\n      \"Date\": \"05-06-2024\",\n      \"Description\": \"Card Transaction 939",
+      "Transactions": []
+    },
+    {
+      "error": "Could not parse JSON: Expecting value: line 663 column 21 (char 19093)",
+      "raw_response": "```json\n{\n  \"Transactions\": [\n    {\n      \"Date\": null,\n      \"Description\": \"BROUGHT FORWARD\",\n      \"Amount\": 1326.17,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 1326.17\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 9397 07JUN24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 11.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1314.18\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 9397 07JUN24 D POKERSTARS LONDON GB\",\n      \"Amount\": 25.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1289.18\n    },\n    {\n      \"Date\": \"09-06-2024\",\n      \"Description\": \"Card Transaction 9397 09JUN24 CD SUBWAY 65781 URMSTON URMSTON GB\",\n      \"Amount\": 8.49,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1280.69\n    },\n    {\n      \"Date\": \"09-06-2024\",\n      \"Description\": \"Card Transaction 9397 09JUN24 CD BARGAIN BOOZE 1129 URMSTON GB\",\n      \"Amount\": 20.68,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1260.01\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 9397 07JUN24 D POKERSTARS LONDON GB\",\n      \"Amount\": 10.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1250.01\n    },\n    {\n      \"Date\": \"09-06-2024\",\n      \"Description\": \"Card Transaction 9397 09JUN24 D FREEPRINTS SOUTHAMPTON GB\",\n      \"Amount\": 6.29,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1243.72\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 9397 07JUN24 CD BARGAIN BOOZE 1129 URMSTON GB\",\n      \"Amount\": 5.25,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1238.47\n    },\n    {\n      \"Date\": \"08-06-2024\",\n      \"Description\": \"Card Transaction 9397 08JUN24 CD BOOTS 1226 MANCHESTER GB\",\n      \"Amount\": 14.49,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1223.98\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 9397 07JUN24 D POKERSTARS LONDON GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1203.98\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 9397 07JUN24 CD UNION INN MANCHESTER GB\",\n      \"Amount\": 11.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1192.98\n    },\n    {\n      \"Date\": \"09-06-2024\",\n      \"Description\": \"Card Transaction 9397 09JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1172.98\n    },\n    {\n      \"Date\": \"08-06-2024\",\n      \"Description\": \"Card Transaction 9397 08JUN24 CD BEVANO LOUNGE MANCHESTER GB\",\n      \"Amount\": 19.75,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1153.23\n    },\n    {\n      \"Date\": \"09-06-2024\",\n      \"Description\": \"Card Transaction 9397 09JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 10.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1143.23\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 7674 07JUN24 UBER *TRIP HELP.UBER.COM GB\",\n      \"Amount\": 17.98,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1125.25\n    },\n    {\n      \"Date\": \"08-06-2024\",\n      \"Description\": \"Card Transaction 7674 08JUN24 NEARLYWILDCAMPING LLANYMYNECH GB\",\n      \"Amount\": 24.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1101.25\n    },\n    {\n      \"Date\": \"08-06-2024\",\n      \"Description\": \"Card Transaction 7674 08JUN24 PAYPAL *APPLE.COM/BILL 35314369001 GB\",\n      \"Amount\": 1.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1099.26\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 9397 07JUN24 D POKERSTARS LONDON GB\",\n      \"Amount\": 10.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1089.26\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 9397 07JUN24 D APPLE.COM/BILL APPLE.COM/BIL IE\",\n      \"Amount\": 2.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1086.27\n    },\n    {\n      \"Date\": \"07-06-2024\",\n      \"Description\": \"Card Transaction 9397 07JUN24 D POKERSTARS LONDON GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1066.27\n    },\n    {\n      \"Date\": null,\n      \"Description\": \"Direct Debit NATIONAL TRUST\",\n      \"Amount\": 7.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1059.27\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 9397 10JUN24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 5.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1053.28\n    },\n    {\n      \"Date\": \"12-06-2024\",\n      \"Description\": \"OnLine Transaction ELISE ROBERTSON Tickets VIA MOBILE - PYMT FP 11/06/24 10 11191159342760000R\",\n      \"Amount\": 180.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 873.28\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 9397 11JUN24 CD SQ *SPANOU REHAB & PER MANCHESTER GB\",\n      \"Amount\": 50.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 823.28\n    },\n    {\n      \"Date\": \"12-06-2024\",\n      \"Description\": \"Card Transaction 9397 12JUN24 D JUST EAT LONDON GB\",\n      \"Amount\": 18.04,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 805.24\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 9397 11JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 15.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 790.24\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 9397 11JUN24 CD TK MAXX MANCHESTER GB\",\n      \"Amount\": 44.17,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 746.07\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 7674 11JUN24 PARENTPAY E-COM R BRIDGWATER GB\",\n      \"Amount\": 36.50,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 709.57\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 9397 11JUN24 CD SAINSBURYS S/MKTS URMSTON 2150 GB\",\n      \"Amount\": 9.20,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 700.37\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 9397 11JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 680.37\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 9397 11JUN24 CD BOOTS 6458 TRAFFORD RET GB\",\n      \"Amount\": 3.50,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 676.87\n    },\n    {\n      \"Date\": null,\n      \"Description\": \"BROUGHT FORWARD\",\n      \"Amount\": 676.87,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 676.87\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 9397 11JUN24 CD SQ *OSCILLATE COFFEE URMSTON GB\",\n      \"Amount\": 9.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 667.87\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 7674 13JUN24 POKERSTARS LONDON GB CREDIT\",\n      \"Amount\": 113.81,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 781.68\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 7674 13JUN24 POKERSTARS LONDON GB CREDIT\",\n      \"Amount\": 94.79,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 876.47\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 7674 13JUN24 POKERSTARS LONDON GB CREDIT\",\n      \"Amount\": 189.82,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 1066.29\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 7674 13JUN24 POKERSTARS LONDON GB CREDIT\",\n      \"Amount\": 341.41,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 1407.70\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 7674 13JUN24 POKERSTARS LONDON GB CREDIT\",\n      \"Amount\": 75.87,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 1483.57\n    },\n    {\n      \"Date\": null,\n      \"Description\": \"OnLine Transaction To A/C 10185383 BYRON C & C Via Mobile Xfer\",\n      \"Amount\": 100.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1383.57\n    },\n    {\n      \"Date\": \"11-06-2024\",\n      \"Description\": \"Card Transaction 7674 11JUN24 PAYPAL *PYPL PAYIN3 8003587911 GB\",\n      \"Amount\": 211.66,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 1171.91\n    },\n    {\n      \"Date\": \"12-06-2024\",\n      \"Description\": \"Card Transaction 9397 12JUN24 CD SQ *V SHACK MARKET LTD ANCOATS GB\",\n      \"Amount\": 10.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1161.91\n    },\n    {\n      \"Date\": \"12-06-2024\",\n      \"Description\": \"Card Transaction 7674 12JUN24 SIMPLE INTELLIGENT PAR MANCHESTER GB\",\n      \"Amount\": 8.40,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1153.51\n    },\n    {\n      \"Date\": \"12-06-2024\",\n      \"Description\": \"Card Transaction 7674 12JUN24 SPOTIFY LONDON GB\",\n      \"Amount\": 19.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1133.52\n    },\n    {\n      \"Date\": \"12-06-2024\",\n      \"Description\": \"Card Transaction 9397 12JUN24 CD N BROWN GRIFFIN HOUSE MANCHESTER GB\",\n      \"Amount\": 3.90,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1129.62\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Automated Credit KEVIN BYRON SENT FROM MONZO FP 14/06/24 0932 PW3MW6HOHKWMLICUL4\",\n      \"Amount\": 240.00,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 1369.62\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 7674 14JUN24 PADDY POWER BETFAI LONDON GB CREDIT\",\n      \"Amount\": 30.00,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 1399.62\n    },\n    {\n      \"Date\": null,\n      \"Description\": \"OnLine Transaction IG BYRON DAD VIA MOBILE - PYMT\",\n      \"Amount\": 10.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1389.62\n    },\n    {\n      \"Date\": null,\n      \"Description\": \"OnLine Transaction ARI CRAIMER CHRISBYRONFOOTBALL VIA MOBILE - PYMT FP 14/06/24 10 20104349873960000R\",\n      \"Amount\": 5.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1384.62\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 9397 13JUN24 CD THE BARKING DOG MANCHESTER LA GB\",\n      \"Amount\": 11.30,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1373.32\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 4874 13JUN24 D POKERSTARS LONDON GB\",\n      \"Amount\": 25.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1348.32\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 9397 13JUN24 D DELIVEROO LONDON GB\",\n      \"Amount\": 12.54,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1335.78\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 9397 13JUN24 CD THE THREE BARRELS URMSTON GB\",\n      \"Amount\": 9.80,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1325.98\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 7674 13JUN24 AMAZON.CO.U K*HV53G0QH4 353-12477661 GB\",\n      \"Amount\": 0.80,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1325.18\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 9397 13JUN24 D POKERSTARS LONDON GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1305.18\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 4874 13JUN24 D POKERSTARS LONDON GB\",\n      \"Amount\": 25.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1280.18\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 9397 13JUN24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 7.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1272.19\n    },\n    {\n      \"Date\": \"12-06-2024\",\n      \"Description\": \"Card Transaction 9397 12JUN24 D BETFAIR LONDON GB\",\n      \"Amount\": 30.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1242.19\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 9397 13JUN24 CD DOCTOR BROWNS MANCHESTER GB\",\n      \"Amount\": 9.20,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1232.99\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 9397 13JUN24 D ODEON CINEMAS LONDON GB\",\n      \"Amount\": 22.98,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1210.01\n    },\n    {\n      \"Date\": \"12-06-2024\",\n      \"Description\": \"Card Transaction 9397 12JUN24 D BETFAIR LONDON GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1190.01\n    },\n    {\n      \"Date\": \"17-06-2024\",\n      \"Description\": \"OnLine Transaction IG BYRON DAD VIA MOBILE - PYMT\",\n      \"Amount\": 15.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 1175.01\n    },\n    {\n      \"Date\": null,\n      \"Description\": \"OnLine Transaction JULIA BYRON CHRIS VIA MOBILE - PYMT FP 15/06/24 10 41135121753749000R\",\n      \"Amount\": 50.00,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 1125.01\n    },\n    {\n      \"Date\": null,\n      \"Description\": \"OnLine Transaction MONZO MONZO VIA MOBILE - PYMT FP 15/06/24 1041111859737234000R\",\n      \"Amount\": 150.00,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 975.01\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 CD THE BARKING DOG MANCHESTER LA GB\",\n      \"Amount\": 14.35,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 960.66\n    },\n    {\n      \"Date\": null,\n      \"Description\": \"BROUGHT FORWARD\",\n      \"Amount\": 960.66,\n      \"Direction\": \"Paid In\",\n      \"Balance\": 960.66\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 7674 15JUN24 WHICH? LONDON GB\",\n      \"Amount\": 10.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 949.67\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 D PADDY POWER LONDON GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 929.67\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 7674 15JUN24 PAYPAL *APPLE.COM/BILL 35314369001 GB\",\n      \"Amount\": 1.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 927.68\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 9397 15JUN24 D APPLE.COM/BILL 08001076285 IE\",\n      \"Amount\": 7.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 919.69\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 7674 15JUN24 AMAZON* 204-8539327-97 LONDON GB\",\n      \"Amount\": 25.39,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 894.30\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 D PADDY POWER LONDON GB\",\n      \"Amount\": 30.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 864.30\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 9397 15JUN24 D PADDY POWER LONDON GB\",\n      \"Amount\": 40.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 824.30\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 9397 15JUN24 D PADDY POWER LONDON GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 804.30\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 CD STEAMHOUSE M'STER M41 GB\",\n      \"Amount\": 15.05,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 789.25\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 7674 14JUN24 NATIONAL LOTTERY LONDON GB\",\n      \"Amount\": 10.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 779.25\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 9397 15JUN24 D PADDY POWER LONDON GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 759.25\n    },\n    {\n      \"Date\": \"16-06-2024\",\n      \"Description\": \"Card Transaction 9397 16JUN24 CD BEVANO LOUNGE MANCHESTER GB\",\n      \"Amount\": 11.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 748.25\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 CD GREGGS PLC URMSTON GB\",\n      \"Amount\": 3.20,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 745.05\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 CD SUMUP *DRINK VIBES MIDDLEWICH GB\",\n      \"Amount\": 3.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 742.05\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 CD THE BARKING DOG MANCHESTER LA GB\",\n      \"Amount\": 5.50,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 736.55\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 9397 15JUN24 CD BARGAIN BOOZE 1129 URMSTON GB\",\n      \"Amount\": 19.98,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 716.57\n    },\n    {\n      \"Date\": \"16-06-2024\",\n      \"Description\": \"Card Transaction 7674 16JUN24 AMAZON* 204-5171977-69 LONDON GB\",\n      \"Amount\": 13.97,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 702.60\n    },\n    {\n      \"Date\": \"13-06-2024\",\n      \"Description\": \"Card Transaction 9397 13JUN24 CD BARGAIN BOOZE 1129 URMSTON GB\",\n      \"Amount\": 37.73,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 664.87\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 CD THE BARKING DOG MANCHESTER LA GB\",\n      \"Amount\": 12.80,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 652.07\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 4874 14JUN24 D POKERSTARS LONDON GB\",\n      \"Amount\": 25.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 627.07\n    },\n    {\n      \"Date\": \"16-06-2024\",\n      \"Description\": \"Card Transaction 9397 16JUN24 CD ROUNDERS M'STER M41 GB\",\n      \"Amount\": 0.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 626.08\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 7674 15JUN24 UBER *EATS HELP.UBER.COM GB\",\n      \"Amount\": 23.24,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 602.84\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 CD THE THREE BARRELS URMSTON GB\",\n      \"Amount\": 4.90,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 597.94\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 D PADDY POWER LONDON GB\",\n      \"Amount\": 20.00,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 577.94\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 9397 14JUN24 CD THE THREE BARRELS URMSTON GB\",\n      \"Amount\": 7.70,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 570.24\n    },\n    {\n      \"Date\": \"15-06-2024\",\n      \"Description\": \"Card Transaction 7674 15JUN24 AMAZON PRIME*HV0DW09L4 AMZN.CO.UK/PM GB\",\n      \"Amount\": 8.99,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 561.25\n    },\n    {\n      \"Date\": \"16-06-2024\",\n      \"Description\": \"Card Transaction 9397 16JUN24 CD THE THREE BARRELS URMSTON GB\",\n      \"Amount\": 4.90,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 556.35\n    },\n    {\n      \"Date\": \"14-06-2024\",\n      \"Description\": \"Card Transaction 7674 14JUN24 OPENAI *CHATGPT SUBSCR SAN FRANCISCO US USD 24.00 VRATE 1.2745 N-S TRN FEE 0.52\",\n      \"Amount\": 19.35,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 537.00\n    },\n    {\n      \"Date\": \"16-06-2024\",\n      \"Description\": \"Card Transaction 9397 16JUN24 CD THE THREE BARRELS URMSTON GB\",\n      \"Amount\": 4.90,\n      \"Direction\": \"Paid Out\",\n      \"Balance\": 532.10\n    },\n    {\n      \"Date\": null,\n      \"Description\":",
+      "Transactions": []
+    },
+    {
+      "Transactions": [
+        {
+          "Date": null,
+          "Description": "BROUGHT FORWARD",
+          "Amount": null,
+          "Direction": null,
+          "Balance": 275.64
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 19JUN24 D BETFAIR LONDON GB",
+          "Amount": 19.0,
+          "Direction": "Paid Out",
+          "Balance": 256.64
+        },
+        {
+          "Date": null,
+          "Description": "Cash Withdrawal NATWEST\n20JUN",
+          "Amount": 100.0,
+          "Direction": "Paid Out",
+          "Balance": 156.64
+        },
+        {
+          "Date": null,
+          "Description": "Direct Debit TESCO BANK",
+          "Amount": 105.0,
+          "Direction": "Paid Out",
+          "Balance": 51.64
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Automated Credit KEVIN BYRON SENT FROM MONZO FP\n23/06/24 1247 PYHS68ZAHUYEKRMQ1T",
+          "Amount": 25.0,
+          "Direction": "Paid In",
+          "Balance": 76.64
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 CD SEVEN OAKS\nMANCHESTER GB",
+          "Amount": 10.15,
+          "Direction": "Paid Out",
+          "Balance": 66.49
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 CD CO OP LIVE GA\nMANCHESTER GB",
+          "Amount": 6.5,
+          "Direction": "Paid Out",
+          "Balance": 59.99
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 9397 20JUN24 D PADDY POWER LONDON\nGB",
+          "Amount": 20.0,
+          "Direction": "Paid Out",
+          "Balance": 39.99
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 D APPLE.COM/BILL\n08001076285 IE",
+          "Amount": 5.99,
+          "Direction": "Paid Out",
+          "Balance": 34.0
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 CD CO OP LIVE GA\nMANCHESTER GB",
+          "Amount": 20.15,
+          "Direction": "Paid Out",
+          "Balance": 13.85
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 9397 21JUN24 CD M1 NEWS M'STER M1 4\nGB",
+          "Amount": 11.5,
+          "Direction": "Paid Out",
+          "Balance": 2.35
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 21JUN24 TAKEAWAY LONDON GB",
+          "Amount": 51.91,
+          "Direction": "Paid Out",
+          "Balance": -49.56
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 22JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+          "Amount": 15.96,
+          "Direction": "Paid Out",
+          "Balance": -65.52
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 9397 21JUN24 D PADDY POWER LONDON\nGB",
+          "Amount": 20.0,
+          "Direction": "Paid Out",
+          "Balance": -85.52
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 23JUN24 CD CHUANYI TRADING\nMANCHESTER GB",
+          "Amount": 27.8,
+          "Direction": "Paid Out",
+          "Balance": -113.32
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 23JUN24 D APPLE.COM/BILL\n08001076285 IE",
+          "Amount": 7.99,
+          "Direction": "Paid Out",
+          "Balance": -121.31
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 22JUN24 PAYPAL *APPLE.COM/BILL\n35314369001 GB",
+          "Amount": 1.99,
+          "Direction": "Paid Out",
+          "Balance": -123.3
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 22JUN24 WWW.AMAZON* 204-627189\nLONDON GB",
+          "Amount": 14.99,
+          "Direction": "Paid Out",
+          "Balance": -138.29
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 9397 20JUN24 D PADDY POWER LONDON\nGB",
+          "Amount": 35.0,
+          "Direction": "Paid Out",
+          "Balance": -173.29
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 22JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+          "Amount": 11.91,
+          "Direction": "Paid Out",
+          "Balance": -185.2
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 21JUN24 NATIONAL LOTTERY\nLONDON GB",
+          "Amount": 25.0,
+          "Direction": "Paid Out",
+          "Balance": -210.2
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 CD THE THREE BARRELS\nURMSTON GB",
+          "Amount": 9.8,
+          "Direction": "Paid Out",
+          "Balance": -220.0
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 21JUN24 FIVERR NICOSIA CY",
+          "Amount": 19.9,
+          "Direction": "Paid Out",
+          "Balance": -239.9
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 20JUN24 FASTHOSTS GLOUCESTER\nGB",
+          "Amount": 9.0,
+          "Direction": "Paid Out",
+          "Balance": -248.9
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 21JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+          "Amount": 5.22,
+          "Direction": "Paid Out",
+          "Balance": -254.12
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 21JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+          "Amount": 20.3,
+          "Direction": "Paid Out",
+          "Balance": -274.42
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 CD CO OP LIVE GA\nMANCHESTER GB",
+          "Amount": 18.8,
+          "Direction": "Paid Out",
+          "Balance": -293.22
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 9397 21JUN24 D PADDY POWER LONDON\nGB",
+          "Amount": 10.0,
+          "Direction": "Paid Out",
+          "Balance": -303.22
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 CD CO OP LIVE GA\nMANCHESTER GB",
+          "Amount": 27.15,
+          "Direction": "Paid Out",
+          "Balance": -330.37
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 23JUN24 PAYPAL *MICROSOFT\n35314369001 GB",
+          "Amount": 7.99,
+          "Direction": "Paid Out",
+          "Balance": -338.36
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 22JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+          "Amount": 21.94,
+          "Direction": "Paid Out",
+          "Balance": -360.3
+        },
+        {
+          "Date": "24-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 CD O SHEAS IRISH BAR\nMANCHESTER GB",
+          "Amount": 5.7,
+          "Direction": "Paid Out",
+          "Balance": -366.0
+        },
+        {
+          "Date": "22-06-2024",
+          "Description": "Cash Withdrawal BMACH",
+          "Amount": 40.0,
+          "Direction": "Paid Out",
+          "Balance": -406.0
+        },
+        {
+          "Date": "25-06-2024",
+          "Description": "Card Transaction 7674 24JUN24 GOHENRY MEMBERSHIP\nLYMINGTON GB",
+          "Amount": 4.49,
+          "Direction": "Paid Out",
+          "Balance": -410.49
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 23JUN24 PAYPAL *APPLE.COM/BILL\n35314369001 GB",
+          "Amount": 2.99,
+          "Direction": "Paid Out",
+          "Balance": -413.48
+        },
+        {
+          "Date": "25-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+          "Amount": 25.0,
+          "Direction": "Paid Out",
+          "Balance": -438.48
+        },
+        {
+          "Date": "25-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+          "Amount": 20.0,
+          "Direction": "Paid Out",
+          "Balance": -458.48
+        },
+        {
+          "Date": "25-06-2024",
+          "Description": "Card Transaction 9397 22JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+          "Amount": 20.0,
+          "Direction": "Paid Out",
+          "Balance": -478.48
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 24JUN24 NATIONAL LOTTERY\nLONDON GB",
+          "Amount": 5.0,
+          "Direction": "Paid Out",
+          "Balance": -483.48
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 24JUN24 NATIONAL LOTTERY\nLONDON GB",
+          "Amount": 25.0,
+          "Direction": "Paid Out",
+          "Balance": -508.48
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 24JUN24 GOOGLE\n*YOUTUBEPREMIUM 650-253-0000 GB",
+          "Amount": 12.99,
+          "Direction": "Paid Out",
+          "Balance": -521.47
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "OnLine Transaction From A/C 10185383 BYRON C & C Via\nMobile Xfer",
+          "Amount": 150.0,
+          "Direction": "Paid In",
+          "Balance": -371.47
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 7674 25JUN24 SIMPLE INTELLIGENT PAR\nMANCHESTER GB",
+          "Amount": 8.4,
+          "Direction": "Paid Out",
+          "Balance": -379.87
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 9397 25JUN24 CD N BROWN GRIFFIN\nHOUSE MANCHESTER GB",
+          "Amount": 3.6,
+          "Direction": "Paid Out",
+          "Balance": -383.47
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 9397 25JUN24 CD LAMB OF TARTARY\nMANCHESTER GB",
+          "Amount": 12.3,
+          "Direction": "Paid Out",
+          "Balance": -395.77
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 9397 25JUN24 D POKERSTARS LONDON\nGB",
+          "Amount": 30.0,
+          "Direction": "Paid Out",
+          "Balance": -425.77
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 9397 24JUN24 D APPLE.COM/BILL CORK IE",
+          "Amount": 0.99,
+          "Direction": "Paid Out",
+          "Balance": -426.76
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 7674 25JUN24 AMAZON.CO.U\nK*HM0AF1GV4 353-12477661 GB",
+          "Amount": 5.6,
+          "Direction": "Paid Out",
+          "Balance": -432.36
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 9397 23JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+          "Amount": 25.0,
+          "Direction": "Paid Out",
+          "Balance": -457.36
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 7674 25JUN24 AZULINE HOTEL BERGANTI\nSANT AGUSTID ES",
+          "Amount": 148.49,
+          "Direction": "Paid Out",
+          "Balance": -605.85
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 9397 25JUN24 CD W M MORRISON STORE\nMANCHESTER GB",
+          "Amount": 7.0,
+          "Direction": "Paid Out",
+          "Balance": -612.85
+        },
+        {
+          "Date": "26-06-2024",
+          "Description": "Card Transaction 7674 25JUN24 JET2.COM 7980088482256\nLEEDS GB",
+          "Amount": 90.9,
+          "Direction": "Paid Out",
+          "Balance": -703.75
+        },
+        {
+          "Date": "27-06-2024",
+          "Description": "Card Transaction 7674 26JUN24 SKY BETTING & GAMI LEEDS\nGB CREDIT",
+          "Amount": 1.29,
+          "Direction": "Paid Out",
+          "Balance": -702.46
+        },
+        {
+          "Date": "27-06-2024",
+          "Description": "Card Transaction 7674 27JUN24 BETMGM.CO.UK\nNEWCASTLE UPO GB CREDIT",
+          "Amount": 1.67,
+          "Direction": "Paid Out",
+          "Balance": -700.79
+        },
+        {
+          "Date": null,
+          "Description": "Card Transaction 7674 26JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+          "Amount": 22.9,
+          "Direction": "Paid Out",
+          "Balance": -723.69
+        },
+        {
+          "Date": "27-06-2024",
+          "Description": "Card Transaction 9397 24JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+          "Amount": 25.0,
+          "Direction": "Paid Out",
+          "Balance": -748.69
+        },
+        {
+          "Date": "27-06-2024",
+          "Description": "Card Transaction 9397 24JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+          "Amount": 15.0,
+          "Direction": "Paid Out",
+          "Balance": -763.69
+        },
+        {
+          "Date": "27-06-2024",
+          "Description": "Card Transaction 9397 26JUN24 CD SEVEN BROTHERS -\nANCOA MANCHESTER GB",
+          "Amount": 17.95,
+          "Direction": "Paid Out",
+          "Balance": -781.64
+        },
+        {
+          "Date": "27-06-2024",
+          "Description": "Card Transaction 9397 26JUN24 CD SEVEN BRO7HERS -\nANCOA MANCHESTER GB",
+          "Amount": 1.57,
+          "Direction": "Paid Out",
+          "Balance": -783.21
+        },
+        {
+          "Date": "27-06-2024",
+          "Description": "Card Transaction 9397 26JUN24 CD SEVEN BRO7HERS -\nANCOA MANCHESTER GB",
+          "Amount": 18.58,
+          "Direction": "Paid Out",
+          "Balance": -801.79
+        },
+        {
+          "Date": "27-06-2024",
+          "Description": "Card Transaction 9397 26JUN24 CD SQ *ORCHID LOUNGE\nKARA PICCADILLY PL GB",
+          "Amount": 13.0,
+          "Direction": "Paid Out",
+          "Balance": -814.79
+        }
+      ]
+    }
+  ],
+  "Transactions": [
+    {
+      "Date": null,
+      "Description": "BROUGHT FORWARD",
+      "Amount": null,
+      "Direction": null,
+      "Balance": 275.64
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 19JUN24 D BETFAIR LONDON GB",
+      "Amount": 19.0,
+      "Direction": "Paid Out",
+      "Balance": 256.64
+    },
+    {
+      "Date": null,
+      "Description": "Cash Withdrawal NATWEST\n20JUN",
+      "Amount": 100.0,
+      "Direction": "Paid Out",
+      "Balance": 156.64
+    },
+    {
+      "Date": null,
+      "Description": "Direct Debit TESCO BANK",
+      "Amount": 105.0,
+      "Direction": "Paid Out",
+      "Balance": 51.64
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Automated Credit KEVIN BYRON SENT FROM MONZO FP\n23/06/24 1247 PYHS68ZAHUYEKRMQ1T",
+      "Amount": 25.0,
+      "Direction": "Paid In",
+      "Balance": 76.64
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 CD SEVEN OAKS\nMANCHESTER GB",
+      "Amount": 10.15,
+      "Direction": "Paid Out",
+      "Balance": 66.49
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 CD CO OP LIVE GA\nMANCHESTER GB",
+      "Amount": 6.5,
+      "Direction": "Paid Out",
+      "Balance": 59.99
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 9397 20JUN24 D PADDY POWER LONDON\nGB",
+      "Amount": 20.0,
+      "Direction": "Paid Out",
+      "Balance": 39.99
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 D APPLE.COM/BILL\n08001076285 IE",
+      "Amount": 5.99,
+      "Direction": "Paid Out",
+      "Balance": 34.0
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 CD CO OP LIVE GA\nMANCHESTER GB",
+      "Amount": 20.15,
+      "Direction": "Paid Out",
+      "Balance": 13.85
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 9397 21JUN24 CD M1 NEWS M'STER M1 4\nGB",
+      "Amount": 11.5,
+      "Direction": "Paid Out",
+      "Balance": 2.35
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 21JUN24 TAKEAWAY LONDON GB",
+      "Amount": 51.91,
+      "Direction": "Paid Out",
+      "Balance": -49.56
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 22JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+      "Amount": 15.96,
+      "Direction": "Paid Out",
+      "Balance": -65.52
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 9397 21JUN24 D PADDY POWER LONDON\nGB",
+      "Amount": 20.0,
+      "Direction": "Paid Out",
+      "Balance": -85.52
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 23JUN24 CD CHUANYI TRADING\nMANCHESTER GB",
+      "Amount": 27.8,
+      "Direction": "Paid Out",
+      "Balance": -113.32
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 23JUN24 D APPLE.COM/BILL\n08001076285 IE",
+      "Amount": 7.99,
+      "Direction": "Paid Out",
+      "Balance": -121.31
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 22JUN24 PAYPAL *APPLE.COM/BILL\n35314369001 GB",
+      "Amount": 1.99,
+      "Direction": "Paid Out",
+      "Balance": -123.3
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 22JUN24 WWW.AMAZON* 204-627189\nLONDON GB",
+      "Amount": 14.99,
+      "Direction": "Paid Out",
+      "Balance": -138.29
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 9397 20JUN24 D PADDY POWER LONDON\nGB",
+      "Amount": 35.0,
+      "Direction": "Paid Out",
+      "Balance": -173.29
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 22JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+      "Amount": 11.91,
+      "Direction": "Paid Out",
+      "Balance": -185.2
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 21JUN24 NATIONAL LOTTERY\nLONDON GB",
+      "Amount": 25.0,
+      "Direction": "Paid Out",
+      "Balance": -210.2
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 CD THE THREE BARRELS\nURMSTON GB",
+      "Amount": 9.8,
+      "Direction": "Paid Out",
+      "Balance": -220.0
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 21JUN24 FIVERR NICOSIA CY",
+      "Amount": 19.9,
+      "Direction": "Paid Out",
+      "Balance": -239.9
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 20JUN24 FASTHOSTS GLOUCESTER\nGB",
+      "Amount": 9.0,
+      "Direction": "Paid Out",
+      "Balance": -248.9
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 21JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+      "Amount": 5.22,
+      "Direction": "Paid Out",
+      "Balance": -254.12
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 21JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+      "Amount": 20.3,
+      "Direction": "Paid Out",
+      "Balance": -274.42
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 CD CO OP LIVE GA\nMANCHESTER GB",
+      "Amount": 18.8,
+      "Direction": "Paid Out",
+      "Balance": -293.22
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 9397 21JUN24 D PADDY POWER LONDON\nGB",
+      "Amount": 10.0,
+      "Direction": "Paid Out",
+      "Balance": -303.22
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 CD CO OP LIVE GA\nMANCHESTER GB",
+      "Amount": 27.15,
+      "Direction": "Paid Out",
+      "Balance": -330.37
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 23JUN24 PAYPAL *MICROSOFT\n35314369001 GB",
+      "Amount": 7.99,
+      "Direction": "Paid Out",
+      "Balance": -338.36
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 22JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+      "Amount": 21.94,
+      "Direction": "Paid Out",
+      "Balance": -360.3
+    },
+    {
+      "Date": "24-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 CD O SHEAS IRISH BAR\nMANCHESTER GB",
+      "Amount": 5.7,
+      "Direction": "Paid Out",
+      "Balance": -366.0
+    },
+    {
+      "Date": "22-06-2024",
+      "Description": "Cash Withdrawal BMACH",
+      "Amount": 40.0,
+      "Direction": "Paid Out",
+      "Balance": -406.0
+    },
+    {
+      "Date": "25-06-2024",
+      "Description": "Card Transaction 7674 24JUN24 GOHENRY MEMBERSHIP\nLYMINGTON GB",
+      "Amount": 4.49,
+      "Direction": "Paid Out",
+      "Balance": -410.49
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 23JUN24 PAYPAL *APPLE.COM/BILL\n35314369001 GB",
+      "Amount": 2.99,
+      "Direction": "Paid Out",
+      "Balance": -413.48
+    },
+    {
+      "Date": "25-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+      "Amount": 25.0,
+      "Direction": "Paid Out",
+      "Balance": -438.48
+    },
+    {
+      "Date": "25-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+      "Amount": 20.0,
+      "Direction": "Paid Out",
+      "Balance": -458.48
+    },
+    {
+      "Date": "25-06-2024",
+      "Description": "Card Transaction 9397 22JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+      "Amount": 20.0,
+      "Direction": "Paid Out",
+      "Balance": -478.48
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 24JUN24 NATIONAL LOTTERY\nLONDON GB",
+      "Amount": 5.0,
+      "Direction": "Paid Out",
+      "Balance": -483.48
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 24JUN24 NATIONAL LOTTERY\nLONDON GB",
+      "Amount": 25.0,
+      "Direction": "Paid Out",
+      "Balance": -508.48
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 24JUN24 GOOGLE\n*YOUTUBEPREMIUM 650-253-0000 GB",
+      "Amount": 12.99,
+      "Direction": "Paid Out",
+      "Balance": -521.47
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "OnLine Transaction From A/C 10185383 BYRON C & C Via\nMobile Xfer",
+      "Amount": 150.0,
+      "Direction": "Paid In",
+      "Balance": -371.47
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 7674 25JUN24 SIMPLE INTELLIGENT PAR\nMANCHESTER GB",
+      "Amount": 8.4,
+      "Direction": "Paid Out",
+      "Balance": -379.87
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 9397 25JUN24 CD N BROWN GRIFFIN\nHOUSE MANCHESTER GB",
+      "Amount": 3.6,
+      "Direction": "Paid Out",
+      "Balance": -383.47
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 9397 25JUN24 CD LAMB OF TARTARY\nMANCHESTER GB",
+      "Amount": 12.3,
+      "Direction": "Paid Out",
+      "Balance": -395.77
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 9397 25JUN24 D POKERSTARS LONDON\nGB",
+      "Amount": 30.0,
+      "Direction": "Paid Out",
+      "Balance": -425.77
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 9397 24JUN24 D APPLE.COM/BILL CORK IE",
+      "Amount": 0.99,
+      "Direction": "Paid Out",
+      "Balance": -426.76
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 7674 25JUN24 AMAZON.CO.U\nK*HM0AF1GV4 353-12477661 GB",
+      "Amount": 5.6,
+      "Direction": "Paid Out",
+      "Balance": -432.36
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 9397 23JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+      "Amount": 25.0,
+      "Direction": "Paid Out",
+      "Balance": -457.36
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 7674 25JUN24 AZULINE HOTEL BERGANTI\nSANT AGUSTID ES",
+      "Amount": 148.49,
+      "Direction": "Paid Out",
+      "Balance": -605.85
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 9397 25JUN24 CD W M MORRISON STORE\nMANCHESTER GB",
+      "Amount": 7.0,
+      "Direction": "Paid Out",
+      "Balance": -612.85
+    },
+    {
+      "Date": "26-06-2024",
+      "Description": "Card Transaction 7674 25JUN24 JET2.COM 7980088482256\nLEEDS GB",
+      "Amount": 90.9,
+      "Direction": "Paid Out",
+      "Balance": -703.75
+    },
+    {
+      "Date": "27-06-2024",
+      "Description": "Card Transaction 7674 26JUN24 SKY BETTING & GAMI LEEDS\nGB CREDIT",
+      "Amount": 1.29,
+      "Direction": "Paid Out",
+      "Balance": -702.46
+    },
+    {
+      "Date": "27-06-2024",
+      "Description": "Card Transaction 7674 27JUN24 BETMGM.CO.UK\nNEWCASTLE UPO GB CREDIT",
+      "Amount": 1.67,
+      "Direction": "Paid Out",
+      "Balance": -700.79
+    },
+    {
+      "Date": null,
+      "Description": "Card Transaction 7674 26JUN24 UBER *TRIP\nHELP.UBER.COM GB",
+      "Amount": 22.9,
+      "Direction": "Paid Out",
+      "Balance": -723.69
+    },
+    {
+      "Date": "27-06-2024",
+      "Description": "Card Transaction 9397 24JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+      "Amount": 25.0,
+      "Direction": "Paid Out",
+      "Balance": -748.69
+    },
+    {
+      "Date": "27-06-2024",
+      "Description": "Card Transaction 9397 24JUN24 D TALKSPORTBET\nGIBRALTAR GI",
+      "Amount": 15.0,
+      "Direction": "Paid Out",
+      "Balance": -763.69
+    },
+    {
+      "Date": "27-06-2024",
+      "Description": "Card Transaction 9397 26JUN24 CD SEVEN BROTHERS -\nANCOA MANCHESTER GB",
+      "Amount": 17.95,
+      "Direction": "Paid Out",
+      "Balance": -781.64
+    },
+    {
+      "Date": "27-06-2024",
+      "Description": "Card Transaction 9397 26JUN24 CD SEVEN BRO7HERS -\nANCOA MANCHESTER GB",
+      "Amount": 1.57,
+      "Direction": "Paid Out",
+      "Balance": -783.21
+    },
+    {
+      "Date": "27-06-2024",
+      "Description": "Card Transaction 9397 26JUN24 CD SEVEN BRO7HERS -\nANCOA MANCHESTER GB",
+      "Amount": 18.58,
+      "Direction": "Paid Out",
+      "Balance": -801.79
+    },
+    {
+      "Date": "27-06-2024",
+      "Description": "Card Transaction 9397 26JUN24 CD SQ *ORCHID LOUNGE\nKARA PICCADILLY PL GB",
+      "Amount": 13.0,
+      "Direction": "Paid Out",
+      "Balance": -814.79
+    }
+  ],
+  "TotalTransactionCount": 61
+}
