@@ -66,6 +66,9 @@ def upload_to_gemini(client, path):
     """Uploads the given file to Gemini with progress logging."""
     print(f"  Uploading sub-PDF \"{path}\" to Gemini...")
     file_obj = client.files.upload(file=path)
+    memory_file = file_obj.file
+    filename = file_obj.display_name
+    memory_file.name = filename if filename.endswith(".pdf") else (filename + ".pdf")
     print(f"  -> Uploaded file '{file_obj.display_name}' as: {file_obj.uri}")
     return file_obj
 

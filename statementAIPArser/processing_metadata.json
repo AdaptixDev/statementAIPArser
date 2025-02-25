@@ -1,9 +1,0 @@
-{
-  "TotalTransactions": 300,
-  "ProcessedChunks": 3,
-  "TransactionsPerChunk": [
-    116,
-    122,
-    62
-  ]
-}
