@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface SummaryCardProps {
   title: string;
@@ -26,6 +27,40 @@ interface SummaryData {
   potentialRedFlagsAndConcerns: string[];
   recommendations: string[];
 }
+
+// Collapsible section component
+interface CollapsibleSectionProps {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+  className?: string;
+}
+
+const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({ 
+  title, 
+  children, 
+  defaultOpen = true,
+  className = ""
+}) => {
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
+
+  return (
+    <div className={`border rounded-lg overflow-hidden mb-4 ${className}`}>
+      <button
+        className="w-full flex justify-between items-center p-3 bg-gray-100 hover:bg-gray-200 transition-colors text-left"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <h2 className="text-lg font-semibold">{title}</h2>
+        {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+      </button>
+      {isOpen && (
+        <div className="p-4">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export function SummaryCard({ title, summary }: SummaryCardProps) {
   // Parse the JSON data from the summary text
@@ -250,11 +285,35 @@ export function SummaryCard({ title, summary }: SummaryCardProps) {
           </div>
         ) : (
           <div className="space-y-4">
-            {renderPersonalInfo()}
-            {renderIncomeAndOutgoings()}
-            {renderFinancialHealthCommentary()}
-            {renderRedFlags()}
-            {renderRecommendations()}
+            <CollapsibleSection title="Statement Summary" defaultOpen={false}>
+              <div className="space-y-4">
+                {renderPersonalInfo()}
+                {renderIncomeAndOutgoings()}
+                {renderFinancialHealthCommentary()}
+                {renderRedFlags()}
+                {renderRecommendations()}
+              </div>
+            </CollapsibleSection>
+            
+            <CollapsibleSection 
+              title="Identification Documents" 
+              defaultOpen={false}
+              className="bg-white"
+            >
+              <div className="py-4 text-center text-gray-500">
+                <p>No identification documents available.</p>
+              </div>
+            </CollapsibleSection>
+            
+            <CollapsibleSection 
+              title="Supporting Documents" 
+              defaultOpen={false}
+              className="bg-white"
+            >
+              <div className="py-4 text-center text-gray-500">
+                <p>No supporting documents available.</p>
+              </div>
+            </CollapsibleSection>
           </div>
         )}
       </CardContent>
