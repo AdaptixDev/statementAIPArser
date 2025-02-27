@@ -11,7 +11,7 @@ export default function Home() {
   const [leftChatMessages, setLeftChatMessages] = useState([
     {
       id: "1",
-      content: "Hello! How can I help you analyse your financial statements?",
+      content: "Hello, how can I help you analyse financial statements or documents?",
       isUser: false,
     },
   ]);

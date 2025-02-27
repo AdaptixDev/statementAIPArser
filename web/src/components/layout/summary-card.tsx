@@ -39,7 +39,7 @@ interface CollapsibleSectionProps {
 const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({ 
   title, 
   children, 
-  defaultOpen = true,
+  defaultOpen = false,
   className = ""
 }) => {
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
@@ -273,8 +273,32 @@ export function SummaryCard({ title, summary }: SummaryCardProps) {
       </CardHeader>
       <CardContent className="flex-1 overflow-y-auto p-4 bg-gray-50">
         {!summary ? (
-          <div className="flex items-center justify-center h-full">
-            <p className="text-gray-500 text-center">Upload and analyze a statement to see the summary</p>
+          <div className="space-y-4">
+            <CollapsibleSection title="Statement Summary" defaultOpen={false}>
+              <div className="flex items-center justify-center py-4">
+                <p className="text-gray-500 text-center">Upload and analyze a statement to see the summary</p>
+              </div>
+            </CollapsibleSection>
+            
+            <CollapsibleSection 
+              title="Identification Documents" 
+              defaultOpen={false}
+              className="bg-white"
+            >
+              <div className="py-4 text-center text-gray-500">
+                <p>No identification documents available.</p>
+              </div>
+            </CollapsibleSection>
+            
+            <CollapsibleSection 
+              title="Supporting Documents" 
+              defaultOpen={false}
+              className="bg-white"
+            >
+              <div className="py-4 text-center text-gray-500">
+                <p>No supporting documents available.</p>
+              </div>
+            </CollapsibleSection>
           </div>
         ) : !summaryData ? (
           <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
