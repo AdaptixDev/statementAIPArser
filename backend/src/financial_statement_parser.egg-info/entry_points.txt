@@ -1,0 +1,3 @@
+[console_scripts]
+statement-api = backend.src.api.server:main
+statement-parser = backend.src.main:main
