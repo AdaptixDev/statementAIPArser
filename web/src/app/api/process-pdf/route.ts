@@ -10,6 +10,8 @@ const execPromise = promisify(exec);
 const TEMP_DIR = path.join(process.cwd(), 'temp');
 // Output directory for processing results
 const OUTPUT_DIR = path.join(process.cwd(), 'output');
+// Backend output directory for raw Gemini responses
+const BACKEND_OUTPUT_DIR = path.join(process.cwd(), '..', 'backend', 'output');
 
 // Ensure temp and output directories exist
 if (!fs.existsSync(TEMP_DIR)) {
@@ -17,6 +19,30 @@ if (!fs.existsSync(TEMP_DIR)) {
 }
 if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+}
+if (!fs.existsSync(BACKEND_OUTPUT_DIR)) {
+  fs.mkdirSync(BACKEND_OUTPUT_DIR, { recursive: true });
+}
+
+// Helper function to clean JSON string from markdown code blocks
+function cleanJsonString(jsonString: string): string {
+  let cleaned = jsonString.trim();
+  
+  // Remove markdown code block markers if present
+  if (cleaned.startsWith("```json")) {
+    cleaned = cleaned.substring(7);
+  } else if (cleaned.startsWith("```")) {
+    cleaned = cleaned.substring(3);
+  }
+  
+  if (cleaned.endsWith("```")) {
+    cleaned = cleaned.substring(0, cleaned.length - 3);
+  }
+  
+  // Trim again after removing markers
+  cleaned = cleaned.trim();
+  
+  return cleaned;
 }
 
 export async function POST(request: NextRequest) {
@@ -63,9 +89,32 @@ export async function POST(request: NextRequest) {
     // Read the summary file
     const summaryPath = path.join(jobOutputDir, 'summary.txt');
     let summary = '';
+    let cleanedSummary = '';
     
     if (fs.existsSync(summaryPath)) {
       summary = fs.readFileSync(summaryPath, 'utf-8');
+      console.log('Raw summary file content:', summary);
+      
+      // Save the raw Gemini response to the backend output directory
+      const rawResponsePath = path.join(BACKEND_OUTPUT_DIR, `raw_gemini_response_${timestamp}.txt`);
+      fs.writeFileSync(rawResponsePath, summary);
+      console.log(`Raw Gemini response saved to: ${rawResponsePath}`);
+      
+      // Clean the JSON string by removing markdown code block markers
+      cleanedSummary = cleanJsonString(summary);
+      console.log('Cleaned summary content:', cleanedSummary);
+      
+      // Try to parse the JSON to verify it's valid
+      try {
+        const parsedSummary = JSON.parse(cleanedSummary);
+        console.log('Parsed summary income:', parsedSummary.summaryOfIncomeAndOutgoings?.income);
+        console.log('Parsed summary outgoings:', parsedSummary.summaryOfIncomeAndOutgoings?.outgoings);
+        
+        // Replace the original summary with the cleaned version
+        summary = cleanedSummary;
+      } catch (parseError) {
+        console.error('Error parsing summary JSON:', parseError);
+      }
     } else {
       summary = 'Summary file not found. Processing may have failed.';
     }

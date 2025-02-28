@@ -1,0 +1,56 @@
+```json
+{
+  "personalInformation": {
+    "name": "CHRISTOPHER J BYRON",
+    "address": "89 FLIXTON ROAD,URMSTON,MANCHESTER,M41 5AN",
+    "accountNumber": "10212003",
+    "sortCode": "16-33-22",
+    "statementStartingBalance": -64.97,
+    "statementFinishingBalance": -814.79
+  },
+  "summaryOfIncomeAndOutgoings": {
+    "income": {
+      "Bank Transfer": 8146.17,
+      "Gambling": 816.18
+    },
+    "outgoings": {
+      "Unknown": 363.54,
+      "Cash Withdrawal": 285.57,
+      "Gambling": 798.21,
+      "Non-Essential Household": 169.9,
+      "Non -Essential Entertainment": 1579.56,
+      "Bank Transfer": 1680.0,
+      "Internet": 9.0
+    }
+  },
+  "generalSummaryAndFinancialHealthCommentary": {
+    "overallBalance": "The account balance has decreased by £749.82 during the statement period (from -£64.97 to -£814.79). The account is overdrawn.",
+    "highGamblingTransactions": "A large amount is spent on gambling transactions.",
+    "highNonEssentialEntertainmentSpending": "A very large amount is spent on Non Essential Entertainment",
+    "inconsistentCategorization": "There are some transactions labelled as 'Unknown.' More specific categorization is needed for proper budgeting and analysis.",
+    "paymentsToIndividuals": "Several payments to individuals could indicate informal lending or reimbursements.",
+    "bankTransfersNote": "There are multiple income and outgoings for bank transfers suggesting money moving between accounts without clear purposes.",
+    "multipleAppleTransactions": "Multiple Apple transactions",
+    "numerousSmallPayments": "Numerous small payments indicating multiple transactions",
+    "dependenceOnTransfers": "A large portion of income comes from transfers, suggesting reliance on them.",
+    "concernOverSpending": "Spends are significantly higher than incomings"
+  },
+  "potentialRedFlagsAndConcerns": [
+    "High 'Gambling' Spending: Indicates a possible gambling addiction.",
+    "High 'Non-Essential Entertainment' Spending: Indicates excessive spending on leisure activities.",
+    "High 'Unknown' Category Spending: Indicates a lack of tracking and control over finances.",
+    "Decreasing Balance: Balance is declining and overdrawn and requires investigation.",
+    "Dependence on Transfers: A large portion of income comes from transfers, suggesting reliance on them.",
+    "Excessive Spending: Overall spending far exceeds income, leading to an overdrawn account."
+  ],
+  "recommendations": [
+    "Seek Professional Help: Due to the high spending on gambling, consider seeking professional help.",
+    "Categorize Transactions: Categorize all 'Unknown' items to see where money is truly going.",
+    "Budgeting: Create a detailed budget to manage income and expenses.",
+    "Reduce Spending: Cut back on non-essential expenses, particularly in entertainment.",
+    "Investigate Transfers: Understand the purpose of frequent transfers to Byron C & C.",
+    "Consider Financial Advice: Seek advice from a financial advisor to address debt and manage finances.",
+    "Monitor Account Regularly: Keep a close watch on your account balance to avoid further overdrafts."
+  ]
+}
+```

@@ -6,42 +6,90 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Send, RefreshCw, Upload } from "lucide-react";
 import { Input } from "../../components/ui/input";
 
+interface ChatMessage {
+  id: string;
+  content: string;
+  isUser: boolean;
+  isProcessing?: boolean;
+}
+
 interface ChatWindowProps {
   title: string;
-  messages: Array<{
-    id: string;
-    content: string;
-    isUser: boolean;
-  }>;
+  messages: Array<ChatMessage>;
   onSendMessage?: (message: string) => void;
   onRefresh?: () => void;
   onFileUpload?: (file: File) => void;
+  onMultipleFilesUpload?: (files: File[]) => void;
 }
 
-export function ChatWindow({ title, messages, onSendMessage, onRefresh, onFileUpload }: ChatWindowProps) {
+export function ChatWindow({ title, messages, onSendMessage, onRefresh, onFileUpload, onMultipleFilesUpload }: ChatWindowProps) {
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  const messagesContainerRef = React.useRef<HTMLDivElement>(null);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = React.useState("");
+  const [lastScrollPosition, setLastScrollPosition] = React.useState(0);
+  const [autoScrollEnabled, setAutoScrollEnabled] = React.useState(true);
 
+  // Only scroll to bottom on new messages if auto-scroll is enabled
   React.useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (autoScrollEnabled && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, autoScrollEnabled]);
+
+  // Handle scroll events to detect when user manually scrolls
+  const handleScroll = () => {
+    if (!messagesContainerRef.current) return;
+    
+    const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
+    
+    // Detect if user is scrolling up or down
+    const isScrollingUp = scrollTop < lastScrollPosition;
+    setLastScrollPosition(scrollTop);
+    
+    // Check if we're at the bottom of the scroll container
+    const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 10;
+    
+    // If user scrolls up, disable auto-scroll
+    if (isScrollingUp && !isAtBottom) {
+      setAutoScrollEnabled(false);
+    }
+    
+    // If user scrolls to the bottom, enable auto-scroll again
+    if (isAtBottom) {
+      setAutoScrollEnabled(true);
+    }
+  };
 
   const handleFileUpload = () => {
     fileInputRef.current?.click();
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file && onFileUpload) {
-      onFileUpload(file);
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+    
+    if (files.length === 1 && onFileUpload) {
+      // Single file upload
+      onFileUpload(files[0]);
+    } else if (files.length > 1 && onMultipleFilesUpload) {
+      // Multiple files upload
+      const fileArray = Array.from(files);
+      onMultipleFilesUpload(fileArray);
     }
   };
 
+  // Reset auto-scroll when user sends a message
   const handleSendMessage = () => {
     if (inputValue.trim() && onSendMessage) {
       onSendMessage(inputValue);
       setInputValue("");
+      setAutoScrollEnabled(true);
+      
+      // Force scroll to bottom
+      setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     }
   };
 
@@ -57,7 +105,11 @@ export function ChatWindow({ title, messages, onSendMessage, onRefresh, onFileUp
       <CardHeader className="bg-gray-100 border-b">
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
+      <CardContent 
+        className="flex-1 overflow-y-auto p-4 space-y-4 text-sm" 
+        ref={messagesContainerRef}
+        onScroll={handleScroll}
+      >
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-gray-500 text-center">No messages yet</p>
@@ -72,7 +124,9 @@ export function ChatWindow({ title, messages, onSendMessage, onRefresh, onFileUp
                 className={`max-w-[80%] rounded-lg p-3 ${
                   message.isUser
                     ? "bg-gray-800 text-white"
-                    : "bg-gray-100 text-gray-900"
+                    : message.isProcessing
+                      ? "processing-message text-gray-900"
+                      : "bg-gray-100 text-gray-900"
                 }`}
               >
                 <p className="whitespace-pre-wrap break-words">{message.content}</p>
@@ -89,7 +143,7 @@ export function ChatWindow({ title, messages, onSendMessage, onRefresh, onFileUp
             value={inputValue}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1"
+            className="flex-1 text-sm"
           />
           <Button 
             variant="outline"
@@ -106,12 +160,13 @@ export function ChatWindow({ title, messages, onSendMessage, onRefresh, onFileUp
                 ref={fileInputRef}
                 onChange={handleFileChange}
                 className="hidden"
-                accept=".pdf,.csv,.xlsx,.xls"
+                accept=".pdf,.jpg,.jpeg,.png"
+                multiple
               />
               <Button 
                 variant="outline"
                 onClick={handleFileUpload}
-                className="flex-1"
+                className="flex-1 text-sm"
               >
                 <Upload className="size-4 mr-2" />
                 Upload
@@ -119,7 +174,7 @@ export function ChatWindow({ title, messages, onSendMessage, onRefresh, onFileUp
             </>
           )}
           <Button 
-            className="flex-1"
+            className="flex-1 text-sm"
             onClick={handleSendMessage}
           >
             <Send className="size-4 mr-2" />

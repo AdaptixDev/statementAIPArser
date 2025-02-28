@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,44 +75,6 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
 };
 
 export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps) {
-  // Add a ref for the card content
-  const cardContentRef = React.useRef<HTMLDivElement>(null);
-  
-  // Use effect to prevent auto-scrolling
-  React.useEffect(() => {
-    // Disable auto-scrolling behavior
-    const handleScroll = () => {
-      if (cardContentRef.current) {
-        // Store the current scroll position
-        const scrollPosition = cardContentRef.current.scrollTop;
-        
-        // If we detect a scroll to top (scrollTop near 0), prevent auto-scrolling
-        if (scrollPosition < 10) {
-          // Set a timeout to check if scroll position changed automatically
-          setTimeout(() => {
-            if (cardContentRef.current && cardContentRef.current.scrollTop > 10) {
-              // Reset to top if auto-scrolled
-              cardContentRef.current.scrollTop = 0;
-            }
-          }, 50);
-        }
-      }
-    };
-    
-    // Add event listener to the card content
-    const currentRef = cardContentRef.current;
-    if (currentRef) {
-      currentRef.addEventListener('scroll', handleScroll);
-    }
-    
-    // Clean up
-    return () => {
-      if (currentRef) {
-        currentRef.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
-
   // Parse the JSON data from the summary text
   const parseSummaryData = (summaryText: string): SummaryData | null => {
     if (!summaryText) return null;
@@ -237,6 +199,45 @@ export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps
             <p className={personalInformation.statementFinishingBalance < 0 ? "text-red-600" : "text-green-600"}>
               {formatCurrency(personalInformation.statementFinishingBalance)}
             </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Render income and outgoings section with exact values from JSON
+  const renderExactIncomeAndOutgoings = () => {
+    if (!summaryData) return null;
+    
+    const { summaryOfIncomeAndOutgoings } = summaryData;
+    
+    return (
+      <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
+        <h2 className="text-xl font-bold mb-3 text-blue-800">Income & Outgoings (Exact JSON Values)</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-lg font-semibold mb-2 text-green-700">Income</h3>
+            <div className="space-y-1">
+              {Object.entries(summaryOfIncomeAndOutgoings.income).map(([category, amount]) => (
+                <div key={`exact-income-${category}`} className="flex justify-between">
+                  <span>{category}</span>
+                  <span className="font-medium">Â£{amount}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-2 text-red-700">Outgoings</h3>
+            <div className="space-y-1">
+              {Object.entries(summaryOfIncomeAndOutgoings.outgoings).map(([category, amount]) => (
+                <div key={`exact-outgoing-${category}`} className="flex justify-between">
+                  <span>{category}</span>
+                  <span className="font-medium">Â£{amount}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -407,7 +408,7 @@ export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps
       <CardHeader className="bg-gray-100 border-b">
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent ref={cardContentRef} className="flex-1 overflow-auto p-4 bg-gray-50 text-sm">
+      <CardContent className="flex-1 overflow-y-auto p-4 bg-gray-50 text-sm">
         {!summary && !drivingLicense ? (
           <div className="space-y-4">
             <CollapsibleSection title="Statement Summary" defaultOpen={false}>
@@ -438,6 +439,9 @@ export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps
           </div>
         ) : (
           <div className="space-y-4">
+            {/* Add the exact income and outgoings display */}
+            {summaryData && renderExactIncomeAndOutgoings()}
+            
             <CollapsibleSection 
               title="Statement Summary" 
               defaultOpen={summary !== null}
