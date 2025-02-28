@@ -9,17 +9,32 @@ import shutil
 import json
 from typing import Dict, Any, List, Optional, Tuple, Union
 
-from backend.src.config.settings import Settings
-from backend.src.utils.exceptions import FileProcessingError
-from backend.src.utils.pdf_utils import PDFConverter, ImageData
-from backend.src.services.openai_service import OpenAIAssistantService
-from backend.src.services.gemini_service import GeminiService, CSV_HEADERS
-from backend.src.core.prompts import (
-    GEMINI_STATEMENT_PARSE,
-    GEMINI_PERSONAL_INFO_PARSE,
-    GEMINI_TRANSACTION_SUMMARY
-)
-from backend.src.core.data_processor import DataProcessor
+try:
+    # Try importing from backend.src (when running from root directory)
+    from backend.src.config.settings import Settings
+    from backend.src.utils.exceptions import FileProcessingError
+    from backend.src.utils.pdf_utils import PDFConverter, ImageData
+    from backend.src.services.openai_service import OpenAIAssistantService
+    from backend.src.services.gemini_service import GeminiService, CSV_HEADERS
+    from backend.src.core.prompts import (
+        GEMINI_STATEMENT_PARSE,
+        GEMINI_PERSONAL_INFO_PARSE,
+        GEMINI_TRANSACTION_SUMMARY
+    )
+    from backend.src.core.data_processor import DataProcessor
+except ImportError:
+    # Try importing from src (when running from backend directory)
+    from src.config.settings import Settings
+    from src.utils.exceptions import FileProcessingError
+    from src.utils.pdf_utils import PDFConverter, ImageData
+    from src.services.openai_service import OpenAIAssistantService
+    from src.services.gemini_service import GeminiService, CSV_HEADERS
+    from src.core.prompts import (
+        GEMINI_STATEMENT_PARSE,
+        GEMINI_PERSONAL_INFO_PARSE,
+        GEMINI_TRANSACTION_SUMMARY
+    )
+    from src.core.data_processor import DataProcessor
 
 logger = logging.getLogger(__name__)
 
@@ -176,11 +191,27 @@ class StatementProcessor:
                     pdf_path = image_files[0]
                     
                 logger.info(f"Processing statement with Gemini")
-                transactions = gemini.process_pdf_statement(
+                # Get both transactions and raw response
+                transactions, raw_response = gemini.process_pdf_statement_with_raw_response(
                     pdf_path=pdf_path,
-                    prompt_template=GEMINI_STATEMENT_PARSE,
-                    output_csv_path=output_csv
+                    prompt_template=GEMINI_STATEMENT_PARSE
                 )
+                
+                # Save the raw response if output_csv is provided
+                if output_csv:
+                    # Determine the directory from output_csv
+                    output_dir = os.path.dirname(output_csv)
+                    raw_response_file = os.path.join(output_dir, "raw_gemini_response.csv")
+                    logger.info(f"Saving raw Gemini response to: {raw_response_file}")
+                    with open(raw_response_file, "w", encoding="utf-8") as f:
+                        f.write(raw_response)
+                    
+                    # Also save the transactions to the output_csv
+                    logger.info(f"Saving {len(transactions)} transactions to CSV: {output_csv}")
+                    with open(output_csv, "w", newline="", encoding="utf-8") as csvfile:
+                        writer = csv.DictWriter(csvfile, fieldnames=CSV_HEADERS)
+                        writer.writeheader()
+                        writer.writerows(transactions)
                 
                 all_transactions.extend(transactions)
                 
@@ -283,7 +314,7 @@ class StatementProcessor:
                 try:
                     # Step 1: Split the PDF into chunks
                     logger.info(f"Splitting PDF into {chunk_count} chunks")
-                    smaller_pdfs = gemini._split_pdf_into_chunks(pdf_path, chunk_count, temp_dir)
+                    smaller_pdfs = gemini.split_pdf_into_subpdfs(pdf_path, chunk_count, temp_dir)
                     
                     # Store the first chunk path for additional processing later
                     first_chunk_path = smaller_pdfs[0] if smaller_pdfs else None
@@ -294,11 +325,19 @@ class StatementProcessor:
                     logger.info("Starting processing of sub-PDFs...")
                     for i, chunk_path in enumerate(smaller_pdfs, start=1):
                         logger.info(f"Processing chunk {i}/{len(smaller_pdfs)} for transactions")
-                        chunk_transactions = gemini.process_pdf_statement(
+                        # Get the raw response and transactions
+                        chunk_transactions, raw_response = gemini.process_pdf_statement_with_raw_response(
                             pdf_path=chunk_path,
                             prompt_template=GEMINI_STATEMENT_PARSE
                         )
                         all_transactions.extend(chunk_transactions)
+                        
+                        # Save the raw response to a file if file storage is enabled
+                        if Settings.ENABLE_FILE_STORAGE:
+                            raw_response_file = os.path.join(output_dir, f"raw_response_chunk_{i}.csv")
+                            logger.info(f"Saving raw Gemini response for chunk {i} to: {raw_response_file}")
+                            with open(raw_response_file, "w", encoding="utf-8") as f:
+                                f.write(raw_response)
                     
                     # Save all transactions to CSV
                     output_csv = os.path.join(output_dir, "transactions.csv") if Settings.ENABLE_FILE_STORAGE else None
@@ -440,19 +479,49 @@ class StatementProcessor:
             # Get the Gemini service
             gemini = self._get_gemini_service()
             
-            # Extract transactions from the PDF
-            logger.info("Step 1: Extracting transactions from PDF")
-            transactions = gemini.extract_transactions(pdf_path, chunk_count)
-            logger.info(f"Extracted {len(transactions)} transactions")
+            # Create a temporary directory for storing sub-PDFs
+            temp_dir = tempfile.mkdtemp()
+            logger.info(f"Created temporary directory: {temp_dir}")
             
-            # Save transactions to CSV
-            if Settings.ENABLE_FILE_STORAGE:
-                csv_path = os.path.join(output_dir, "transactions.csv")
-                logger.info(f"Saving transactions to CSV: {csv_path}")
-                with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
-                    writer = csv.DictWriter(csvfile, fieldnames=CSV_HEADERS)
-                    writer.writeheader()
-                    writer.writerows(transactions)
+            try:
+                # Step 1: Split the PDF into chunks
+                logger.info(f"Splitting PDF into {chunk_count} chunks")
+                smaller_pdfs = gemini.split_pdf_into_subpdfs(pdf_path, chunk_count, temp_dir)
+                
+                # Process each chunk for transactions
+                all_transactions = []
+                
+                logger.info("Starting processing of sub-PDFs...")
+                for i, chunk_path in enumerate(smaller_pdfs, start=1):
+                    logger.info(f"Processing chunk {i}/{len(smaller_pdfs)} for transactions")
+                    # Get the raw response and transactions
+                    chunk_transactions, raw_response = gemini.process_pdf_statement_with_raw_response(
+                        pdf_path=chunk_path,
+                        prompt_template=GEMINI_STATEMENT_PARSE
+                    )
+                    all_transactions.extend(chunk_transactions)
+                    
+                    # Save the raw response to a file if file storage is enabled
+                    if Settings.ENABLE_FILE_STORAGE:
+                        raw_response_file = os.path.join(output_dir, f"raw_response_chunk_{i}.csv")
+                        logger.info(f"Saving raw Gemini response for chunk {i} to: {raw_response_file}")
+                        with open(raw_response_file, "w", encoding="utf-8") as f:
+                            f.write(raw_response)
+                
+                # Save all transactions to CSV
+                if Settings.ENABLE_FILE_STORAGE:
+                    csv_path = os.path.join(output_dir, "transactions.csv")
+                    logger.info(f"Saving {len(all_transactions)} transactions to CSV: {csv_path}")
+                    with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
+                        writer = csv.DictWriter(csvfile, fieldnames=CSV_HEADERS)
+                        writer.writeheader()
+                        writer.writerows(all_transactions)
+                
+                transactions = all_transactions
+            finally:
+                # Clean up: remove all sub-PDFs in the temp directory
+                shutil.rmtree(temp_dir, ignore_errors=True)
+                logger.info(f"Removed temporary directory: {temp_dir}")
             
             # Extract personal information from the PDF
             logger.info("Step 2: Extracting personal information from PDF")

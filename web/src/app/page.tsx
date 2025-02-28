@@ -5,7 +5,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { ChatWindow } from "@/components/layout/chat-window";
 import { SummaryCard } from "@/components/layout/summary-card";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
 
 export default function Home() {
   // Define the message type
@@ -25,9 +24,9 @@ export default function Home() {
   ]);
 
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [summaryData, setSummaryData] = useState<string | null>(null);
   const [drivingLicenseData, setDrivingLicenseData] = useState<string | null>(null);
+  const [passportData, setPassportData] = useState<string | null>(null);
 
   const processingMessages = [
     "Extracting data from documents...",
@@ -46,25 +45,32 @@ export default function Home() {
     const fileName = file.name.toLowerCase();
     const fileType = file.type;
     
-    let documentType = "Unknown document";
+    let documentType = "Unknown";
     
     if (fileName.endsWith('.pdf') && fileName.includes('statement')) {
       documentType = "Bank Statement";
-    } else if (fileName.endsWith('.pdf')) {
-      documentType = "PDF Document";
-    } else if ((fileType.includes('image/') || fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')) 
-              && (fileName.includes('licence') || fileName.includes('license') || fileName.includes('dl'))) {
+    } 
+    else if ((fileType.includes('image/') || fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')) 
+            && (fileName.includes('licence') || fileName.includes('license') || fileName.includes('dl'))) {
       documentType = "Driving License";
-    } else if (fileType.includes('image/') || fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')) {
-      documentType = "Image Document";
+    }
+    else if ((fileType.includes('image/') || fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')) 
+            && (fileName.includes('pass') || fileName.includes('passport'))) {
+      documentType = "Passport";
+    }
+    else if (fileName.endsWith('.pdf')) {
+      documentType = "PDF Document";
+    }
+    else if (fileType.includes('image/') || fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')) {
+      documentType = "Image";
     }
     
-    // Add message to chat
+    // Add a message to the chat
     setLeftChatMessages(prev => [
       ...prev,
       {
         id: generateUniqueId(),
-        content: `${documentType} detected: ${file.name}`,
+        content: `Detected document type: ${documentType}`,
         isUser: false,
       }
     ]);
@@ -182,22 +188,21 @@ export default function Home() {
 
   const handleAnalyzeDocuments = async () => {
     if (uploadedFiles.length === 0) {
+      // No files to analyze
       setLeftChatMessages(prev => [
         ...prev,
         {
           id: generateUniqueId(),
-          content: "Please upload at least one document first.",
+          content: "Please upload some documents to analyze.",
           isUser: false,
         }
       ]);
       return;
     }
-
-    setIsProcessing(true);
     
     // Start the processing messages
     startProcessingMessages();
-
+    
     try {
       // Process each file based on its type
       for (const file of uploadedFiles) {
@@ -213,6 +218,11 @@ export default function Home() {
                 && (fileName.includes('licence') || fileName.includes('license') || fileName.includes('dl'))) {
           await processDrivingLicense(file);
         }
+        // Check if it's a passport image
+        else if ((fileType.includes('image/') || fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')) 
+                && (fileName.includes('pass') || fileName.includes('passport'))) {
+          await processPassport(file);
+        }
         // Default to statement processing for PDFs
         else if (fileName.endsWith('.pdf')) {
           await processStatementPDF(file);
@@ -227,7 +237,7 @@ export default function Home() {
             ...prev,
             {
               id: generateUniqueId(),
-              content: `Unsupported file type: ${file.name}. Please upload PDF statements or image files for driving licenses.`,
+              content: `Unsupported file type: ${file.name}. Please upload PDF statements or image files for driving licenses or passports.`,
               isUser: false,
             }
           ]);
@@ -248,21 +258,18 @@ export default function Home() {
       ]);
       
     } catch (error) {
-      console.error('Error processing documents:', error);
-      
       // Stop the processing messages
       stopProcessingMessages();
       
+      // Add an error message to the chat
       setLeftChatMessages(prev => [
         ...prev,
         {
           id: generateUniqueId(),
-          content: `Error: ${error instanceof Error ? error.message : 'Failed to process documents'}`,
+          content: `Error analyzing documents: ${error instanceof Error ? error.message : String(error)}`,
           isUser: false,
         }
       ]);
-    } finally {
-      setIsProcessing(false);
     }
   };
 
@@ -320,6 +327,37 @@ export default function Home() {
     }
   };
 
+  const processPassport = async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch('/api/process-passport', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json();
+    console.log('Passport API response:', data);
+
+    if (response.ok) {
+      // Set the passport data
+      console.log('Setting passport data:', data.result);
+      setPassportData(JSON.stringify(data.result));
+      
+      // Add a message to the chat
+      setLeftChatMessages(prev => [
+        ...prev,
+        {
+          id: generateUniqueId(),
+          content: "Passport processed successfully. Check the Identification Documents section.",
+          isUser: false,
+        }
+      ]);
+    } else {
+      throw new Error(data.error || 'Failed to process passport');
+    }
+  };
+
   const handleSendMessage = (message: string) => {
     // Add the user message to the chat
     setLeftChatMessages(prev => [
@@ -345,6 +383,7 @@ export default function Home() {
               setUploadedFiles([]);
               setSummaryData(null);
               setDrivingLicenseData(null);
+              setPassportData(null);
             }}
             onFileUpload={handleFileUpload}
             onMultipleFilesUpload={handleMultipleFilesUpload}
@@ -353,16 +392,9 @@ export default function Home() {
             <Button 
               className="w-full"
               onClick={handleAnalyzeDocuments}
-              disabled={isProcessing || uploadedFiles.length === 0}
+              disabled={uploadedFiles.length === 0}
             >
-              {isProcessing ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                'Analyse Documents'
-              )}
+              Analyse Documents
             </Button>
           </div>
         </div>
@@ -371,6 +403,7 @@ export default function Home() {
           title="Document Summary" 
           summary={summaryData}
           drivingLicense={drivingLicenseData}
+          passport={passportData}
         />
       </div>
     </AppLayout>

@@ -8,6 +8,7 @@ interface SummaryCardProps {
   title: string;
   summary: string | null;
   drivingLicense: string | null;
+  passport: string | null;
 }
 
 // Define the structure of our summary data
@@ -37,6 +38,17 @@ interface DrivingLicenseData {
   dateOfBirth: string;
   expiryDate: string;
   licenceNumber: string;
+  raw_response?: string;
+}
+
+// Define the structure of passport data
+interface PassportData {
+  surname: string;
+  forename: string;
+  address: string;
+  dateOfBirth: string;
+  expiryDate: string;
+  passportNumber: string;
   raw_response?: string;
 }
 
@@ -74,46 +86,67 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   );
 };
 
-export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps) {
+// Parse the identification document data
+const parseIdentificationDocument = (documentText: string): DrivingLicenseData | PassportData | null => {
+  if (!documentText) return null;
+  
+  try {
+    // Clean up the input string - remove any "```json" or "```" markers
+    let cleanedText = documentText.trim();
+    
+    // Remove markdown code block markers if present
+    if (cleanedText.startsWith("```json")) {
+      cleanedText = cleanedText.substring(7);
+    }
+    if (cleanedText.startsWith("```")) {
+      cleanedText = cleanedText.substring(3);
+    }
+    if (cleanedText.endsWith("```")) {
+      cleanedText = cleanedText.substring(0, cleanedText.length - 3);
+    }
+    
+    // Trim again after removing markers
+    cleanedText = cleanedText.trim();
+    
+    // Log the cleaned text for debugging
+    console.log("Cleaned identification document text:", cleanedText);
+    
+    // Parse the JSON
+    const parsedData = JSON.parse(cleanedText);
+    
+    // Log the parsed data for debugging
+    console.log("Parsed identification document data:", parsedData);
+    
+    // Check if it's a passport or driving license
+    if ('passportNumber' in parsedData) {
+      console.log("Detected passport data");
+    } else if ('licenceNumber' in parsedData) {
+      console.log("Detected driving license data");
+    } else {
+      console.log("Unknown identification document type");
+    }
+    
+    return parsedData;
+  } catch (error) {
+    console.error("Failed to parse identification document data:", error);
+    return null;
+  }
+};
+
+// Determine if the data is a passport or driving license
+const isPassportData = (data: DrivingLicenseData | PassportData | Record<string, unknown>): data is PassportData => {
+  return Boolean(data && typeof data === 'object' && 'passportNumber' in data && data.passportNumber);
+};
+
+const isDrivingLicenseData = (data: DrivingLicenseData | PassportData | Record<string, unknown>): data is DrivingLicenseData => {
+  return Boolean(data && typeof data === 'object' && 'licenceNumber' in data && data.licenceNumber);
+};
+
+export function SummaryCard({ title, summary, drivingLicense, passport }: SummaryCardProps) {
   // Add a ref for the card content
   const cardContentRef = React.useRef<HTMLDivElement>(null);
   
-  // Use effect to prevent auto-scrolling
-  React.useEffect(() => {
-    // Disable auto-scrolling behavior
-    const handleScroll = () => {
-      if (cardContentRef.current) {
-        // Store the current scroll position
-        const scrollPosition = cardContentRef.current.scrollTop;
-        
-        // If we detect a scroll to top (scrollTop near 0), prevent auto-scrolling
-        if (scrollPosition < 10) {
-          // Set a timeout to check if scroll position changed automatically
-          setTimeout(() => {
-            if (cardContentRef.current && cardContentRef.current.scrollTop > 10) {
-              // Reset to top if auto-scrolled
-              cardContentRef.current.scrollTop = 0;
-            }
-          }, 50);
-        }
-      }
-    };
-    
-    // Add event listener to the card content
-    const currentRef = cardContentRef.current;
-    if (currentRef) {
-      currentRef.addEventListener('scroll', handleScroll);
-    }
-    
-    // Clean up
-    return () => {
-      if (currentRef) {
-        currentRef.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
-
-  // Parse the JSON data from the summary text
+  // Parse the summary data
   const parseSummaryData = (summaryText: string): SummaryData | null => {
     if (!summaryText) return null;
     
@@ -150,39 +183,116 @@ export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps
       return null;
     }
   };
-
-  // Parse the JSON data from the driving license text
-  const parseDrivingLicenseData = (licenseText: string): DrivingLicenseData | null => {
-    if (!licenseText) return null;
-    
-    try {
-      // Clean up the input string - remove any "```json" or "```" markers
-      let cleanedText = licenseText.trim();
-      
-      // Remove markdown code block markers if present
-      if (cleanedText.startsWith("```json")) {
-        cleanedText = cleanedText.substring(7);
-      }
-      if (cleanedText.startsWith("```")) {
-        cleanedText = cleanedText.substring(3);
-      }
-      if (cleanedText.endsWith("```")) {
-        cleanedText = cleanedText.substring(0, cleanedText.length - 3);
-      }
-      
-      // Trim again after removing markers
-      cleanedText = cleanedText.trim();
-      
-      // Parse the JSON
-      return JSON.parse(cleanedText);
-    } catch (error) {
-      console.error("Failed to parse driving license data:", error);
-      return null;
-    }
-  };
-
+  
+  // Parse the data
   const summaryData = summary ? parseSummaryData(summary) : null;
-  const licenseData = drivingLicense ? parseDrivingLicenseData(drivingLicense) : null;
+  const drivingLicenseDocument = drivingLicense ? parseIdentificationDocument(drivingLicense) : null;
+  const passportDocument = passport ? parseIdentificationDocument(passport) : null;
+  
+  // Extract passport and driving license data if available
+  const passportData = passportDocument && isPassportData(passportDocument) ? passportDocument : null;
+  const drivingLicenseData = drivingLicenseDocument && isDrivingLicenseData(drivingLicenseDocument) ? drivingLicenseDocument : null;
+  
+  // Use effect to prevent auto-scrolling
+  React.useEffect(() => {
+    let isManualScroll = false;
+    let scrollTimeout: NodeJS.Timeout | null = null;
+    
+    // Disable auto-scrolling behavior
+    const handleScroll = () => {
+      if (!cardContentRef.current) return;
+      
+      // If this is a manual scroll, mark it
+      isManualScroll = true;
+      
+      // Clear any existing timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      
+      // Set a timeout to reset the manual scroll flag
+      scrollTimeout = setTimeout(() => {
+        isManualScroll = false;
+      }, 100);
+    };
+    
+    // Handle any automatic scrolling that might occur
+    const checkForAutoScroll = () => {
+      if (!cardContentRef.current || isManualScroll) return;
+      
+      // If we're not at the top and we didn't manually scroll, it's likely an auto-scroll
+      if (cardContentRef.current.scrollTop > 0) {
+        cardContentRef.current.scrollTop = 0;
+      }
+    };
+    
+    // Set up an interval to check for auto-scrolling
+    const intervalId = setInterval(checkForAutoScroll, 100);
+    
+    // Add event listener to the card content
+    const currentRef = cardContentRef.current;
+    if (currentRef) {
+      currentRef.addEventListener('scroll', handleScroll);
+    }
+    
+    // Clean up
+    return () => {
+      if (currentRef) {
+        currentRef.removeEventListener('scroll', handleScroll);
+      }
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  // Use effect to maintain scroll position
+  React.useEffect(() => {
+    // Create a MutationObserver to watch for changes in the card content
+    if (cardContentRef.current) {
+      let lastScrollTop = 0;
+      
+      // Function to store the current scroll position
+      const storeScrollPosition = () => {
+        if (cardContentRef.current) {
+          lastScrollTop = cardContentRef.current.scrollTop;
+        }
+      };
+      
+      // Function to restore the scroll position
+      const restoreScrollPosition = () => {
+        if (cardContentRef.current && cardContentRef.current.scrollTop !== lastScrollTop) {
+          cardContentRef.current.scrollTop = lastScrollTop;
+        }
+      };
+      
+      // Create a MutationObserver to watch for changes
+      const observer = new MutationObserver(() => {
+        // Restore scroll position after DOM changes
+        restoreScrollPosition();
+      });
+      
+      // Start observing the card content for changes
+      observer.observe(cardContentRef.current, { 
+        childList: true, 
+        subtree: true,
+        attributes: true,
+        characterData: true
+      });
+      
+      // Add event listener to store scroll position before changes
+      cardContentRef.current.addEventListener('scroll', storeScrollPosition);
+      
+      // Clean up
+      return () => {
+        observer.disconnect();
+        if (cardContentRef.current) {
+          cardContentRef.current.removeEventListener('scroll', storeScrollPosition);
+        }
+      };
+    }
+  }, []);
 
   // Format currency values
   const formatCurrency = (value: number): string => {
@@ -366,8 +476,8 @@ export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps
   };
 
   // Render driving license information
-  const renderDrivingLicense = () => {
-    if (!licenseData) return null;
+  const renderDrivingLicenseDocument = () => {
+    if (!drivingLicenseData) return null;
     
     return (
       <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
@@ -375,30 +485,79 @@ export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
             <p className="font-semibold">Surname</p>
-            <p>{licenseData.surname}</p>
+            <p>{drivingLicenseData.surname}</p>
           </div>
           <div>
             <p className="font-semibold">Forename</p>
-            <p>{licenseData.forename}</p>
+            <p>{drivingLicenseData.forename}</p>
           </div>
           <div>
             <p className="font-semibold">Address</p>
-            <p>{licenseData.address}</p>
+            <p>{drivingLicenseData.address || "Not available"}</p>
           </div>
           <div>
             <p className="font-semibold">Date of Birth</p>
-            <p>{licenseData.dateOfBirth}</p>
+            <p>{drivingLicenseData.dateOfBirth}</p>
           </div>
           <div>
             <p className="font-semibold">Expiry Date</p>
-            <p>{licenseData.expiryDate}</p>
+            <p>{drivingLicenseData.expiryDate}</p>
           </div>
           <div>
             <p className="font-semibold">License Number</p>
-            <p>{licenseData.licenceNumber}</p>
+            <p>{drivingLicenseData.licenceNumber}</p>
           </div>
         </div>
       </div>
+    );
+  };
+  
+  // Render passport information
+  const renderPassportDocument = () => {
+    if (!passportData) return null;
+    
+    return (
+      <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
+        <h2 className="text-xl font-bold mb-3 text-blue-800">Passport Information</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <p className="font-semibold">Surname</p>
+            <p>{passportData.surname}</p>
+          </div>
+          <div>
+            <p className="font-semibold">Forename</p>
+            <p>{passportData.forename}</p>
+          </div>
+          <div>
+            <p className="font-semibold">Address</p>
+            <p>{passportData.address || "Not available"}</p>
+          </div>
+          <div>
+            <p className="font-semibold">Date of Birth</p>
+            <p>{passportData.dateOfBirth}</p>
+          </div>
+          <div>
+            <p className="font-semibold">Expiry Date</p>
+            <p>{passportData.expiryDate}</p>
+          </div>
+          <div>
+            <p className="font-semibold">Passport Number</p>
+            <p>{passportData.passportNumber}</p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  // Render identification documents section
+  const renderIdentificationDocuments = () => {
+    if (!drivingLicenseData && !passportData) return null;
+    
+    return (
+      <>
+        {passportData && renderPassportDocument()}
+        {drivingLicenseData && renderDrivingLicenseDocument()}
+      </>
     );
   };
 
@@ -408,7 +567,7 @@ export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent ref={cardContentRef} className="flex-1 overflow-auto p-4 bg-gray-50 text-sm">
-        {!summary && !drivingLicense ? (
+        {!summary && !drivingLicense && !passport ? (
           <div className="space-y-4">
             <CollapsibleSection title="Statement Summary" defaultOpen={false}>
               <div className="flex items-center justify-center py-4">
@@ -468,20 +627,11 @@ export function SummaryCard({ title, summary, drivingLicense }: SummaryCardProps
             
             <CollapsibleSection 
               title="Identification Documents" 
-              defaultOpen={drivingLicense !== null}
+              defaultOpen={drivingLicense !== null || passport !== null}
               className="bg-white"
             >
-              {drivingLicense ? (
-                licenseData ? (
-                  renderDrivingLicense()
-                ) : (
-                  <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <p className="text-yellow-800">Unable to parse the driving license data. Please ensure it&apos;s in the correct format.</p>
-                    <pre className="mt-2 text-xs overflow-auto max-h-40 bg-gray-100 p-2 rounded">
-                      {drivingLicense}
-                    </pre>
-                  </div>
-                )
+              {drivingLicense || passport ? (
+                renderIdentificationDocuments()
               ) : (
                 <div className="py-4 text-center text-gray-500">
                   <p>No identification documents available.</p>

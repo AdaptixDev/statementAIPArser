@@ -22,6 +22,7 @@ Category fields has to be one of the following an should be inferred from the tr
 8. Bank Transfer - Money transferred from one account to another - Can be outgoing or incoming
 9. Unknown - Any other category that does not fit into the above
 
+The only categories to be used are the ones listed above, do not make up new categories. Use unknown if you cannot infer a category.
 
 If the date is not clear parse the description data to infer.
 Any dates must be output in the format dd-mm-yyyy 
@@ -107,4 +108,45 @@ The JSON needs to follow the following structure
     "Seek Financial Advice: If the balance keeps declining or financial management is challenging, consult a professional."
   ]
 }
+"""
+
+GEMINI_DRIVING_LICENCE_PARSE = """\
+You are an expert at parsing driving licence information from an image of a driving licence.
+
+The information you need to extract is as follows:
+
+Surname, Forename, Address, Date of Birth, Expiry Date, Licence Number
+
+Return as a JSON object with the following structure:
+
+{
+  "surname": "Smith",
+  "forename": "John",
+  "address": "123 Example Street, Example Town, EX1 1EX",
+  "dateOfBirth": "1990-01-01",
+  "expiryDate": "2025-01-01",
+  "licenceNumber": "1234567890"
+}
+
+"""
+
+GEMINI_PASSPORT_PARSE = """\
+You are an expert at parsing passport information from an image of a passport.
+
+The information you need to extract is as follows:
+
+Surname, Forename, Address, Date of Birth, Expiry Date, Passport Number
+
+Return as a JSON object with the following structure:
+
+{ 
+  "surname": "Smith",
+  "forename": "John",
+  "address": "123 Example Street, Example Town, EX1 1EX",
+  "dateOfBirth": "1990-01-01",
+  "expiryDate": "2025-01-01",
+  "passportNumber": "1234567890"
+}
+
+
 """
