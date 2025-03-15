@@ -193,102 +193,31 @@ export function SummaryCard({ title, summary, drivingLicense, passport }: Summar
   const passportData = passportDocument && isPassportData(passportDocument) ? passportDocument : null;
   const drivingLicenseData = drivingLicenseDocument && isDrivingLicenseData(drivingLicenseDocument) ? drivingLicenseDocument : null;
   
-  // Use effect to prevent auto-scrolling
+  // Use effect for simplified scroll management
   React.useEffect(() => {
-    let isManualScroll = false;
-    let scrollTimeout: NodeJS.Timeout | null = null;
-    
-    // Disable auto-scrolling behavior
-    const handleScroll = () => {
-      if (!cardContentRef.current) return;
-      
-      // If this is a manual scroll, mark it
-      isManualScroll = true;
-      
-      // Clear any existing timeout
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-      
-      // Set a timeout to reset the manual scroll flag
-      scrollTimeout = setTimeout(() => {
-        isManualScroll = false;
-      }, 100);
-    };
-    
-    // Handle any automatic scrolling that might occur
-    const checkForAutoScroll = () => {
-      if (!cardContentRef.current || isManualScroll) return;
-      
-      // If we're not at the top and we didn't manually scroll, it's likely an auto-scroll
-      if (cardContentRef.current.scrollTop > 0) {
-        cardContentRef.current.scrollTop = 0;
-      }
-    };
-    
-    // Set up an interval to check for auto-scrolling
-    const intervalId = setInterval(checkForAutoScroll, 100);
-    
-    // Add event listener to the card content
-    const currentRef = cardContentRef.current;
-    if (currentRef) {
-      currentRef.addEventListener('scroll', handleScroll);
-    }
-    
-    // Clean up
-    return () => {
-      if (currentRef) {
-        currentRef.removeEventListener('scroll', handleScroll);
-      }
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-      clearInterval(intervalId);
-    };
-  }, []);
-
-  // Use effect to maintain scroll position
-  React.useEffect(() => {
-    // Create a MutationObserver to watch for changes in the card content
     if (cardContentRef.current) {
-      let lastScrollTop = 0;
+      let scrollTimeout: NodeJS.Timeout | null = null;
       
-      // Function to store the current scroll position
-      const storeScrollPosition = () => {
-        if (cardContentRef.current) {
-          lastScrollTop = cardContentRef.current.scrollTop;
+      const handleScroll = () => {
+        if (!cardContentRef.current) return;
+        
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
         }
+        
+        scrollTimeout = setTimeout(() => {
+          // Reset scroll timeout
+        }, 250);
       };
       
-      // Function to restore the scroll position
-      const restoreScrollPosition = () => {
-        if (cardContentRef.current && cardContentRef.current.scrollTop !== lastScrollTop) {
-          cardContentRef.current.scrollTop = lastScrollTop;
-        }
-      };
+      cardContentRef.current.addEventListener('scroll', handleScroll);
       
-      // Create a MutationObserver to watch for changes
-      const observer = new MutationObserver(() => {
-        // Restore scroll position after DOM changes
-        restoreScrollPosition();
-      });
-      
-      // Start observing the card content for changes
-      observer.observe(cardContentRef.current, { 
-        childList: true, 
-        subtree: true,
-        attributes: true,
-        characterData: true
-      });
-      
-      // Add event listener to store scroll position before changes
-      cardContentRef.current.addEventListener('scroll', storeScrollPosition);
-      
-      // Clean up
       return () => {
-        observer.disconnect();
         if (cardContentRef.current) {
-          cardContentRef.current.removeEventListener('scroll', storeScrollPosition);
+          cardContentRef.current.removeEventListener('scroll', handleScroll);
+        }
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
         }
       };
     }
@@ -563,10 +492,14 @@ export function SummaryCard({ title, summary, drivingLicense, passport }: Summar
 
   return (
     <Card className="flex flex-col h-full">
-      <CardHeader className="bg-gray-100 border-b">
+      <CardHeader className="bg-gray-100 border-b flex-shrink-0">
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent ref={cardContentRef} className="flex-1 overflow-auto p-4 bg-gray-50 text-sm">
+      <CardContent 
+        ref={cardContentRef} 
+        className="flex-1 overflow-y-auto p-4 bg-gray-50 text-sm"
+        style={{ scrollbarGutter: 'stable' }}
+      >
         {!summary && !drivingLicense && !passport ? (
           <div className="space-y-4">
             <CollapsibleSection title="Statement Summary" defaultOpen={false}>

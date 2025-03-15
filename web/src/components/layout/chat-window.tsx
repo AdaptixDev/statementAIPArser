@@ -102,41 +102,44 @@ export function ChatWindow({ title, messages, onSendMessage, onRefresh, onFileUp
 
   return (
     <Card className="flex flex-col h-full">
-      <CardHeader className="bg-gray-100 border-b">
+      <CardHeader className="bg-gray-100 border-b flex-shrink-0">
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent 
         className="flex-1 overflow-y-auto p-4 space-y-4 text-sm" 
         ref={messagesContainerRef}
         onScroll={handleScroll}
+        style={{ scrollbarGutter: 'stable' }}
       >
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-gray-500 text-center">No messages yet</p>
           </div>
         ) : (
-          messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.isUser ? "justify-end" : "justify-start"}`}
-            >
+          <>
+            {messages.map((message) => (
               <div
-                className={`max-w-[80%] rounded-lg p-3 ${
-                  message.isUser
-                    ? "bg-gray-800 text-white"
-                    : message.isProcessing
-                      ? "processing-message text-gray-900"
-                      : "bg-gray-100 text-gray-900"
-                }`}
+                key={message.id}
+                className={`flex ${message.isUser ? "justify-end" : "justify-start"}`}
               >
-                <p className="whitespace-pre-wrap break-words">{message.content}</p>
+                <div
+                  className={`max-w-[80%] rounded-lg p-3 ${
+                    message.isUser
+                      ? "bg-gray-800 text-white"
+                      : message.isProcessing
+                        ? "processing-message text-gray-900"
+                        : "bg-gray-100 text-gray-900"
+                  }`}
+                >
+                  <p className="whitespace-pre-wrap break-words">{message.content}</p>
+                </div>
               </div>
-            </div>
-          ))
+            ))}
+            <div ref={messagesEndRef} />
+          </>
         )}
-        <div ref={messagesEndRef} />
       </CardContent>
-      <CardFooter className="border-t p-3 gap-2 flex flex-col">
+      <CardFooter className="flex-shrink-0 border-t bg-white p-4 space-y-2">
         <div className="flex w-full gap-2">
           <Input
             placeholder="Type your message..."

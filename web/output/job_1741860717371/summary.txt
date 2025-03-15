@@ -1,0 +1,50 @@
+```json
+{
+  "personalInformation": {
+    "name": "CHRISTOPHER J BYRON",
+    "address": "89 FLIXTON ROAD, URMSTON, MANCHESTER, M41 5AN",
+    "accountNumber": "10212003",
+    "sortCode": "16-33-22",
+    "statementStartingBalance": 64.97,
+    "statementFinishingBalance": 814.79
+  },
+  "summaryOfIncomeAndOutgoings": {
+    "income": {
+      "Unknown": 7519.30 + 110.55 + 100.00 + 75.00 + 0.33,
+      "Gambling": 113.81 + 94.79 + 189.82 + 341.41 + 75.87 + 30.00,
+      "Salary": 211.66 + 240.00 + 150.00,
+      "Bank Transfer": 200.00
+    },
+    "outgoings": {
+      "Cash Withdrawal": 81.00 + 54.38 + 54.19 + 50.00 + 50.00 + 40.00,
+      "Unknown": 20.00 + 4.49 + 53.41 + 4.86 + 5.60 + 16.07 + 10.46 + 105.05 + 5.20 + 8.75 + 20.00 + 13.00 + 26.00 + 27.50 + 20.00 + 9.97 + 7.98 + 8.40 + 11.50 + 14.99 + 5.60 + 37.73 + 10.99 + 25.39 + 19.98 + 13.97 + 0.80 + 20.85 + 7.59 + 5.00 + 8.40 + 3.60 + 12.30 + 7.00 + 10.15 + 6.50 + 20.15 + 11.50 + 14.99 + 27.80 + 14.99 + 9.00 + 18.80 + 27.15 + 19.90,
+      "Gambling": 5.00 + 30.00 + 14.00 + 20.00 + 50.00 + 5.00 + 12.00 + 25.00 + 30.00 + 10.00 + 25.00 + 25.00 + 30.00 + 20.00 + 25.00 + 25.00 + 15.00 + 20.00 + 30.00 + 25.00 + 20.00 + 10.00 + 5.00 + 20.00 + 10.00 + 20.00 + 10.00 + 20.00 + 15.00 + 25.00 + 10.00 + 20.00 + 20.00 + 30.00 + 25.00 + 20.00 + 25.00 + 10.00 + 15.00 + 25.00 + 10.00 + 20.00 + 35.00 + 25.00 + 20.00 + 20.00 + 5.00 + 25.00 + 30.00 + 25.00 + 15.00 + 25.00 + 25.00 + 10.00 + 19.00 + 20.00 + 35.00 + 25.00 + 15.00 + 25.00 + 25.00 + 15.00 + 20.00 + 25.00 + 20.00 + 20.00 + 20.00 + 10.00 + 10.00,
+      "Non-Essential Household": 19.45 + 2.99 + 1.99 + 6.99 + 12.99 + 5.99 + 11.99 + 1.99 + 5.99 + 7.99 + 5.99 + 7.99 + 11.99 + 1.99 + 2.99 + 4.49 + 7.99 + 1.99 + 7.99 + 8.99 + 19.35 + 0.99 + 7.99 + 12.99,
+      "Bank Transfer": 3300.00 + 800.00 + 100.00 + 260.00 + 200.00 + 10.00 + 5.00 + 15.00 + 50.00 + 150.00,
+      "Non -Essential Entertainment": 38.10 + 26.88 + 14.91 + 29.98 + 8.28 + 20.39 + 5.80 + 25.36 + 13.50 + 11.90 + 14.03 + 47.10 + 30.00 + 8.00 + 8.74 + 38.45 + 0.84 + 1.10 + 4.05 + 4.99 + 15.90 + 16.96 + 6.20 + 8.99 + 5.65 + 8.99 + 17.97 + 6.50 + 6.98 + 14.96 + 6.95 + 5.75 + 18.25 + 12.35 + 4.80 + 1.90 + 13.80 + 11.00 + 5.25 + 13.10 + 6.75 + 14.10 + 35.99 + 14.95 + 11.00 + 8.49 + 11.00 + 19.75 + 17.98 + 24.00 + 180.00 + 18.04 + 9.00 + 10.00 + 11.30 + 12.54 + 9.80 + 9.20 + 22.98 + 14.35 + 15.05 + 3.20 + 3.00 + 5.50 + 12.80 + 0.99 + 23.24 + 4.90 + 7.70 + 4.90 + 22.30 + 18.85 + 4.90 + 12.85 + 35.44 + 9.94 + 19.00 + 22.80 + 3.50 + 18.99 + 11.82 + 160.00 + 14.63 + 12.00 + 17.60 + 3.90 + 1.10 + 20.85 + 3.50 + 5.00 + 8.40 + 12.30 + 7.00 + 90.90 + 22.90 + 17.95 + 1.57 + 18.58 + 13.00 + 51.91 + 15.96 + 11.91 + 9.80 + 21.94 + 5.70,
+      "Essential Household": 105.00
+    }
+  },
+  "generalSummaryAndFinancialHealthCommentary": {
+    "overallBalance": "The account balance has increased by £749.82 during the statement period (from £64.97 to £814.79).",
+    "inconsistentCategorization": "There are a lot of transactions labelled as 'Unknown.' More specific categorization is needed for proper budgeting and analysis.",
+    "essentialHouseholdSpending": "There is an Essential Household direct debit.",
+    "transfers": "Frequent transfers to and from 'BYRON C & C', 'KEVIN BYRON' and 'JULIA BYRON' suggest money moving between accounts.",
+    "paymentsToIndividuals": "Numerous payments to individuals could indicate informal lending or reimbursements.",
+    "incomeNote": "Multiple payments are listed as salary.",
+    "highEntertainmentSpending": "High spending on non-essential entertainment"
+  },
+  "potentialRedFlagsAndConcerns": [
+    "High 'Unknown' Category Spending: Indicates lack of tracking and control over finances.",
+    "Frequent Gambling Transactions: A significant number of transactions are related to gambling, which could be a concern.",
+    "Overdraft Usage: The final balance in the statement period ends in overdraft. Ensure these can be repaid and consider ways to avoid these in the future."
+  ],
+  "recommendations": [
+    "Categorize Transactions: Categorize all 'Unknown' items to see where money is truly going.",
+    "Budgeting: Create a detailed budget to manage income and expenses.",
+    "Investigate Transfers: Understand the purpose of frequent transfers to 'BYRON C' and other individuals.",
+    "Reduce Gambling Spending: Consider setting limits on gambling activities to avoid financial strain.",
+    "Avoid Overdraft: Manage spending to avoid overdraft fees and potential credit issues."
+  ]
+}
+```

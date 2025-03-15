@@ -1,0 +1,49 @@
+```json
+{
+  "personalInformation": {
+    "name": "CLAIRE V BYRON & CHRISTOPHER J BYRON",
+    "address": "89 FLIXTON ROAD URMSTON MANCHESTER M41 5AN",
+    "accountNumber": "10185383",
+    "sortCode": "16-33-22",
+    "statementStartingBalance": 8233.65,
+    "statementFinishingBalance": 6174.17
+  },
+  "summaryOfIncomeAndOutgoings": {
+    "income": {
+      "Essential Home - Rent/Mortgage": 1250.00,
+      "Essential Household": 145.99,
+      "Bank Transfer": 4000.00
+    },
+    "outgoings": {
+      "Essential Household": 1187.67,
+      "Non-Essential Household": 33.00,
+      "Non -Essential Entertainment": 18.00,
+      "Unknown": 1711.12,
+      "Bank Transfer": 1945.00
+    }
+  },
+  "generalSummaryAndFinancialHealthCommentary": {
+    "overallBalance": "The account balance has decreased by £2059.48 during the statement period (from £8233.65 to £6174.17).",
+    "inconsistentCategorization": "There are transactions labelled as 'Unknown' and 'Bank Transfer'. More specific categorization is needed for proper budgeting and analysis.",
+    "essentialHouseholdSpending": "A significant amount is spent on essential household bills.",
+    "transfers": "Frequent transfers to and from 'BYRON C' and 'BYRON CJ' suggest money moving between accounts without clear purposes.",
+    "standingOrdersAndDirectDebits": "Several standing orders and direct debits are active.",
+    "rentMortgagePayments": "Rent/Mortgage payments are made regularly.",
+    "councilTaxPayments": "Council tax is being paid on a regular basis.",
+    "paymentToIndividual": "Payment to EGGM MAN for £18.00 has been recorded under a new Category 'Non -Essential Entertainment' which could be updated to Non-Essential Household"
+  },
+  "potentialRedFlagsAndConcerns": [
+    "High 'Unknown' Category Spending: Indicates lack of tracking and control over finances.",
+    "Frequent Small Transfers: Could be a sign of poor budgeting or overspending without clarity.",
+    "Decreasing Balance: Balance declined over the period, unclear if temporary or long-term.",
+    "Dependence on Transfers: A large portion of income comes from transfers, suggesting reliance on them."
+  ],
+  "recommendations": [
+    "Categorize Transactions: Categorize all 'Unknown' and 'Bank Transfer' items to see where money is truly going.",
+    "Budgeting: Create a detailed budget to manage income and expenses.",
+    "Investigate Transfers: Understand the purpose of frequent transfers to 'BYRON C' and 'BYRON CJ'.",
+    "Review Direct Debits and Standing Orders: Ensure they are necessary and amounts are correct.",
+    "Seek Financial Advice: If the balance keeps declining or financial management is challenging, consult a professional."
+  ]
+}
+```

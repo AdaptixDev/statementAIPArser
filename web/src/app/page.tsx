@@ -372,39 +372,45 @@ export default function Home() {
 
   return (
     <AppLayout>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[calc(100vh-160px)]">
-        <div className="flex flex-col h-full">
-          <ChatWindow 
-            title="Statement Analysis" 
-            messages={leftChatMessages}
-            onSendMessage={handleSendMessage}
-            onRefresh={() => {
-              setLeftChatMessages([leftChatMessages[0]]);
-              setUploadedFiles([]);
-              setSummaryData(null);
-              setDrivingLicenseData(null);
-              setPassportData(null);
-            }}
-            onFileUpload={handleFileUpload}
-            onMultipleFilesUpload={handleMultipleFilesUpload}
-          />
-          <div className="mt-2 space-y-2">
-            <Button 
-              className="w-full"
-              onClick={handleAnalyzeDocuments}
-              disabled={uploadedFiles.length === 0}
-            >
-              Analyse Documents
-            </Button>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[calc(100vh-160px)] overflow-hidden">
+        {/* Left Panel - Fixed width, independent scroll */}
+        <div className="w-full h-full overflow-hidden">
+          <div className="flex flex-col h-full">
+            <ChatWindow 
+              title="Statement Analysis" 
+              messages={leftChatMessages}
+              onSendMessage={handleSendMessage}
+              onRefresh={() => {
+                setLeftChatMessages([leftChatMessages[0]]);
+                setUploadedFiles([]);
+                setSummaryData(null);
+                setDrivingLicenseData(null);
+                setPassportData(null);
+              }}
+              onFileUpload={handleFileUpload}
+              onMultipleFilesUpload={handleMultipleFilesUpload}
+            />
+            <div className="mt-2 space-y-2">
+              <Button 
+                className="w-full"
+                onClick={handleAnalyzeDocuments}
+                disabled={uploadedFiles.length === 0}
+              >
+                Analyse Documents
+              </Button>
+            </div>
           </div>
         </div>
         
-        <SummaryCard 
-          title="Document Summary" 
-          summary={summaryData}
-          drivingLicense={drivingLicenseData}
-          passport={passportData}
-        />
+        {/* Right Panel - Independent scroll */}
+        <div className="w-full h-full overflow-hidden">
+          <SummaryCard 
+            title="Document Summary" 
+            summary={summaryData}
+            drivingLicense={drivingLicenseData}
+            passport={passportData}
+          />
+        </div>
       </div>
     </AppLayout>
   );

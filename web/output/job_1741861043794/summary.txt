@@ -1,0 +1,69 @@
+```json
+{
+  "personalInformation": {
+    "name": "Christopher J Byron",
+    "address": "89 FLIXTON ROAD, URMSTON, MANCHESTER, M41 5AN",
+    "accountNumber": "10212003",
+    "sortCode": "16-33-22",
+    "statementStartingBalance": -64.97,
+    "statementFinishingBalance": -814.79
+  },
+  "summaryOfIncomeAndOutgoings": {
+    "income": {
+      "Essential Home - Rent/Mortgage": 0.0,
+      "Gambling": 716.85,
+      "Bank Transfer": 795.0,
+      "Unknown": 7629.85,
+      "Essential Household": 0.0,
+      "Non-Essential Household": 0.0,
+      "Non -Essential Entertainment": 0.0,
+      "Cash Withdrawal": 0.0,
+      "Bank Transfer": 795.0,
+      "Interest": 0.33
+      
+    },
+    "outgoings": {
+      "Essential Home - Rent/Mortgage": 0.0,
+      "Gambling": 593.0,
+      "Bank Transfer": 701.56,
+      "Unknown": 1089.25,
+      "Essential Household": 9.0,
+      "Non-Essential Household": 135.83,
+      "Non -Essential Entertainment": 1120.01,
+      "Cash Withdrawal": 194.38,
+      "Essential Household": 9.0,
+      "Non -Essential Entertainment": 1120.01,
+       "Non-Essential Household": 135.83
+      
+    }
+  },
+  "generalSummaryAndFinancialHealthCommentary": {
+    "overallBalance": "The account balance has decreased by £749.82 during the statement period (from -£64.97 to -£814.79). The account is significantly overdrawn.",
+    "highIncome": "The total income of £9,418.51 is substantial, suggesting a potentially high overall income level",
+    "significantSpending": "The high level of expenditure, particularly withdrawals totaling £10,168.33, indicates overspending relative to income.",
+    "gamblingSpending": "The account has a high volume of transactions in both gambling wins and losses",
+    "relianceOnTransfers": "Frequent transfers from various sources suggest reliance on incoming transfers to maintain balance",
+    "unknownCategorization": "Significant transactions are uncategorized which may hide financial trends",
+    "frequentEntertainment": "Large number of transactions for non-essential entertainment",
+    "appleSubscriptions": "High volume of subscriptions to apple",
+    "amazonPurchases": "Regular expenditure to amazon",
+    "nationalLottery": "multiple transactions relating to national lottery"
+  },
+  "potentialRedFlagsAndConcerns": [
+    "Overdrawn Account: The account is overdrawn and the overdraft has increased significantly.",
+    "High Gambling Spend: A significant amount of money is being spent on gambling which could be a financial risk.",
+    "Uncategorized Spend: A large number of transactions are uncategorized, indicating a need for improved monitoring",
+    "Dependence on Transfers: A large portion of income comes from transfers, suggesting reliance on them.",
+     "High Uber Spend: Multiple transactions from Uber could suggest high transport spend.",
+     "Multiple App Subscriptions": "Multiple app subscriptions are present"
+  ],
+  "recommendations": [
+    "Reduce Gambling: Evaluate and reduce spending on gambling to improve financial stability.",
+    "Categorize Transactions: Accurately categorize all transactions to track where money is going and identify areas to cut back.",
+    "Review Subscriptions: Review and cancel any unnecessary subscription services to save money.",
+    "Control Spending: Develop and stick to a budget to avoid overspending and reliance on transfers.",
+    "Set Financial Goals: Establish clear financial goals to improve financial discipline.",
+    "seekFinancialAdvise" : "Seek financial advice on how to manage funds in the future"
+  ]
+}
+```
