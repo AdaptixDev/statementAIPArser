@@ -1,194 +1,110 @@
 ---
 description: Useful for building react full stack applications
-globs: web/*.{ts,tsx,js,jsx}
+globs: web/*.{ts,*.tsx,*.ts
 alwaysApply: false
 ---
+# Front-End Development Rule Set
+
+These rules must be followed **before** and **throughout** the development of any front-end application to ensure best-practice engineering, mobile-first design, and state-of-the-art technologies.
 
 ---
-description: Useful for building react full stack applications
-globs: web/*.{ts,tsx,js,jsx}
-alwaysApply: true
+
+## 1. Mobile-First Design
+1. Start by designing and building the smallest screen size first.
+2. Use fluid layouts and percentage-based widths to allow for flexible resizing.
+3. Implement responsive breakpoints (media queries) to adapt layouts for larger screens.
+4. Always test design and interactions on mobile devices before scaling up.
+
 ---
-You are an expert TypeScript software engineer and architect with over 10 years of industry experience. Your expertise spans the entire stack, including React, Next.js 15 (with App Router), Tailwind CSS, shadcn/ui, Radix, Cloudflare (hono), Bun, Postgres andDrizzle .
 
+## 2. Semantic HTML
+1. Use meaningful HTML tags (e.g., `<header>`, `<main>`, `<section>`, `<footer>`) to outline the document structure.
+2. Use heading tags (`<h1>`, `<h2>`...) in hierarchical order for readability and SEO.
+3. Maintain clean and minimal DOM structures; avoid extra wrapper `<div>` elements.
 
-### Code Style and Structure
+---
 
-- Write concise, technical TypeScript code with accurate examples.
-- Use functional and declarative programming patterns; avoid classes.
-- Prefer iteration and modularization over code duplication.
-- Use descriptive variable names with auxiliary verbs (e.g., `isLoading`, `hasError`).
-- Structure files: exported component, subcomponents, helpers, static content, types.
+## 3. CSS & Styling Best Practices
+1. Use modular and scalable CSS methodologies (e.g., BEM, SMACSS, or utility-first frameworks).
+2. Apply minimal custom CSS and rely on widely supported, lightweight frameworks or pre-processors (e.g., Sass, PostCSS) when appropriate.
+3. Optimize CSS by removing unused styles and combining files when feasible.
+4. Leverage CSS variables (`var(--variable-name)`) for maintaining consistent design tokens (colors, spacing, fonts).
 
-### Frontend Components
+---
 
-- Prefer Server Components over Client Components when possible to reduce client-side JavaScript.
-- Avoid using `useEffect` unless absolutely necessary for client-side-only logic or interactions.
-- When `useEffect` is needed in Client Components, clearly justify its use and consider alternatives.
-- Implement proper error boundaries and loading states for better user experience.
-- Using default shadcn/ui color theme (I.e not hardcoded)
-- Some shadcn/ui components have been improved. 
+## 4. Performance Optimization
+1. Compress and minify HTML, CSS, and JavaScript files.
+2. Use tree shaking and code splitting to reduce JavaScript bundle sizes.
+3. Load scripts asynchronously or defer them where possible (`async`, `defer` attributes).
+4. Optimize images (e.g., responsive images with `srcset`, modern formats like WebP, and lazy loading).
+5. Implement caching strategies (e.g., HTTP caching headers, Service Workers).
 
-### Component colocation
-When building Next.js applications, follow component co-location principles for better maintainability and code organization. Co-locate simple, feature-specific components (used only within a single page/feature) in a `_components` directory within that feature's folder. For shared components, use two main categories: UI components (from your component library like shadcn/ui) and app-specific reusable components. The folder structure should look like this:
-apps/
-  └── web/
-      └── src/
-          ├── app/
-          │   └── [feature]/
-          │       ├── page.tsx
-          │       └── _components/    # highly specific feature components (e.g., dashboard-stats.tsx)
-          └── components/            
-              ├── ui/                # Component library components (shadcn/ui)
-              │   ├── button.tsx
-              │   └── card.tsx
-              └── layout/       # App specific, shared components, or if the feature is very large/complex put, create its own folder     
-                  ├── header.tsx
-                  └── footer.tsx
-              └── forms/            
+---
 
-Note sometimes, when a feature gets large and complex, it makes more sense to put it in the `component` folder instead, since it is more maintainable.
+## 5. Accessibility (A11y)
+1. Include alt text for images and labels for form elements.
+2. Ensure all interactive elements are reachable and usable via keyboard navigation.
+3. Provide ARIA attributes where necessary but avoid excessive or incorrect ARIA usage.
+4. Use high-contrast color schemes for text and backgrounds to increase visibility.
+5. Test with screen readers and automated accessibility checkers.
 
-### Folder Structure
-Within the frontend, using nextjs, you can leverage route grouping using `(group)`
-The root layout component should be reserved only for providers and other configuration. 
+---
 
+## 6. State-of-the-Art Front-End Tools
+1. Use modern build tools such as Vite, Webpack, or Parcel to streamline development.
+2. Employ modern JavaScript frameworks (React, Vue, Svelte, or Angular) as appropriate.
+3. Prefer TypeScript for more robust and maintainable code.
+4. Integrate linters (ESLint, Stylelint) and formatters (Prettier) into the workflow.
 
-### Web app Data Fetching
+---
 
-- Use TanStack Query as the primary data fetching solution:
-  - Use `useQuery` for GET operations
-  - Use `useMutation` for POST/PUT/DELETE operations
-- Avoid creating custom data fetching hooks (i.e `useFn`) unless absolutely necessary (2 or more separate components need the same data).
-- Instead, react-query within components, until multiple components require the same data.
-- Leverage TanStack Query's built-in features:
-  - Automatic background refetching
-  - Cache invalidation
-  - Optimistic updates
-  - Infinite queries for pagination
-  - Parallel queries when needed
-- Structure query keys consistently:
-  - Use array syntax: ['users', userId]
-  - Include relevant dependencies
-- Handle loading and error states using built-in properties:
-  - isLoading, isError, error, data
-- Use prefetching where appropriate for better UX
-- Implement proper retry and error handling strategies using TanStack Query configuration
-- You can use sonnet toast for handling toast notifications (toast.error, toast.success, toast.info, etc)
+## 7. Testing & Quality Assurance
+1. Automate unit tests for reusable components (using Jest, Mocha, or Vitest).
+2. Automate integration/end-to-end tests (using Cypress, Playwright, or Selenium).
+3. Use visual regression testing tools to ensure UI consistency (e.g., Storybook with Chromatic).
+4. Validate forms, user input, and external data sources thoroughly.
 
-### Typesafe rpc client with react query
-When fetching data from the backend api, create functions in `src/api/name.api.ts`
-For example:
-```ts
-import { apiRpc, getApiClient, InferRequestType } from "./client";
+---
 
-const $createPost = apiRpc.posts.$post;
-// Simple get
-export async function getPosts() {
-  const client = await getApiClient();
+## 8. Version Control & CI/CD
+1. Use Git for version control; maintain a clear branching strategy (e.g., Gitflow, trunk-based).
+2. Every commit should be meaningful and follow a conventional commit format where possible.
+3. Integrate continuous integration (CI) to run linting, testing, and building on every push or pull request.
+4. Utilize continuous delivery/deployment (CD) to automate staging and production deployments.
 
-  const response = await client.posts.$get();
-  return response.json();
-}
-// Safely leverage the typed params elsewhere within the nextjs application 
-export type CreatePostParams = InferRequestType<typeof $createPost>["json"];
-export async function createPost(params: CreatePostParams) {
-  const client = await getApiClient();
+---
 
-  const response = await client.posts.$post({ json: params });
-  // This returns fully typed response, no need to cast anything
-  return response.json();
-}
-```
+## 9. Security Considerations
+1. Use HTTPS for all environments, including development.
+2. Implement Content Security Policy (CSP) and other security headers where feasible.
+3. Sanitize and validate all user inputs to prevent XSS attacks.
+4. Follow best practices for securing third-party integrations and APIs (e.g., OAuth tokens, JWT).
 
+---
 
-### Naming Conventions
-- Use lowercase with dashes for directories (e.g., `components/auth-wizard`).
-- Use kebab-case (`example-card.tsx`) for *all* components.
-- Favor named exports for components.
+## 10. Documentation & Collaboration
+1. Document components, functions, and modules (inline comments plus separate documentation).
+2. Maintain up-to-date README and contributor guides.
+3. Use design systems or style guides to keep the UI consistent.
+4. Encourage code reviews and pair programming to foster knowledge sharing and maintain quality.
 
-### TypeScript Usage
+---
 
-- Use TypeScript for all code; prefer interfaces over types.
-- Avoid enums; use maps instead.
-- Use functional components with TypeScript interfaces.
+## 11. Scalability & Maintenance
+1. Break large apps into smaller, manageable modules or micro front-ends if necessary.
+2. Refactor regularly to remove obsolete code and dependencies.
+3. Monitor application performance using tools (e.g., Google Lighthouse, browser dev tools).
+4. Always keep dependencies up to date and remove unused packages.
 
-### Syntax and Formatting
+---
 
-- Use the `function` keyword for pure functions.
-- Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
-- Never use `React.FC` or arrow functions to define components.
-- Use declarative JSX in web projects and React Native JSX in mobile projects.
+## 12. Ethical & Inclusive Design
+1. Strive for inclusive language, imagery, and user flows.
+2. Follow WAI-ARIA and WCAG standards to accommodate diverse user needs.
+3. Respect user privacy; prompt for consent where required by data protection laws.
+4. Honor user preferences (light/dark mode, accessibility settings).
 
-### UI and Styling
+---
 
-- For React, use Shadcn UI, Radix, and Tailwind for components and styling.
-- Implement responsive design in React using Tailwind CSS, with a mobile-first approach.
-- Use the `cn` utility function from `clsx` or a similar library for joining Tailwind classes, especially for conditional styling.
-- Use new tailwind v4 semantic, i.e. size-4 instead of h-4 w-4 etc.
-
-
-### Performance Optimization
-
-- Use dynamic loading for non-critical components.
-- Optimize images: use WebP format, include size data, implement lazy loading.
-
-### Key Conventions
-
-- Use 'nuqs' for URL search parameter state management (where applicable).
-- Optimize Web Vitals (LCP, CLS, FID).
-
-### Architectural Thinking
-
-- Always consider the broader system architecture when proposing solutions.
-- Explain your design decisions and trade-offs.
-- Suggest appropriate abstractions and patterns that enhance code reusability and maintainability.
-
-### Code Quality
-
-- Write clean, idiomatic TypeScript code with proper type annotations.
-- Implement error handling and edge cases.
-- Use modern ES6+ features appropriately.
-- For methods with more than one argument, use object destructuring: `function myMethod({ param1, param2 }: MyMethodParams) {...}`.
-
-### Testing and Documentation
-
-- Suggest unit tests for critical functions using Vitest and React Testing Library.
-- Provide JSDoc comments for complex functions and types.
-
-### Performance and Optimization
-
-- Consider performance implications of your code, especially for larger datasets or complex operations.
-- Suggest optimizations where relevant, explaining the benefits.
-
-### Reasoning and Explanation
-
-- Explain your thought process and decisions.
-- If multiple approaches are viable, outline them and explain the pros and cons of each.
-
-### Continuous Improvement
-
-  - Use functional and declarative programming patterns; avoid classes.
-  - Prefer iteration and modularization over code duplication.
-  - Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
-  - Structure files: exported component, subcomponents, helpers, static content, types.
-    Naming Conventions
-  - Use lowercase with dashes for directories (e.g., components/auth-wizard).
-  - Favor named exports for components.
-  TypeScript Usage
-  - Use TypeScript for all code; prefer interfaces over types.
-  - Avoid enums; use maps instead.
-  - Use functional components with TypeScript interfaces.
-    Syntax and Formatting
-  - Use the "function" keyword for pure functions.
-  - Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
-  - Never use ReactFC or arrow functions to define components
-  - Use declarative JSX.
-
-<package_management>
-
-- Use `pnpm` as the primary package manager for the project
-- Install dependencies using `pnpm add [package-name]`
-- Install dev dependencies using `pnpm add -D [package-name]`
-- Install workspace dependencies using `pnpm add -w [package-name]`
-</package_management>
+## Final Note
+**This rule set must be run before writing any front-end code** to ensure the solution aligns

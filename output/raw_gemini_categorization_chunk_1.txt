@@ -1,0 +1,117 @@
+```csv
+Date,Description,Amount,Direction,Balance,Category
+25-05-2024,BROUGHT FORWARD,0.0,withdrawn,-64.97,Unknown
+28-05-2024,Automated Credit JD WILLIAMS & CO,7519.3,paid in,7454.33,Salary
+28-05-2024,Automated Credit JDW & CO EXPENSES,110.55,paid in,7564.88,Salary
+28-05-2024,Automated Credit MR I J LAWLER AQUABETS LTD FP,100.0,paid in,7664.88,Salary
+28-05-2024,Automated Credit COLLETTE BARLOW YOUR FAVE SISTER FP,75.0,paid in,7739.88,Salary
+24-05-2024,Cash Withdrawal 7674 24MAY24 ANTALYA TEKIROVA ANTALYA TR,81.0,withdrawn,7658.88,Cash Withdrawal
+25-05-2024,Cash Withdrawal 7674 25MAY24 KEMER ATATURK CADDESI ANTALYA TR,54.38,withdrawn,7604.5,Cash Withdrawal
+26-05-2024,Cash Withdrawal 7674 26MAY24 TEKIROVA BELEDIYESI/KE ANTALYA TR,54.19,withdrawn,7550.31,Cash Withdrawal
+25-05-2024,OnLine Transaction David Ward Germ Bet VIA MOBILE - PYMT FP,20.0,withdrawn,7530.31,Gambling
+25-05-2024,Card Transaction 7674 25MAY24 PAYPAL *BETFRED COM,5.0,withdrawn,7525.31,Gambling
+24-05-2024,Card Transaction 7674 24MAY24 GOHENRY MEMBERSHIP LYMINGTON GB,4.49,withdrawn,7520.82,Unknown
+27-05-2024,Card Transaction 7674 27MAY24 SPLICE.COM* SPLICE PLA,19.45,withdrawn,7501.37,Non-Essential Household
+24-05-2024,Card Transaction 9397 24MAY24 CD LIMAN MARKET ANTALYA TR,53.41,withdrawn,7447.96,Unknown
+26-05-2024,Card Transaction 7674 26MAY24 OF LONDON GB,4.86,withdrawn,7443.1,Unknown
+23-05-2024,Card Transaction 7674 23MAY24 PAYPAL *APPLE.COM/BILL,2.99,withdrawn,7440.11,Non-Essential Household
+25-05-2024,Card Transaction 7674 25MAY24 PAYPAL *APPLE.COM/BILL,1.99,withdrawn,7438.12,Non-Essential Household
+27-05-2024,Card Transaction 9397 27MAY24 D APPLE.COM/BILL,6.99,withdrawn,7431.13,Non-Essential Household
+23-05-2024,Card Transaction 9397 23MAY24 D BETFAIR TA XBIEX GB,30.0,withdrawn,7401.13,Gambling
+24-05-2024,Card Transaction 7674 24MAY24 GOOGLE *YOUTUBEPREMIUM,12.99,withdrawn,7388.14,Non-Essential Household
+25-05-2024,Card Transaction 7674 25MAY24 AMAZON.CO.U,5.6,withdrawn,7382.54,Unknown
+30-05-2024,Card Transaction 9397 23MAY24 D BETFAIR TA XBIEX GB,14.0,withdrawn,7368.54,Gambling
+30-05-2024,OnLine Transaction To A/C 10185383 BYRON C & C Via Mobile Xfer,3300.0,paid in,4068.54,Bank Transfer
+30-05-2024,OnLine Transaction MONZO MONZO VIA MOBILE - PYMT FP,800.0,withdrawn,3268.54,Bank Transfer
+29-05-2024,Card Transaction 7674 29MAY24 BANDZOOGLE WEBSITE,16.07,withdrawn,3252.47,Unknown
+29-05-2024,Card Transaction 6759 29MAY24 D WELLTORY.COM,10.46,withdrawn,3242.01,Unknown
+29-05-2024,Card Transaction 7674 29MAY24 ANI FOTOGRAFCILIK ANTALYA TR,105.05,withdrawn,3136.96,Unknown
+31-05-2024,Direct Debit BAUER CONSUMER MED,5.2,withdrawn,3131.76,Unknown
+29-05-2024,Card Transaction 7674 29MAY24 TOMBOLA TOMBOLA UK GI,20.0,withdrawn,3111.76,Gambling
+30-05-2024,Card Transaction 9397 30MAY24 D BETMGM.CO.UK NEWCASTLE UPO GB,50.0,withdrawn,3061.76,Gambling
+30-05-2024,Card Transaction 7674 30MAY24 TAKEAWAY LONDON GB,38.1,withdrawn,3023.66,Non-Essential Entertainment
+29-05-2024,Card Transaction 9397 29MAY24 D BETFAIR LONDON GB,5.0,withdrawn,3018.66,Gambling
+29-05-2024,Card Transaction 9397 29MAY24 D BETFAIR LONDON GB,12.0,withdrawn,3006.66,Gambling
+29-05-2024,Card Transaction 7674 29MAY24 SABIR HEDIYELIK ANTALYA TR EUR,8.75,withdrawn,2997.91,Unknown
+29-05-2024,Card Transaction 7674 29MAY24 TOMBOLA TOMBOLA UK GI,25.0,withdrawn,2972.91,Gambling
+29-05-2024,Card Transaction 9397 29MAY24 D BETFAIR LONDON GB,30.0,withdrawn,2942.91,Gambling
+03-06-2024,OnLine Transaction IG BYRON DAD VIA MOBILE - PYMT,20.0,withdrawn,2922.91,Bank Transfer
+01-06-2024,Card Transaction 9397 01JUN24 CD PLY MANCHESTER GB,13.0,withdrawn,2909.91,Non-Essential Entertainment
+31-05-2024,Card Transaction 7674 31MAY24 PAYPAL *EVENTIMUKLT,26.88,withdrawn,2883.03,Non-Essential Entertainment
+01-06-2024,Card Transaction 7674 01JUN24 UBER *TRIP,14.91,withdrawn,2868.12,Non-Essential Entertainment
+31-05-2024,Card Transaction 939731MAY24 D BETMGM.CO.UK NEWCASTLE UPO GB,25.0,withdrawn,2843.12,Gambling
+01-06-2024,Card Transaction 9397 01JUN24 CD VIET SHACK M'STER M4 5 GB,29.98,withdrawn,2813.14,Non-Essential Entertainment
+31-05-2024,Card Transaction 9397 31MAY24 D BETMGM.CO.UK NEWCASTLE UPO GB,25.0,withdrawn,2788.14,Gambling
+01-06-2024,Card Transaction 7674 01JUN24 PATREON* MEMBERSHIPPAT INTERNET GB,5.0,withdrawn,2783.14,Non-Essential Household
+31-05-2024,Card Transaction 9397 31MAY24 CD SUBWAY 65781 URMSTON URMSTON GB,8.28,withdrawn,2774.86,Non-Essential Entertainment
+01-06-2024,Card Transaction 9397 01JUN24 D JUST EAT LONDON GB,20.39,withdrawn,2754.47,Non-Essential Entertainment
+01-06-2024,Card Transaction 9397 01JUN24 CD SQ *OSCILLATE COFFEE URMSTON GB,5.8,withdrawn,2748.67,Non-Essential Entertainment
+31-05-2024,Card Transaction 9397 31MAY24 D APPLE.COM/BILL,5.99,withdrawn,2742.68,Non-Essential Household
+01-06-2024,Card Transaction 9397 01JUN24 D QUARTER HOUSE NQ* ME&U RIBCHESTER,,12.91,Non-Essential Entertainment
+01-06-2024,Card Transaction 9397 01JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB,30.0,withdrawn,2699.77,Gambling
+02-06-2024,Card Transaction 9397 02JUN24 D DELIVEROO LONDON GB,25.36,withdrawn,2674.41,Non-Essential Entertainment
+31-05-2024,Card Transaction 7674 31MAY24 ASHBOURNE-M EMBERSHIPS SOLIHULL GB,26.0,withdrawn,2648.41,Unknown
+01-06-2024,Card Transaction 7674 01JUN24 PAYPAL *APPLE.COM/BILL,1.99,withdrawn,2646.42,Non-Essential Household
+01-06-2024,Card Transaction 9397 01JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB,15.0,withdrawn,2631.42,Gambling
+31-05-2024,Card Transaction 9397 31MAY24 D APPLE.COM/BILL,11.99,withdrawn,2619.43,Non-Essential Household
+01-06-2024,Card Transaction 9397 01JUN24 CD SUMUP **THE CROWN KET MANCHESTER GB,13.5,withdrawn,2605.93,Non-Essential Entertainment
+01-06-2024,Card Transaction 9397 01JUN24 CD FIERCE BEER MANCHESTER MANCHESTER GB,11.9,withdrawn,2594.03,Non-Essential Entertainment
+02-06-2024,Card Transaction 9397 02JUN24 CD BARGAIN BOOZE 1129 URMSTON GB,14.03,withdrawn,2580.0,Non-Essential Entertainment
+01-06-2024,Card Transaction 7674 01JUN24 C ZETTLE_*FLOK MANCHESTER GB,47.1,withdrawn,2532.9,Unknown
+01-06-2024,Card Transaction 7674 01JUN24 NAKEDWINES.COM NORWICH GB,30.0,withdrawn,2502.9,Unknown
+01-06-2024,Card Transaction 9397 01JUN24 CD 7 SINS MANCHESTER GB,8.0,withdrawn,2494.9,Non-Essential Entertainment
+31-05-2024,Card Transaction 9397 31MAY24 CD BARGAIN BOOZE 1129 URMSTON GB,8.74,withdrawn,2486.16,Non-Essential Entertainment
+01-06-2024,Card Transaction 9397 01JUN24 D JG *BONE CANCER RESEAR LONDON GB,27.5,withdrawn,2458.66,Unknown
+02-06-2024,Cash Withdrawal BMACH,50.0,withdrawn,2408.66,Cash Withdrawal
+02-06-2024,Cash Withdrawal BMACH,50.0,withdrawn,2358.66,Cash Withdrawal
+04-06-2024,Card Transaction 9397 03JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB,10.0,withdrawn,2348.66,Gambling
+03-06-2024,Card Transaction 9397 03JUN24 D APPLE.COM/BILL,5.99,withdrawn,2342.67,Non-Essential Household
+03-06-2024,Card Transaction 9397 03JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB,25.0,withdrawn,2317.67,Gambling
+05-06-2024,OnLine Transaction NICK SWEENEY THAI BRIDE VIA MOBILE - PYMT FP,20.0,withdrawn,2297.67,Bank Transfer
+04-06-2024,Card Transaction 7674 04JUN24 AMAZON* 204-9519457-71 LONDON GB,9.97,withdrawn,2287.7,Unknown
+04-06-2024,Card Transaction 9397 04JUN24 CD BEVANO LOUNGE MANCHESTER GB,38.45,withdrawn,2249.25,Non-Essential Entertainment
+04-06-2024,Card Transaction 7674 04JUN24 AMAZON* 204-3139383-10 LONDON GB,7.98,withdrawn,2241.27,Unknown
+04-06-2024,Card Transaction 9397 04JUN24 D APPLE.COM/BILL,5.99,withdrawn,2235.28,Non-Essential Household
+06-06-2024,Card Transaction 9397 05JUN24 CD N BROWN GRIFFIN HOUSE MANCHESTER GB,0.84,withdrawn,2234.44,Unknown
+05-06-2024,Card Transaction 9397 05JUN24 D APPLE.COM/BILL,7.99,withdrawn,2226.45,Non-Essential Household
+05-06-2024,Card Transaction 9397 05JUN24 CD N BROWN GRIFFIN HOUSE MANCHESTER GB,1.1,withdrawn,2225.35,Unknown
+05-06-2024,Card Transaction 9397 05JUN24 D BETMGM.CO.UK NEWCASTLE UPO GB,25.0,withdrawn,2200.35,Gambling
+05-06-2024,Card Transaction 7674 05JUN24 SIMPLE INTELLIGENT PAR MANCHESTER GB,8.4,withdrawn,2191.95,Unknown
+05-06-2024,Card Transaction 9397 05JUN24 CD N BROWN GRIFFIN HOUSE MANCHESTER GB,4.05,withdrawn,2187.9,Unknown
+07-06-2024,Card Transaction 7674 06JUN24 ARCADE ONLINE,4.99,withdrawn,2182.91,Non-Essential Entertainment
+06-06-2024,Card Transaction 9397 06JUN24 CD SUMUP **THE CROWN KET MANCHESTER GB,15.9,withdrawn,2167.01,Non-Essential Entertainment
+06-06-2024,Card Transaction 9397 06JUN24 CD SUMUP **THE CROWN KET MANCHESTER GB,16.96,withdrawn,2150.05,Non-Essential Entertainment
+06-06-2024,Card Transaction 9397 06JUN24 CD SUMUP *ADG LEISURE LT MANCHESTER GB,6.2,withdrawn,2143.85,Non-Essential Entertainment
+06-06-2024,Card Transaction 7674 06JUN24 PAYPAL *CONNECTEDRE AR,8.99,withdrawn,2134.86,Unknown
+06-06-2024,Card Transaction 9397 06JUN24 CD SUMUP *ADG LEISURE LT MANCHESTER GB,5.65,withdrawn,2129.21,Non-Essential Entertainment
+06-06-2024,Card Transaction 7674 06JUN24 PAYPAL *CONNECTEDRE AR,8.99,withdrawn,2120.22,Unknown
+06-06-2024,Card Transaction 7674 06JUN24 UBER *TRIP,17.97,withdrawn,2102.25,Non-Essential Entertainment
+06-06-2024,Card Transaction 9397 06JUN24 CD SUMUP *ADG LEISURE LT MANCHESTER GB,6.5,withdrawn,2095.75,Non-Essential Entertainment
+06-06-2024,Card Transaction 7674 06JUN24 UBER *TRIP,6.98,withdrawn,2088.77,Non-Essential Entertainment
+06-06-2024,Card Transaction 7674 06JUN24 UBER *TRIP,14.96,withdrawn,2073.81,Non-Essential Entertainment
+05-06-2024,Card Transaction 9397 05JUN24 D BETFAIR LONDON GB,25.0,withdrawn,2048.81,Gambling
+06-06-2024,Card Transaction 7674 06JUN24 UBER *TRIP,6.95,withdrawn,2041.86,Non-Essential Entertainment
+05-06-2024,Card Transaction 9397 05JUN24 D BETFAIR LONDON GB,23.0,withdrawn,2018.86,Gambling
+06-06-2024,Card Transaction 9397 06JUN24 CD THE BRITONS PROTECTION MANCHESTER GB,5.75,withdrawn,2013.11,Non-Essential Entertainment
+06-06-2024,Card Transaction 9397 06JUN24 CD SUMUP *ADG LEISURE LT MANCHESTER GB,18.25,withdrawn,1994.86,Non-Essential Entertainment
+06-06-2024,Card Transaction 9397 06JUN24 CD SUMUP *ADG LEISURE LT MANCHESTER GB,12.35,withdrawn,1982.51,Non-Essential Entertainment
+10-06-2024,Interest 27MAY A/C 10212003,0.33,paid in,1982.18,Unknown
+,OnLine Transaction IG BYRON DAD VIA MOBILE - PYMT,10.0,withdrawn,1972.18,Bank Transfer
+,OnLine Transaction To A/C 10185383 BYRON C & C Via Mobile Xfer,260.0,withdrawn,1712.18,Bank Transfer
+,OnLine Transaction To A/C 10185383 BYRON C & C Via Mobile Xfer,200.0,withdrawn,1512.18,Bank Transfer
+09-06-2024,Card Transaction 7674 09JUN24 GOOGLE *GOOGLE PLAY AP,7.99,withdrawn,1504.19,Non-Essential Household
+07-06-2024,Card Transaction 9397 07JUN24 CD UNION INN MANCHESTER GB,4.8,withdrawn,1499.39,Non-Essential Entertainment
+08-06-2024,Card Transaction 9397 08JUN24 CD BEVANO LOUNGE MANCHESTER GB,1.9,withdrawn,1497.49,Non-Essential Entertainment
+07-06-2024,Card Transaction 9397 07JUN24 CD UNION INN MANCHESTER GB,13.8,withdrawn,1483.69,Non-Essential Entertainment
+08-06-2024,Card Transaction 9397 08JUN24 CD BIRD IN HAND MANCHESTER GB,11.0,withdrawn,1472.69,Non-Essential Entertainment
+09-06-2024,Card Transaction 9397 09JUN24 CD URMSTON - SAINSBURY'S MANCHESTER GB,5.25,withdrawn,1467.44,Unknown
+09-06-2024,Card Transaction 7674 09JUN24 FREEPRINTS SOUTHAMPTON GB,5.39,withdrawn,1462.05,Unknown
+06-06-2024,Card Transaction 7674 06JUN24 PAYPAL *GOOGLE,9.99,withdrawn,1452.06,Unknown
+07-06-2024,Card Transaction 9397 07JUN24 D POKERSTARS LONDON GB,30.0,withdrawn,1422.06,Gambling
+07-06-2024,Card Transaction 9397 07JUN24 CD UNION INN MANCHESTER GB,13.1,withdrawn,1408.96,Non-Essential Entertainment
+09-06-2024,Card Transaction 9397 09JUN24 CD GREGGS PLC URMSTON GB,6.75,withdrawn,1402.21,Non-Essential Entertainment
+07-06-2024,Card Transaction 9397 07JUN24 CD MS&D FOODS LTD MANCHESTER GB,14.1,withdrawn,1388.11,Unknown
+08-06-2024,Card Transaction 9397 08JUN24 D DELIVEROO LONDON GB,35.99,withdrawn,1352.12,Non-Essential Entertainment
+07-06-2024,Card Transaction 7674 07JUN24 UBER *TRIP,14.95,withdrawn,1337.17,Non-Essential Entertainment
+07-06-2024,Card Transaction 9397 07JUN24 CD UNION INN MANCHESTER GB,11.0,withdrawn,1326.17,Non-Essential Entertainment
+```

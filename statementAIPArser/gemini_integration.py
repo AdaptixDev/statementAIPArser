@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Integration with Gemini 2.0 taking a PDF, splitting into smaller PDFs, 
-and processing each sub-PDF sequentially using a reusable prompt from ai_prompts.py.
+and processing each sub-PDF sequentially using a reusable prompt from backend/src/core/prompts.py.
 """
 
 import os
@@ -19,7 +19,7 @@ import shutil
 import tempfile
 
 # Import your reusable prompt
-from prompts.ai_prompts import GEMINI_STATEMENT_PARSE, GEMINI_PERSONAL_INFO_PARSE, GEMINI_TRANSACTION_SUMMARY
+from backend.src.core.prompts import GEMINI_STATEMENT_PARSE, GEMINI_PERSONAL_INFO_PARSE, GEMINI_TRANSACTION_SUMMARY, GEMINI_TRANSACTION_CATEGORISATION
 
 # CSV Headers
 CSV_HEADERS = ['Date', 'Description', 'Amount', 'Direction', 'Balance', 'Category']
@@ -289,7 +289,38 @@ def main():
             # Extract CSV, parse, etc...
             csv_content = extract_csv_from_response(response_text)
             chunk_transactions = parse_csv_to_transactions(csv_content)
-            all_transactions.extend(chunk_transactions)
+            
+            # Categorize transactions for this chunk immediately
+            if chunk_transactions:
+                print(f"  [CHUNK {i}] Categorizing {len(chunk_transactions)} transactions...")
+                
+                # Create a CSV from chunk transactions without categories
+                csv_without_categories = io.StringIO()
+                writer = csv.DictWriter(csv_without_categories, fieldnames=['Date', 'Description', 'Amount', 'Direction', 'Balance'])
+                writer.writeheader()
+                for transaction in chunk_transactions:
+                    # Create a copy without the Category field
+                    transaction_without_category = {k: v for k, v in transaction.items() if k != 'Category'}
+                    writer.writerow(transaction_without_category)
+                
+                # Send to Gemini with the categorization prompt
+                categorization_response = client.models.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=[GEMINI_TRANSACTION_CATEGORISATION, csv_without_categories.getvalue()],
+                    config=types.GenerateContentConfig(max_output_tokens=400000),
+                )
+                
+                # Extract CSV from response
+                categorized_csv = categorization_response.text
+                
+                # Parse the categorized CSV
+                categorized_chunk_transactions = parse_csv_to_transactions(categorized_csv)
+                print(f"  [CHUNK {i}] Successfully categorized {len(categorized_chunk_transactions)} transactions")
+                
+                # Add categorized transactions to the main list
+                all_transactions.extend(categorized_chunk_transactions)
+            else:
+                print(f"  [CHUNK {i}] No transactions found, skipping categorization")
 
         # After all chunks processed, write final CSV
         total_found = len(all_transactions)

@@ -59,5 +59,8 @@ class Settings:
     # will be written to disk for debugging/inspection; if False, these writes are skipped.
     ENABLE_FILE_STORAGE = os.getenv("ENABLE_FILE_STORAGE", "True").lower() in ["true", "1", "yes"]
 
+    # Export raw Gemini API responses for debugging
+    EXPORT_RAW_GEMINI_RESPONSES = os.getenv("EXPORT_RAW_GEMINI_RESPONSES", "False").lower() in ["true", "1", "yes"]
+
     # Google Gemini API Key
     GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY", "") 

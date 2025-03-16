@@ -1,0 +1,5 @@
+full name,address,account number,sort code,statement starting balance,statement finishing balance,statement period date,bank provider,total paid in,total withdrawn
+MR CHRISTOPHER J BYRON,"89 FLIXTON ROAD
+URMSTON
+MANCHESTER
+M41 5AN",10212003,16-33-22,64.97,814.79,"25 MAY 2024 to 27 JUN 2024","Royal Bank of Scotland",9418.51,10168.33

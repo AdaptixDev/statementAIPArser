@@ -1,0 +1,65 @@
+```csv
+Date,Description,Amount,Direction,Balance,Category
+,BROUGHT FORWARD,275.64,,,Unknown
+24-06-2024,Card Transaction 9397 19JUN24 D BETFAIR LONDON GB,19.0,withdrawn,256.64,Gambling
+,Cash Withdrawal NATWEST 20JUN,100.0,withdrawn,156.64,Cash Withdrawal
+,Direct Debit TESCO BANK,105.0,withdrawn,51.64,Unknown
+24-06-2024,Automated Credit KEVIN BYRON SENT FROM MONZO FP 23/06/24 1247 PYHS68ZAHUYEKRMQ1T,25.0,paid in,76.64,Bank Transfer
+,Card Transaction 9397 22JUN24 CD SEVEN OAKS MANCHESTER GB,10.15,withdrawn,66.49,Non -Essential Entertainment
+,Card Transaction 9397 22JUN24 CD CO OP LIVE GA MANCHESTER GB,6.5,withdrawn,59.99,Unknown
+,Card Transaction 9397 20JUN24 D PADDY POWER LONDON GB,20.0,withdrawn,39.99,Gambling
+,Card Transaction 9397 22JUN24 D APPLE.COM/BILL 08001076285 IE,5.99,withdrawn,34.0,Non-Essential Household
+,Card Transaction 9397 22JUN24 CD CO OP LIVE GA MANCHESTER GB,20.15,withdrawn,13.85,Unknown
+,Card Transaction 9397 21JUN24 CD M1 NEWS M'STER M1 4 GB,11.5,withdrawn,2.35,Unknown
+,Card Transaction 7674 21JUN24 TAKEAWAY LONDON GB,51.91,withdrawn,-49.56,Non -Essential Entertainment
+,Card Transaction 7674 22JUN24 UBER *TRIP HELP.UBER.COM GB,15.96,withdrawn,-65.52,Non -Essential Entertainment
+,Card Transaction 9397 21JUN24 D PADDY POWER LONDON GB,20.0,withdrawn,-85.52,Gambling
+,Card Transaction 9397 23JUN24 CD CHUANYI TRADING MANCHESTER GB,27.8,withdrawn,-113.32,Unknown
+,Card Transaction 9397 23JUN24 D APPLE.COM/BILL 08001076285 IE,7.99,withdrawn,-121.31,Non-Essential Household
+,Card Transaction 7674 22JUN24 PAYPAL *APPLE.COM/BILL 35314369001 GB,1.99,withdrawn,-123.3,Non-Essential Household
+,Card Transaction 7674 22JUN24 WWW.AMAZON* 204-627189 LONDON GB,14.99,withdrawn,-138.29,Unknown
+,Card Transaction 9397 20JUN24 D PADDY POWER LONDON GB,35.0,withdrawn,-173.29,Gambling
+,Card Transaction 7674 22JUN24 UBER *TRIP HELP.UBER.COM GB,11.91,withdrawn,-185.2,Non -Essential Entertainment
+,Card Transaction 7674 21JUN24 NATIONAL LOTTERY LONDON GB,25.0,withdrawn,-210.2,Gambling
+,Card Transaction 9397 22JUN24 CD THE THREE BARRELS URMSTON GB,9.8,withdrawn,-220.0,Non -Essential Entertainment
+,Card Transaction 7674 21JUN24 FIVERR NICOSIA CY,19.9,withdrawn,-239.9,Unknown
+,Card Transaction 7674 20JUN24 FASTHOSTS GLOUCESTER GB,9.0,withdrawn,-248.9,Unknown
+,Card Transaction 7674 21JUN24 UBER *TRIP HELP.UBER.COM GB,5.22,withdrawn,-254.12,Non -Essential Entertainment
+,Card Transaction 7674 21JUN24 UBER *TRIP HELP.UBER.COM GB,20.3,withdrawn,-274.42,Non -Essential Entertainment
+,Card Transaction 9397 22JUN24 CD CO OP LIVE GA MANCHESTER GB,18.8,withdrawn,-293.22,Unknown
+,Card Transaction 9397 21JUN24 D PADDY POWER LONDON GB,10.0,withdrawn,-303.22,Gambling
+,Card Transaction 9397 22JUN24 CD CO OP LIVE GA MANCHESTER GB,27.15,withdrawn,-330.37,Unknown
+,Card Transaction 7674 23JUN24 PAYPAL *MICROSOFT 35314369001 GB,7.99,withdrawn,-338.36,Non-Essential Household
+,Card Transaction 7674 22JUN24 UBER *TRIP HELP.UBER.COM GB,21.94,withdrawn,-360.3,Non -Essential Entertainment
+,Card Transaction 9397 22JUN24 CD O SHEAS IRISH BAR MANCHESTER GB,5.7,withdrawn,-366.0,Non -Essential Entertainment
+,Cash Withdrawal BMACH 22JUN,40.0,withdrawn,-406.0,Cash Withdrawal
+,BROUGHT FORWARD,,,,Unknown
+25-06-2024,Card Transaction 7674 24JUN24 GOHENRY MEMBERSHIP LYMINGTON GB,4.49,withdrawn,-410.49,Unknown
+,Card Transaction 7674 23JUN24 PAYPAL *APPLE.COM/BILL 35314369001 GB,2.99,withdrawn,-413.48,Non-Essential Household
+,Card Transaction 9397 22JUN24 D TALKSPORTBET GIBRALTAR GI,25.0,withdrawn,-438.48,Gambling
+,Card Transaction 9397 22JUN24 D TALKSPORTBET GIBRALTAR GI,20.0,withdrawn,-458.48,Gambling
+,Card Transaction 9397 22JUN24 D TALKSPORTBET GIBRALTAR GI,20.0,withdrawn,-478.48,Gambling
+,Card Transaction 7674 24JUN24 NATIONAL LOTTERY LONDON GB,5.0,withdrawn,-483.48,Gambling
+,Card Transaction 7674 24JUN24 NATIONAL LOTTERY LONDON GB,25.0,withdrawn,-508.48,Gambling
+,Card Transaction 7674 24JUN24 GOOGLE *YOUTUBEPREMIUM 650-253-0000 GB,12.99,withdrawn,-521.47,Non-Essential Household
+26-06-2024,OnLine Transaction From A/C 10185383 BYRON C & C Via Mobile Xfer,150.0,paid in,-371.47,Bank Transfer
+,Card Transaction 7674 25JUN24 SIMPLE INTELLIGENT PAR MANCHESTER GB,8.4,withdrawn,-379.87,Unknown
+,Card Transaction 9397 25JUN24 CD N BROWN GRIFFIN HOUSE MANCHESTER GB,3.6,withdrawn,-383.47,Unknown
+,Card Transaction 9397 25JUN24 CD LAMB OF TARTARY MANCHESTER GB,12.3,withdrawn,-395.77,Non -Essential Entertainment
+,Card Transaction 9397 25JUN24 D POKERSTARS LONDON GB,30.0,withdrawn,-425.77,Gambling
+,Card Transaction 9397 24JUN24 D APPLE.COM/BILL CORK IE,0.99,withdrawn,-426.76,Non-Essential Household
+,Card Transaction 7674 25JUN24 AMAZON.CO.U K*HM0AF1GV4 353-12477661 GB,5.6,withdrawn,-432.36,Unknown
+,Card Transaction 9397 23JUN24 D TALKSPORTBET GIBRALTAR GI,25.0,withdrawn,-457.36,Gambling
+,Card Transaction 7674 25JUN24 AZULINE HOTEL BERGANTI SANT AGUSTID ES,148.49,withdrawn,-605.85,Non -Essential Entertainment
+,Card Transaction 9397 25JUN24 CD W M MORRISON STORE MANCHESTER GB,7.0,withdrawn,-612.85,Unknown
+,Card Transaction 7674 25JUN24 JET2.COM 7980088482256 LEEDS GB,90.9,withdrawn,-703.75,Non -Essential Entertainment
+27-06-2024,Card Transaction 7674 26JUN24 SKY BETTING & GAMI LEEDS GB CREDIT,1.29,paid in,-702.46,Gambling
+27-06-2024,Card Transaction 7674 27JUN24 BETMGM.CO.UK NEWCASTLE UPO GB CREDIT,1.67,paid in,-700.79,Gambling
+,Card Transaction 7674 26JUN24 UBER *TRIP HELP.UBER.COM GB,22.9,withdrawn,-723.69,Non -Essential Entertainment
+,Card Transaction 9397 24JUN24 D TALKSPORTBET GIBRALTAR GI,25.0,withdrawn,-748.69,Gambling
+,Card Transaction 9397 24JUN24 D TALKSPORTBET GIBRALTAR GI,15.0,withdrawn,-763.69,Gambling
+,Card Transaction 9397 26JUN24 CD SEVEN BROTHERS - ANCOA MANCHESTER GB,17.95,withdrawn,-781.64,Non -Essential Entertainment
+,Card Transaction 9397 26JUN24 CD SEVEN BRO7HERS - ANCOA MANCHESTER GB,1.57,withdrawn,-783.21,Non -Essential Entertainment
+,Card Transaction 9397 26JUN24 CD SEVEN BRO7HERS - ANCOA MANCHESTER GB,18.58,withdrawn,-801.79,Non -Essential Entertainment
+,Card Transaction 9397 26JUN24 CD SQ *ORCHID LOUNGE KARA PICCADILLY PL GB,13.0,withdrawn,-814.79,Non -Essential Entertainment
+```

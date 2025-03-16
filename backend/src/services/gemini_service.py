@@ -25,18 +25,23 @@ try:
     from backend.src.core.prompts import (
         GEMINI_STATEMENT_PARSE,
         GEMINI_PERSONAL_INFO_PARSE,
-        GEMINI_TRANSACTION_SUMMARY
+        GEMINI_TRANSACTION_SUMMARY,
+        GEMINI_TRANSACTION_CATEGORISATION
     )
+    from backend.src.config.settings import Settings
 except ImportError:
     # Try importing from src (when running from backend directory)
     from src.core.prompts import (
         GEMINI_STATEMENT_PARSE,
         GEMINI_PERSONAL_INFO_PARSE,
-        GEMINI_TRANSACTION_SUMMARY
+        GEMINI_TRANSACTION_SUMMARY,
+        GEMINI_TRANSACTION_CATEGORISATION
     )
+    from src.config.settings import Settings
 
 # CSV Headers for statement processing
 CSV_HEADERS = ['Date', 'Description', 'Amount', 'Direction', 'Balance', 'Category']
+CSV_HEADERS_WITHOUT_CATEGORY = ['Date', 'Description', 'Amount', 'Direction', 'Balance']
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -157,7 +162,7 @@ class GeminiService:
                 )
         logger.info("All file(s) ready")
     
-    def generate_content(self, prompt: str, file_obj: object, max_output_tokens: int = 400000) -> str:
+    def generate_content(self, prompt: str, file_obj: object, max_output_tokens: int = 400000, export_path: str = None) -> str:
         """
         Generates content using Gemini with the given prompt and file.
         
@@ -165,6 +170,7 @@ class GeminiService:
             prompt: The prompt to use
             file_obj: The file object to process
             max_output_tokens: Maximum number of tokens to generate
+            export_path: Path to export the raw response (if Settings.EXPORT_RAW_GEMINI_RESPONSES is True)
             
         Returns:
             The generated text response
@@ -177,6 +183,19 @@ class GeminiService:
             contents=[prompt, file_obj],
             config=types.GenerateContentConfig(max_output_tokens=max_output_tokens),
         )
+        
+        # Export raw response if enabled and export_path is provided
+        if export_path and Settings.EXPORT_RAW_GEMINI_RESPONSES:
+            try:
+                # Create directory if it doesn't exist
+                os.makedirs(os.path.dirname(export_path), exist_ok=True)
+                
+                # Write response to file
+                with open(export_path, 'w', encoding='utf-8') as f:
+                    f.write(response.text)
+                logger.info(f"Raw Gemini response exported to: {export_path}")
+            except Exception as e:
+                logger.warning(f"Failed to export raw Gemini response: {str(e)}")
         
         return response.text
     
@@ -194,36 +213,60 @@ class GeminiService:
         """
         raise NotImplementedError("Subclasses must implement process_document()")
 
-    def process_pdf_statement_with_raw_response(self, pdf_path: str, prompt_template: str = GEMINI_STATEMENT_PARSE) -> tuple:
+    def process_pdf_statement_with_raw_response(self, pdf_path: str, prompt_template: str = GEMINI_STATEMENT_PARSE, export_raw_responses: bool = False, output_dir: str = None) -> tuple:
         """
         Process a PDF statement and return both the transactions and the raw CSV response.
         
         Args:
             pdf_path: Path to the PDF file
             prompt_template: Template for the prompt to send to Gemini
+            export_raw_responses: Whether to export raw responses (overrides Settings.EXPORT_RAW_GEMINI_RESPONSES)
+            output_dir: Directory to export raw responses to (if None, uses the directory of pdf_path)
             
         Returns:
             Tuple containing (list of transaction dictionaries, raw CSV response)
         """
         logger.info(f"Processing PDF statement with raw response: {pdf_path}")
         
-        # Upload the PDF to Gemini
-        pdf_obj = self.upload_to_gemini(pdf_path)
+        # Determine output directory for raw responses
+        if export_raw_responses and output_dir is None:
+            output_dir = os.path.dirname(pdf_path)
         
-        # Wait for the file to be active
-        self.wait_for_files_active([pdf_obj])
+        # Override Settings.EXPORT_RAW_GEMINI_RESPONSES if export_raw_responses is True
+        original_export_setting = Settings.EXPORT_RAW_GEMINI_RESPONSES
+        if export_raw_responses:
+            Settings.EXPORT_RAW_GEMINI_RESPONSES = True
         
-        # Process with the provided prompt template
-        response_text = self.generate_content(prompt_template, pdf_obj)
-        
-        # Extract CSV from the response
-        csv_content = self.extract_csv_from_response(response_text)
-        
-        # Parse the CSV to transactions
-        transactions = self.parse_csv_to_transactions(csv_content)
-        
-        # Return both the transactions and the raw CSV response
-        return transactions, response_text
+        try:
+            # Upload the PDF to Gemini
+            pdf_obj = self.upload_to_gemini(pdf_path)
+            
+            # Wait for the file to be active
+            self.wait_for_files_active([pdf_obj])
+            
+            # Prepare export path
+            export_path = None
+            if Settings.EXPORT_RAW_GEMINI_RESPONSES and output_dir:
+                export_path = os.path.join(output_dir, "raw_gemini_statement_parse.txt")
+            
+            # Process with the provided prompt template
+            response_text = self.generate_content(
+                prompt_template, 
+                pdf_obj,
+                export_path=export_path
+            )
+            
+            # Extract CSV from the response
+            csv_content = self.extract_csv_from_response(response_text)
+            
+            # Parse the CSV to transactions
+            transactions = self.parse_csv_to_transactions(csv_content)
+            
+            # Return both the transactions and the raw CSV response
+            return transactions, response_text
+        finally:
+            # Restore original export setting
+            Settings.EXPORT_RAW_GEMINI_RESPONSES = original_export_setting
 
     def extract_csv_from_response(self, text: str) -> str:
         """
@@ -314,19 +357,66 @@ class GeminiService:
 
         return transactions
 
+    def categorize_transactions(self, transactions_csv: str, prompt_template: str = GEMINI_TRANSACTION_CATEGORISATION, export_path: str = None) -> str:
+        """
+        Categorize transactions using Gemini.
+        
+        Args:
+            transactions_csv: CSV string containing transaction data
+            prompt_template: Prompt template for categorization
+            export_path: Path to export the raw response (if Settings.EXPORT_RAW_GEMINI_RESPONSES is True)
+            
+        Returns:
+            CSV string with categorized transactions
+        """
+        logger.info(f"Categorizing transactions with Gemini")
+        
+        try:
+            # Send to Gemini with the categorization prompt
+            response = self.client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=[prompt_template, transactions_csv],
+                config=types.GenerateContentConfig(max_output_tokens=400000),
+            )
+            
+            # Extract CSV from response
+            categorized_csv = response.text
+            
+            # Export raw response if enabled and export_path is provided
+            if export_path and Settings.EXPORT_RAW_GEMINI_RESPONSES:
+                try:
+                    # Create directory if it doesn't exist
+                    os.makedirs(os.path.dirname(export_path), exist_ok=True)
+                    
+                    # Write response to file
+                    with open(export_path, 'w', encoding='utf-8') as f:
+                        f.write(categorized_csv)
+                    logger.info(f"Raw categorization response exported to: {export_path}")
+                except Exception as e:
+                    logger.warning(f"Failed to export raw categorization response: {str(e)}")
+            
+            logger.info(f"Successfully categorized transactions")
+            
+            return categorized_csv
+        except Exception as e:
+            logger.exception(f"Error categorizing transactions: {str(e)}")
+            raise APIError(f"Error categorizing transactions: {str(e)}")
+
 
 class StatementGeminiService(GeminiService):
     """
     Specialized service for processing financial statements with Gemini.
     """
     
-    def process_document(self, pdf_path: str, chunk_count: int = 3) -> dict:
+    def process_document(self, pdf_path: str, chunk_count: int = 3, export_raw_responses: bool = False, output_dir: str = None) -> dict:
         """
         Process a financial statement PDF with Gemini.
         
         Args:
             pdf_path: Path to the PDF file to process
             chunk_count: Number of chunks to split the PDF into
+            export_raw_responses: Whether to export raw responses (overrides Settings.EXPORT_RAW_GEMINI_RESPONSES)
+            output_dir: Directory to export raw responses to (if None, uses the directory of pdf_path)
             
         Returns:
             A dictionary containing the processing results
@@ -334,6 +424,15 @@ class StatementGeminiService(GeminiService):
         # Create a temporary directory for storing sub-PDFs
         temp_dir = tempfile.mkdtemp()
         logger.info(f"Created temporary directory: {temp_dir}")
+        
+        # Determine output directory for raw responses
+        if export_raw_responses and output_dir is None:
+            output_dir = os.path.dirname(pdf_path)
+        
+        # Override Settings.EXPORT_RAW_GEMINI_RESPONSES if export_raw_responses is True
+        original_export_setting = Settings.EXPORT_RAW_GEMINI_RESPONSES
+        if export_raw_responses:
+            Settings.EXPORT_RAW_GEMINI_RESPONSES = True
         
         try:
             # Split the PDF into sub-PDFs
@@ -351,13 +450,53 @@ class StatementGeminiService(GeminiService):
                 # Wait for the file to be active
                 self.wait_for_files_active([pdf_obj])
                 
+                # Prepare export path for this chunk
+                export_path = None
+                if Settings.EXPORT_RAW_GEMINI_RESPONSES and output_dir:
+                    export_path = os.path.join(output_dir, f"raw_gemini_statement_parse_chunk_{i}.txt")
+                
                 # Process with GEMINI_STATEMENT_PARSE prompt
-                response_text = self.generate_content(GEMINI_STATEMENT_PARSE, pdf_obj)
+                response_text = self.generate_content(
+                    GEMINI_STATEMENT_PARSE, 
+                    pdf_obj,
+                    export_path=export_path
+                )
                 
                 # Extract CSV and parse transactions
                 csv_content = self.extract_csv_from_response(response_text)
                 chunk_transactions = self.parse_csv_to_transactions(csv_content)
-                all_transactions.extend(chunk_transactions)
+                
+                # Categorize transactions for this chunk immediately
+                if chunk_transactions:
+                    logger.info(f"Categorizing transactions for chunk {i}...")
+                    # Create a CSV from chunk transactions without categories
+                    csv_content = io.StringIO()
+                    writer = csv.DictWriter(csv_content, fieldnames=CSV_HEADERS_WITHOUT_CATEGORY)
+                    writer.writeheader()
+                    for transaction in chunk_transactions:
+                        # Create a copy without the Category field
+                        transaction_without_category = {k: v for k, v in transaction.items() if k != 'Category'}
+                        writer.writerow(transaction_without_category)
+                    
+                    # Prepare export path for categorization of this chunk
+                    categorization_export_path = None
+                    if Settings.EXPORT_RAW_GEMINI_RESPONSES and output_dir:
+                        categorization_export_path = os.path.join(output_dir, f"raw_gemini_categorization_chunk_{i}.txt")
+                    
+                    # Categorize transactions for this chunk
+                    categorized_csv = self.categorize_transactions(
+                        csv_content.getvalue(),
+                        export_path=categorization_export_path
+                    )
+                    
+                    # Parse categorized CSV back to transactions
+                    categorized_chunk_transactions = self.parse_csv_to_transactions(categorized_csv)
+                    logger.info(f"Successfully categorized {len(categorized_chunk_transactions)} transactions for chunk {i}")
+                    
+                    # Add categorized transactions to the main list
+                    all_transactions.extend(categorized_chunk_transactions)
+                else:
+                    logger.info(f"No transactions found in chunk {i}, skipping categorization")
             
             # Process personal information from the first chunk
             personal_info = None
@@ -370,8 +509,17 @@ class StatementGeminiService(GeminiService):
                 # Wait for it to be active
                 self.wait_for_files_active([first_chunk_obj])
                 
+                # Prepare export path for personal info
+                personal_info_export_path = None
+                if Settings.EXPORT_RAW_GEMINI_RESPONSES and output_dir:
+                    personal_info_export_path = os.path.join(output_dir, "raw_gemini_personal_info.txt")
+                
                 # Process with GEMINI_PERSONAL_INFO_PARSE prompt
-                personal_info_response = self.generate_content(GEMINI_PERSONAL_INFO_PARSE, first_chunk_obj)
+                personal_info_response = self.generate_content(
+                    GEMINI_PERSONAL_INFO_PARSE, 
+                    first_chunk_obj,
+                    export_path=personal_info_export_path
+                )
                 personal_info = personal_info_response.strip()
             
             # Generate transaction summary
@@ -389,8 +537,17 @@ class StatementGeminiService(GeminiService):
                 else:
                     csv_with_personal_info = csv_content.getvalue()
                 
+                # Prepare export path for summary
+                summary_export_path = None
+                if Settings.EXPORT_RAW_GEMINI_RESPONSES and output_dir:
+                    summary_export_path = os.path.join(output_dir, "raw_gemini_summary.txt")
+                
                 # Generate summary
-                summary_response = self.generate_content(GEMINI_TRANSACTION_SUMMARY, csv_with_personal_info)
+                summary_response = self.generate_content(
+                    GEMINI_TRANSACTION_SUMMARY, 
+                    csv_with_personal_info,
+                    export_path=summary_export_path
+                )
                 
                 try:
                     # Try to parse as JSON
@@ -404,8 +561,10 @@ class StatementGeminiService(GeminiService):
                 "personal_info": personal_info,
                 "summary": summary
             }
-            
         finally:
-            # Clean up: remove all sub-PDFs in the temp directory
+            # Restore original export setting
+            Settings.EXPORT_RAW_GEMINI_RESPONSES = original_export_setting
+            
+            # Clean up temporary directory
             shutil.rmtree(temp_dir, ignore_errors=True)
             logger.info(f"Removed temporary directory: {temp_dir}") 

@@ -34,13 +34,18 @@ logger = logging.getLogger(__name__)
 # Load environment variables
 load_dotenv()
 
+# CSV Headers for statement processing
+CSV_HEADERS = ['Date', 'Description', 'Amount', 'Direction', 'Balance', 'Category']
+CSV_HEADERS_WITHOUT_CATEGORY = ['Date', 'Description', 'Amount', 'Direction', 'Balance']
+
 # Import prompts directly from the core/prompts.py file
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 try:
     from src.core.prompts import (
         GEMINI_STATEMENT_PARSE,
         GEMINI_PERSONAL_INFO_PARSE,
-        GEMINI_TRANSACTION_SUMMARY
+        GEMINI_TRANSACTION_SUMMARY,
+        GEMINI_TRANSACTION_CATEGORISATION
     )
     logger.info("Successfully imported prompts from src.core.prompts")
 except ImportError:
@@ -151,9 +156,6 @@ The JSON needs to follow the following structure
 }
 """
     logger.info("Using fallback prompts")
-
-# CSV Headers
-CSV_HEADERS = ['Date', 'Description', 'Amount', 'Direction', 'Balance', 'Category']
 
 # Check for the Gemini API key
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
@@ -314,6 +316,11 @@ def main():
         default=3,
         help="How many smaller PDFs to produce (default=3)."
     )
+    parser.add_argument(
+        "--export-raw-responses",
+        action="store_true",
+        help="Export raw Gemini API responses for debugging (overrides Settings.EXPORT_RAW_GEMINI_RESPONSES)"
+    )
     args = parser.parse_args()
 
     pdf_file = args.pdf
@@ -363,26 +370,83 @@ def main():
             # 3. Wait for the file to be active, then process...
             wait_for_files_active(client, [pdf_obj])
 
+            # Prepare export path for this chunk if exporting raw responses
+            export_path = None
+            if args.export_raw_responses:
+                export_path = os.path.join(args.output, f"raw_gemini_statement_parse_chunk_{i}.txt")
+                # Create directory if it doesn't exist
+                os.makedirs(os.path.dirname(export_path), exist_ok=True)
+
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=[GEMINI_STATEMENT_PARSE, pdf_obj],
                 config=types.GenerateContentConfig(max_output_tokens=400000),
             )
             response_text = response.text
+            
+            # Export raw response if enabled
+            if args.export_raw_responses and export_path:
+                with open(export_path, 'w', encoding='utf-8') as f:
+                    f.write(response_text)
+                logger.info(f"Raw Gemini response for chunk {i} exported to: {export_path}")
+            
             # Extract CSV, parse, etc...
             csv_content = extract_csv_from_response(response_text)
             chunk_transactions = parse_csv_to_transactions(csv_content)
-            all_transactions.extend(chunk_transactions)
-            logger.info(f"Processed chunk {i}, extracted {len(chunk_transactions)} transactions")
+            
+            # Add new code for immediate categorization
+            if chunk_transactions:
+                logger.info(f"Categorizing {len(chunk_transactions)} transactions from chunk {i}...")
+                
+                # Create a CSV without categories for this chunk
+                csv_without_categories = io.StringIO()
+                writer = csv.DictWriter(csv_without_categories, fieldnames=CSV_HEADERS_WITHOUT_CATEGORY)
+                writer.writeheader()
+                for transaction in chunk_transactions:
+                    # Create a copy without the Category field
+                    transaction_without_category = {k: v for k, v in transaction.items() if k != 'Category'}
+                    writer.writerow(transaction_without_category)
+                
+                # Prepare export path for categorization of this chunk
+                chunk_categorization_export_path = None
+                if args.export_raw_responses:
+                    chunk_categorization_export_path = os.path.join(args.output, f"raw_gemini_categorization_chunk_{i}.txt")
+                    os.makedirs(os.path.dirname(chunk_categorization_export_path), exist_ok=True)
+                
+                # Send to Gemini with the categorization prompt
+                categorization_response = client.models.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=[GEMINI_TRANSACTION_CATEGORISATION, csv_without_categories.getvalue()],
+                    config=types.GenerateContentConfig(max_output_tokens=400000),
+                )
+                
+                # Extract CSV from response
+                categorized_csv = categorization_response.text
+                
+                # Export raw response if enabled
+                if args.export_raw_responses and chunk_categorization_export_path:
+                    with open(chunk_categorization_export_path, 'w', encoding='utf-8') as f:
+                        f.write(categorized_csv)
+                    logger.info(f"Raw categorization response for chunk {i} exported to: {chunk_categorization_export_path}")
+                
+                # Parse categorized CSV back to transactions
+                categorized_chunk_transactions = parse_csv_to_transactions(categorized_csv)
+                logger.info(f"Successfully categorized {len(categorized_chunk_transactions)} transactions for chunk {i}")
+                
+                # Add categorized transactions to the main list
+                all_transactions.extend(categorized_chunk_transactions)
+            else:
+                logger.info(f"No transactions found in chunk {i}, skipping categorization")
+                all_transactions.extend(chunk_transactions)  # Still add empty transactions if any
 
-        # After all chunks processed, write final CSV
+        # After all chunks processed, write final CSV with already categorized transactions
         total_found = len(all_transactions)
         final_csv_filename = os.path.join(args.output, "final_transactions.csv")
         with open(final_csv_filename, "w", newline="", encoding="utf-8") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=CSV_HEADERS)
             writer.writeheader()
             writer.writerows(all_transactions)
-        logger.info(f"Process complete. Aggregated {total_found} transactions. Final CSV written to {final_csv_filename}")
+        logger.info(f"Process complete. Wrote {total_found} categorized transactions to {final_csv_filename}")
 
         # Additional processing for the first chunk with GEMINI_PERSONAL_INFO_PARSE
         if first_chunk_path:
@@ -395,6 +459,13 @@ def main():
             
             # Wait for it to be active
             wait_for_files_active(client, [first_chunk_obj])
+            
+            # Prepare export path for personal info if exporting raw responses
+            personal_info_export_path = None
+            if args.export_raw_responses:
+                personal_info_export_path = os.path.join(args.output, "raw_gemini_personal_info.txt")
+                # Create directory if it doesn't exist
+                os.makedirs(os.path.dirname(personal_info_export_path), exist_ok=True)
             
             # Process with GEMINI_PERSONAL_INFO_PARSE
             logger.info("Sending GEMINI_PERSONAL_INFO_PARSE prompt with first chunk to Gemini...")
@@ -411,6 +482,12 @@ def main():
             logger.info(personal_info_text)
             logger.info("=" * 80)
             logger.info("END OF PERSONAL INFO EXTRACTION")
+            
+            # Export raw response if enabled
+            if args.export_raw_responses and personal_info_export_path:
+                with open(personal_info_export_path, 'w', encoding='utf-8') as f:
+                    f.write(personal_info_text)
+                logger.info(f"Raw personal info response exported to: {personal_info_export_path}")
             
             # Add the personal info line to the top of the final_transactions.csv file
             logger.info("Adding personal information to the top of the final_transactions.csv file...")
@@ -435,6 +512,13 @@ def main():
             with open(final_csv_filename, 'r', encoding='utf-8') as f:
                 csv_content = f.read()
             
+            # Prepare export path for summary if exporting raw responses
+            summary_export_path = None
+            if args.export_raw_responses:
+                summary_export_path = os.path.join(args.output, "raw_gemini_summary.txt")
+                # Create directory if it doesn't exist
+                os.makedirs(os.path.dirname(summary_export_path), exist_ok=True)
+            
             # Send to Gemini with the transaction summary prompt
             summary_response = client.models.generate_content(
                 model="gemini-2.0-flash",
@@ -448,6 +532,12 @@ def main():
             logger.info(summary_response.text)
             logger.info("=" * 80)
             logger.info("END OF TRANSACTION SUMMARY")
+            
+            # Export raw response if enabled
+            if args.export_raw_responses and summary_export_path:
+                with open(summary_export_path, 'w', encoding='utf-8') as f:
+                    f.write(summary_response.text)
+                logger.info(f"Raw summary response exported to: {summary_export_path}")
             
             # Save summary to file
             summary_file = os.path.join(args.output, "summary.txt")

@@ -7,36 +7,41 @@ GEMINI_STATEMENT_PARSE = """\
 Please parse the attached financial statement PDF and a provide a csv response. Only return a valid .csv, no other text or comments, CSV output should have the following structure
 
 For every single transaction identified, output the following data by parsing each line in the statement
-Date of transaction,Description of transaction,Amount of transaction,Direction, either paid in  or withdrawn,Balance remaining, Category 
-
-The category field must be present on every output line and must be assigned to one of the following categories by parsing the description data and inferring category
-
-Category fields has to be one of the following an should be inferred from the transaction description:
-
-1. Essential Home - Rent/Mortgage, monthly or weekly consistent payment - must be outgoing
-2. Essential Household - Council Tax, Water, Electricity, Gas, Internet, TV Licence, Phone, Mobile, etc. - must be outgoing
-3. Non-Essential Household - Sky TV, Netflix, Spotify, Disney+, Apple Music, cleaners, gardeners, etc. - must be outgoing
-4. Salary - Money received from a salary or other regular payment - must be incoming
-5. Non -Essential Entertainment - Going out, dining out, cinema, theatre, Uber, takeaways - must be outgoing
-6. Gambling - Betting, Casino, Lotteries, etc. - Can be incoming or outgoing
-7. Cash Withdrawal - Cash withdrawals from ATMs, banks, etc. - must be outgoing
-8. Bank Transfer - Money transferred from one account to another - Can be outgoing or incoming
-9. Unknown - Any other category that does not fit into the above
-
+Date of transaction,Description of transaction,Amount of transaction,Direction, either paid in  or withdrawn,Balance remaining 
 
 If the date is not clear parse the description data to infer.
 Any dates must be output in the format dd-mm-yyyy 
-There structure should be one transaction per row of CSV
+The structure should be one transaction per row of CSV
 Note that balance remaining may we be negative or overdrawn, possibly denoted with a minus sign or in brackets, or with an OD, or overdrawn. This must be represented in the banace reamining as a negative number
-
 
 Note that no headers should be returned, just transaction data.
 Provide exactly one row per transaction identified, do not skip any transactions for any reason, even missing or incomplete data
 
 If the file does not seem to contain any transactions the just return an empty CSV
 
-"""
+very important that every single transaction is included in the output, do not skip any transactions for any reason
 
+"""
+GEMINI_TRANSACTION_CATEGORISATION = """\
+
+Parse the attached CSV file of financial transactions and categorise each transaction into one of the following categories:
+
+1. Essential Home - Rent/Mortgage, monthly or weekly consistent payment - must be outgoing
+2. Essential Household - Council Tax, Water, Electricity, Gas, Internet, TV Licence, Phone, Mobile, etc. - must be outgoing
+3. Non-Essential Household - Sky TV, Netflix, Spotify, Disney+, Apple Music, cleaners, gardeners, etc. - must be outgoing
+4. Salary - Money received from a salary or other regular payment, generally large transactions coming into the account - must be incoming
+5. Non -Essential Entertainment - Going out, dining out, cinema, theatre, Uber, takeaways - must be outgoing
+6. Gambling - Betting, Casino, Lotteries, etc. Will be from a bookmaker, casino, or lotteries - Can be incoming or outgoing
+7. Cash Withdrawal - Cash withdrawals from ATMs, banks, etc. - must be outgoing
+8. Bank Transfer - Money transferred from one account to another - Can be outgoing or incoming
+9. Unknown - Any other category that does not fit into the above
+
+The category for that transaction must be added to the end of the row in the CSV file and the howl, altered file then returned
+
+The category field must be present on every output line and must be assigned to one of the following categories by parsing the description data and inferring category
+
+
+"""
 
 GEMINI_PERSONAL_INFO_PARSE = """\
 

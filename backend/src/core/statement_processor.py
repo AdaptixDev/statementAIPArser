@@ -7,6 +7,7 @@ import tempfile
 import csv
 import shutil
 import json
+import io
 from typing import Dict, Any, List, Optional, Tuple, Union
 
 try:
@@ -19,7 +20,8 @@ try:
     from backend.src.core.prompts import (
         GEMINI_STATEMENT_PARSE,
         GEMINI_PERSONAL_INFO_PARSE,
-        GEMINI_TRANSACTION_SUMMARY
+        GEMINI_TRANSACTION_SUMMARY,
+        GEMINI_TRANSACTION_CATEGORISATION
     )
     from backend.src.core.data_processor import DataProcessor
 except ImportError:
@@ -32,7 +34,8 @@ except ImportError:
     from src.core.prompts import (
         GEMINI_STATEMENT_PARSE,
         GEMINI_PERSONAL_INFO_PARSE,
-        GEMINI_TRANSACTION_SUMMARY
+        GEMINI_TRANSACTION_SUMMARY,
+        GEMINI_TRANSACTION_CATEGORISATION
     )
     from src.core.data_processor import DataProcessor
 
@@ -144,7 +147,8 @@ class StatementProcessor:
         self,
         image_files: List[ImageData],
         use_gemini: bool = False,
-        output_csv: Optional[str] = None
+        output_csv: Optional[str] = None,
+        export_raw_responses: bool = False
     ) -> List[Dict[str, Any]]:
         """
         Process statement pages to extract transaction data.
@@ -153,6 +157,7 @@ class StatementProcessor:
             image_files: List of image data (file paths or in-memory tuples)
             use_gemini: Whether to use Gemini instead of OpenAI
             output_csv: Path to save the output CSV (optional)
+            export_raw_responses: Whether to export raw responses (overrides Settings.EXPORT_RAW_GEMINI_RESPONSES)
             
         Returns:
             List of transaction dictionaries
@@ -191,40 +196,57 @@ class StatementProcessor:
                     pdf_path = image_files[0]
                     
                 logger.info(f"Processing statement with Gemini")
+                
+                # Determine output directory for raw responses
+                output_dir = None
+                if output_csv:
+                    output_dir = os.path.dirname(output_csv)
+                
                 # Get both transactions and raw response
                 transactions, raw_response = gemini.process_pdf_statement_with_raw_response(
                     pdf_path=pdf_path,
-                    prompt_template=GEMINI_STATEMENT_PARSE
+                    prompt_template=GEMINI_STATEMENT_PARSE,
+                    export_raw_responses=export_raw_responses,
+                    output_dir=output_dir
                 )
                 
                 # Save the raw response if output_csv is provided
-                if output_csv:
-                    # Determine the directory from output_csv
-                    output_dir = os.path.dirname(output_csv)
-                    raw_response_file = os.path.join(output_dir, "raw_gemini_response.csv")
-                    logger.info(f"Saving raw Gemini response to: {raw_response_file}")
-                    with open(raw_response_file, "w", encoding="utf-8") as f:
+                if output_csv and raw_response:
+                    raw_output_path = output_csv.replace(".csv", "_raw.txt")
+                    with open(raw_output_path, "w", encoding="utf-8") as f:
                         f.write(raw_response)
-                    
-                    # Also save the transactions to the output_csv
-                    logger.info(f"Saving {len(transactions)} transactions to CSV: {output_csv}")
-                    with open(output_csv, "w", newline="", encoding="utf-8") as csvfile:
-                        writer = csv.DictWriter(csvfile, fieldnames=CSV_HEADERS)
-                        writer.writeheader()
-                        writer.writerows(transactions)
+                    logger.info(f"Raw response saved to {raw_output_path}")
                 
+                # Add transactions to the result
                 all_transactions.extend(transactions)
                 
-                # Clean up temporary files if created
-                if isinstance(image_files[0], tuple):
-                    for temp_file in temp_files:
-                        if os.path.exists(temp_file):
-                            os.remove(temp_file)
-                    if os.path.exists(temp_dir):
-                        os.rmdir(temp_dir)
-                        
+                # Categorize transactions
+                if all_transactions:
+                    logger.info("Categorizing transactions with Gemini...")
+                    # Create a CSV from all transactions without categories
+                    csv_content = io.StringIO()
+                    writer = csv.DictWriter(csv_content, fieldnames=['Date', 'Description', 'Amount', 'Direction', 'Balance'])
+                    writer.writeheader()
+                    for transaction in all_transactions:
+                        # Create a copy without the Category field
+                        transaction_without_category = {k: v for k, v in transaction.items() if k != 'Category'}
+                        writer.writerow(transaction_without_category)
+                    
+                    # Categorize transactions
+                    categorized_csv = gemini.categorize_transactions(csv_content.getvalue())
+                    
+                    # Parse categorized CSV back to transactions
+                    all_transactions = gemini.parse_csv_to_transactions(categorized_csv)
+                    logger.info(f"Successfully categorized {len(all_transactions)} transactions")
+                
+                # Clean up temporary files
+                if isinstance(image_files[0], tuple) and os.path.exists(temp_dir):
+                    shutil.rmtree(temp_dir)
+                    logger.info(f"Removed temporary directory: {temp_dir}")
             else:
                 # Use OpenAI for transaction extraction
+                openai = self._get_openai_service()
+                
                 # Process each image separately
                 for image_data in image_files:
                     if isinstance(image_data, tuple):
@@ -241,7 +263,7 @@ class StatementProcessor:
                         original_identifier = image_data
                         
                     # Send to OpenAI Assistant
-                    response = self._get_openai_service().extract_transactions(
+                    response = openai.extract_transactions(
                         file_bytes=file_bytes,
                         file_name=file_name
                     )
