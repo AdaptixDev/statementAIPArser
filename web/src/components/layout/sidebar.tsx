@@ -4,11 +4,9 @@ import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { 
-  Home, 
   FileText, 
-  BarChart, 
-  Settings, 
-  HelpCircle,
+  CreditCard,
+  User,
   Menu,
   X
 } from "lucide-react";
@@ -51,22 +49,33 @@ export function Sidebar({ className, isOpen, onClose, ...props }: SidebarProps) 
           </Button>
         </div>
         
-        <nav className="space-y-1">
-          <SidebarItem href="/" icon={<Home className="size-5" />}>
-            Dashboard
-          </SidebarItem>
-          <SidebarItem href="/documents" icon={<FileText className="size-5" />}>
-            Documents
-          </SidebarItem>
-          <SidebarItem href="/analytics" icon={<BarChart className="size-5" />}>
-            Analytics
-          </SidebarItem>
-          <SidebarItem href="/settings" icon={<Settings className="size-5" />}>
-            Settings
-          </SidebarItem>
-          <SidebarItem href="/help" icon={<HelpCircle className="size-5" />}>
-            Help
-          </SidebarItem>
+        <nav className="space-y-6">
+          {/* Finance Section */}
+          <div>
+            <h2 className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+              Finance
+            </h2>
+            <div className="space-y-1">
+              <SidebarItem href="/statements" icon={<CreditCard className="size-5" />}>
+                Bank Statements
+              </SidebarItem>
+            </div>
+          </div>
+
+          {/* Personal Section */}
+          <div>
+            <h2 className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+              Personal
+            </h2>
+            <div className="space-y-1">
+              <SidebarItem href="/documents" icon={<FileText className="size-5" />}>
+                Documents
+              </SidebarItem>
+              <SidebarItem href="/identification" icon={<User className="size-5" />}>
+                Identification
+              </SidebarItem>
+            </div>
+          </div>
         </nav>
         
         <div className="absolute bottom-4 left-4 right-4">
@@ -98,12 +107,18 @@ function SidebarItem({ href, icon, children }: SidebarItemProps) {
   );
 }
 
-export function SidebarTrigger({ onClick }: { onClick: () => void }) {
+export function SidebarTrigger({ 
+  onClick, 
+  className 
+}: { 
+  onClick: () => void;
+  className?: string;
+}) {
   return (
     <Button 
       variant="ghost" 
       size="icon" 
-      className="md:hidden fixed top-4 left-4 z-30" 
+      className={cn("md:hidden", className)} 
       onClick={onClick}
     >
       <Menu className="size-5" />

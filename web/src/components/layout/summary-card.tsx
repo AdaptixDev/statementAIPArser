@@ -69,16 +69,20 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
   return (
-    <div className={`border rounded-lg overflow-hidden mb-4 ${className}`}>
+    <div className={`border rounded-lg overflow-hidden ${className}`}>
       <button
-        className="w-full flex justify-between items-center p-3 bg-gray-100 hover:bg-gray-200 transition-colors text-left"
         onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-3 md:p-4 bg-gray-50 hover:bg-gray-100 transition-colors"
       >
-        <h2 className="text-lg font-semibold">{title}</h2>
-        {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        <h3 className="text-sm md:text-base font-medium">{title}</h3>
+        {isOpen ? (
+          <ChevronUp className="size-4 md:size-5 text-gray-500" />
+        ) : (
+          <ChevronDown className="size-4 md:size-5 text-gray-500" />
+        )}
       </button>
       {isOpen && (
-        <div className="p-4">
+        <div className="p-3 md:p-4 text-sm md:text-base">
           {children}
         </div>
       )}
@@ -491,96 +495,56 @@ export function SummaryCard({ title, summary, drivingLicense, passport }: Summar
   };
 
   return (
-    <Card className="flex flex-col h-full">
-      <CardHeader className="bg-gray-100 border-b flex-shrink-0">
-        <CardTitle>{title}</CardTitle>
+    <Card className="w-full">
+      <CardHeader className="px-4 py-3 border-b">
+        <CardTitle className="text-lg font-medium">{title}</CardTitle>
       </CardHeader>
-      <CardContent 
-        ref={cardContentRef} 
-        className="flex-1 overflow-y-auto p-4 bg-gray-50 text-sm"
-        style={{ scrollbarGutter: 'stable' }}
-      >
-        {!summary && !drivingLicense && !passport ? (
-          <div className="space-y-4">
-            <CollapsibleSection title="Statement Summary" defaultOpen={false}>
-              <div className="flex items-center justify-center py-4">
-                <p className="text-gray-500 text-center">Upload and analyze a statement to see the summary</p>
+      <CardContent className="p-4 space-y-4">
+        {summaryData && (
+          <>
+            <CollapsibleSection title="Personal Information" defaultOpen>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                {renderPersonalInfo()}
               </div>
             </CollapsibleSection>
-            
-            <CollapsibleSection 
-              title="Identification Documents" 
-              defaultOpen={false}
-              className="bg-white"
-            >
-              <div className="py-4 text-center text-gray-500">
-                <p>No identification documents available.</p>
+
+            <CollapsibleSection title="Income & Outgoings">
+              <div className="space-y-4">
+                {renderIncomeAndOutgoings()}
               </div>
             </CollapsibleSection>
-            
-            <CollapsibleSection 
-              title="Supporting Documents" 
-              defaultOpen={false}
-              className="bg-white"
-            >
-              <div className="py-4 text-center text-gray-500">
-                <p>No supporting documents available.</p>
+
+            <CollapsibleSection title="Financial Health Commentary">
+              <div className="space-y-3">
+                {renderFinancialHealthCommentary()}
               </div>
             </CollapsibleSection>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <CollapsibleSection 
-              title="Statement Summary" 
-              defaultOpen={summary !== null}
-            >
-              {summary ? (
-                summaryData ? (
-                  <div className="space-y-4">
-                    {renderPersonalInfo()}
-                    {renderIncomeAndOutgoings()}
-                    {renderFinancialHealthCommentary()}
-                    {renderRedFlags()}
-                    {renderRecommendations()}
-                  </div>
-                ) : (
-                  <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <p className="text-yellow-800">Unable to parse the statement data. Please ensure it&apos;s in the correct format.</p>
-                    <pre className="mt-2 text-xs overflow-auto max-h-40 bg-gray-100 p-2 rounded">
-                      {summary}
-                    </pre>
-                  </div>
-                )
-              ) : (
-                <div className="flex items-center justify-center py-4">
-                  <p className="text-gray-500 text-center">Upload and analyze a statement to see the summary</p>
-                </div>
-              )}
-            </CollapsibleSection>
-            
-            <CollapsibleSection 
-              title="Identification Documents" 
-              defaultOpen={drivingLicense !== null || passport !== null}
-              className="bg-white"
-            >
-              {drivingLicense || passport ? (
-                renderIdentificationDocuments()
-              ) : (
-                <div className="py-4 text-center text-gray-500">
-                  <p>No identification documents available.</p>
-                </div>
-              )}
-            </CollapsibleSection>
-            
-            <CollapsibleSection 
-              title="Supporting Documents" 
-              defaultOpen={false}
-              className="bg-white"
-            >
-              <div className="py-4 text-center text-gray-500">
-                <p>No supporting documents available.</p>
+
+            <CollapsibleSection title="Potential Red Flags">
+              <div className="space-y-2">
+                {renderRedFlags()}
               </div>
             </CollapsibleSection>
+
+            <CollapsibleSection title="Recommendations">
+              <div className="space-y-2">
+                {renderRecommendations()}
+              </div>
+            </CollapsibleSection>
+          </>
+        )}
+
+        {(drivingLicense || passport) && (
+          <CollapsibleSection title="Identification Documents">
+            <div className="space-y-4">
+              {renderIdentificationDocuments()}
+            </div>
+          </CollapsibleSection>
+        )}
+
+        {!summaryData && !drivingLicense && !passport && (
+          <div className="flex items-center justify-center h-32">
+            <p className="text-gray-500">No data available</p>
           </div>
         )}
       </CardContent>

@@ -101,89 +101,81 @@ export function ChatWindow({ title, messages, onSendMessage, onRefresh, onFileUp
   };
 
   return (
-    <Card className="flex flex-col h-full">
-      <CardHeader className="bg-gray-100 border-b flex-shrink-0">
-        <CardTitle>{title}</CardTitle>
+    <Card className="h-[calc(100vh-8rem)] md:h-[600px] flex flex-col">
+      <CardHeader className="px-4 py-3 border-b">
+        <CardTitle className="text-lg font-medium">{title}</CardTitle>
       </CardHeader>
+      
       <CardContent 
-        className="flex-1 overflow-y-auto p-4 space-y-4 text-sm" 
         ref={messagesContainerRef}
+        className="flex-1 overflow-y-auto p-4 space-y-4"
         onScroll={handleScroll}
-        style={{ scrollbarGutter: 'stable' }}
       >
-        {messages.length === 0 ? (
-          <div className="flex items-center justify-center h-full">
-            <p className="text-gray-500 text-center">No messages yet</p>
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+          >
+            <div
+              className={`max-w-[85%] md:max-w-[70%] rounded-lg px-4 py-2 ${
+                message.isUser
+                  ? 'bg-blue-600 text-white'
+                  : message.isProcessing
+                  ? 'processing-message'
+                  : 'bg-gray-100'
+              }`}
+            >
+              <p className="text-sm md:text-base whitespace-pre-wrap break-words">
+                {message.content}
+              </p>
+            </div>
           </div>
-        ) : (
-          <>
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.isUser ? "justify-end" : "justify-start"}`}
-              >
-                <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.isUser
-                      ? "bg-gray-800 text-white"
-                      : message.isProcessing
-                        ? "processing-message text-gray-900"
-                        : "bg-gray-100 text-gray-900"
-                  }`}
-                >
-                  <p className="whitespace-pre-wrap break-words">{message.content}</p>
-                </div>
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </>
-        )}
+        ))}
+        <div ref={messagesEndRef} />
       </CardContent>
-      <CardFooter className="flex-shrink-0 border-t bg-white p-4 space-y-2">
-        <div className="flex w-full gap-2">
-          <Input
-            placeholder="Type your message..."
-            value={inputValue}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="flex-1 text-sm"
-          />
-          <Button 
+
+      <CardFooter className="p-4 border-t space-x-2">
+        <input
+          type="file"
+          ref={fileInputRef}
+          className="hidden"
+          onChange={handleFileChange}
+          multiple
+        />
+        <Button
+          variant="outline"
+          size="icon"
+          className="shrink-0"
+          onClick={handleFileUpload}
+        >
+          <Upload className="size-4" />
+        </Button>
+        {onRefresh && (
+          <Button
             variant="outline"
+            size="icon"
+            className="shrink-0"
             onClick={onRefresh}
           >
             <RefreshCw className="size-4" />
           </Button>
+        )}
+        <div className="flex-1">
+          <Input
+            placeholder="Type a message..."
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="w-full"
+          />
         </div>
-        <div className="flex gap-2 w-full">
-          {title === "Statement Analysis" && (
-            <>
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                className="hidden"
-                accept=".pdf,.jpg,.jpeg,.png"
-                multiple
-              />
-              <Button 
-                variant="outline"
-                onClick={handleFileUpload}
-                className="flex-1 text-sm"
-              >
-                <Upload className="size-4 mr-2" />
-                Upload
-              </Button>
-            </>
-          )}
-          <Button 
-            className="flex-1 text-sm"
-            onClick={handleSendMessage}
-          >
-            <Send className="size-4 mr-2" />
-            Send
-          </Button>
-        </div>
+        <Button
+          className="shrink-0"
+          onClick={handleSendMessage}
+          disabled={!inputValue.trim()}
+        >
+          <Send className="size-4" />
+        </Button>
       </CardFooter>
     </Card>
   );

@@ -1,0 +1,51 @@
+```json
+{
+  "personalInformation": {
+    "name": "Christopher J Byron",
+    "address": "89 FLIXTON ROAD, URMSTON, MANCHESTER, M41 5AN",
+    "accountNumber": "10212003",
+    "sortCode": "16-33-22",
+    "statementStartingBalance": -64.97,
+    "statementFinishingBalance": -814.79
+  },
+  "summaryOfIncomeAndOutgoings": {
+    "income": {
+      "Unknown": 2463.12,
+      "Bank Transfer": 765.0,
+      "Gambling": 816.85
+    },
+    "outgoings": {
+      "Unknown": 808.49,
+      "Non-Essential Household": 155.32,
+      "Non -Essential Entertainment": 1014.44,
+      "Gambling": 703.0,
+      "Essential Household": 114.0,
+      "Cash Withdrawal": 194.38,
+      "Bank Transfer": 250.0
+    }
+  },
+  "generalSummaryAndFinancialHealthCommentary": {
+    "overallBalance": "The account balance has decreased by £749.82 during the statement period (from -£64.97 to -£814.79). The account is overdrawn throughout the statement period.",
+    "inconsistentCategorization": "There are a lot of transactions labelled as 'Unknown.' More specific categorization is needed for proper budgeting and analysis. There is also a lot of Entertainment spending",
+    "essentialHouseholdSpending": "There is one essential household transaction present",
+    "transfers": "Transfers to and from 'BYRON C' suggest money moving between accounts, this appears to be a regular transfer",
+    "paymentsToIndividuals": "Payments to individuals are present.",
+    "gamblingTransactions": "A high number of transactions relate to gambling, this is an area of potential concern.",
+    "highLevelofSpending":"The spend on non essential items is very high, especially entertainment.",
+    "negativeBalance":"The account is overdrawn and this has increased significantly over the period."
+  },
+  "potentialRedFlagsAndConcerns": [
+    "High 'Unknown' Category Spending: Indicates lack of tracking and control over finances.",
+    "Dependence on Transfers: A portion of income comes from transfers, suggesting reliance on them.",
+    "The account is overdrawn",
+    "The amount the account is overdrawn has increased dramatically in the statement period",
+    "High gambling spend"
+  ],
+  "recommendations": [
+    "Categorize Transactions: Categorize all 'Unknown' items to see where money is truly going.",
+    "Budgeting: Create a detailed budget to manage income and expenses.",
+    "Investigate Transfers: Understand the purpose of frequent transfers to 'BYRON C'.",
+    "Seek Financial Advice: Given the negative balance and gambling spend, it is highly advisable to speak to a financial advisor"
+  ]
+}
+```

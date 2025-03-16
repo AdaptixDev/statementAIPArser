@@ -14,19 +14,21 @@ export function AppLayout({ children }: AppLayoutProps) {
   const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen-dynamic bg-gray-50">
       <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-      <SidebarTrigger onClick={openSidebar} />
+      <SidebarTrigger onClick={openSidebar} className="fixed top-4 left-4 z-50 md:hidden" />
       
-      <main className="md:ml-64 min-h-screen p-4 md:p-6 transition-all duration-300">
-        <div className="max-w-7xl mx-auto">
-          <header className="mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">
+      <main className="w-full min-h-screen-dynamic px-4 py-safe-top pb-safe-bottom transition-all duration-300 md:ml-64 md:px-6">
+        <div className="w-full max-w-mobile md:max-w-7xl mx-auto">
+          <header className="sticky top-0 z-40 py-4 mb-4 bg-gray-50/80 backdrop-blur-sm">
+            <h1 className="text-xl font-bold text-gray-900 md:text-2xl truncate">
               Adaptix Innovation Smart Finance
             </h1>
           </header>
           
-          {children}
+          <div className="pb-20 md:pb-6">
+            {children}
+          </div>
         </div>
       </main>
     </div>
